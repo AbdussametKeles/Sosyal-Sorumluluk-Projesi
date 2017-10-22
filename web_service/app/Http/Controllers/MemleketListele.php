@@ -11,6 +11,5 @@ class MemleketController extends Controller
     //Memleket listeleme fonksiyonu
     public function memleket_listele()
     {
-
     }
 }
