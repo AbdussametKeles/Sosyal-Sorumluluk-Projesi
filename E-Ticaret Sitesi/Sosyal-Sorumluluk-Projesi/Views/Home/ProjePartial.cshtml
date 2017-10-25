@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Sosyal_Sorumluluk_Projesi.Models.proje>
+
+
+
+
+<p>
+    @Html.ActionLink("Yeni Proje", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.kategoriler.kategori_adi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.kullanicilar.ad_soyad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.memleket.memleket_adi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.urunler.urun_adi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.yorum.icerik)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tarih)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.resim)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.kategoriler.kategori_adi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.kullanicilar.ad_soyad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.memleket.memleket_adi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.urunler.urun_adi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.yorum.icerik)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tarih)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.resim)
+        </td>
+        <td>
+            @Html.ActionLink("Düzenle", "Edit", new { id=item.proje_id }) |
+            @Html.ActionLink("Sil", "Delete", new { id=item.proje_id })
+        </td>
+    </tr>
+}
+
+</table>
