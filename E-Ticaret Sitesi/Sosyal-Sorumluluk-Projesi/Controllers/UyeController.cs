@@ -11,7 +11,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
 {
     public class UyeController : Controller
     {
-        siteDb db = new siteDb();
+        Model1 db = new Model1();
         // GET: Uye
         public ActionResult Index()
         {
@@ -60,7 +60,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         public ActionResult Create(kullanicilar uye,HttpPostedFileBase resim)
         {
             if (ModelState.IsValid)
-            {
+            { 
                 if (resim != null)
                 {
                     WebImage img = new WebImage(resim.InputStream);
@@ -70,7 +70,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                     img.Resize(150, 150);
                     img.Save("~/Uploads/resimler/" + newfoto);
                     uye.resim = "/Uploads/resimler/" + newfoto;
-                    uye.yetki_id = 2;
+                    uye.yetki_id = 2;  
                     db.kullanicilars.Add(uye);
                     db.SaveChanges();
                     Session["kullaniciid"] = uye.kullanici_id;

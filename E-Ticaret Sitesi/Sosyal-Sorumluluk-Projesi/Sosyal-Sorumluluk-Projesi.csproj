@@ -257,6 +257,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AdminProjeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UyeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -264,9 +265,8 @@
     </Compile>
     <Compile Include="Models\kategoriler.cs" />
     <Compile Include="Models\kullanicilar.cs" />
-    <Compile Include="Models\memleket.cs" />
+    <Compile Include="Models\Model1.cs" />
     <Compile Include="Models\proje.cs" />
-    <Compile Include="Models\siteDb.cs" />
     <Compile Include="Models\urunler.cs" />
     <Compile Include="Models\yetki.cs" />
     <Compile Include="Models\yorum.cs" />
@@ -322,9 +322,12 @@
     <Content Include="Content\Admin\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\Admin\fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Views\Admin\Index.cshtml" />
-    <Content Include="Views\Home\ProjePartial.cshtml" />
     <Content Include="Views\Uye\Create.cshtml" />
     <Content Include="Views\Uye\Login.cshtml" />
+    <Content Include="Views\Shared\_LayoutUye.cshtml" />
+    <Content Include="Views\Uye\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutUyeKayit.cshtml" />
+    <Content Include="Views\AdminProje\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

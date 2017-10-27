@@ -20,8 +20,6 @@ namespace Sosyal_Sorumluluk_Projesi.Models
 
         public int? yorum_id { get; set; }
 
-        public int? urun_memleket_id { get; set; }
-
         [StringLength(500)]
         public string resim { get; set; }
 
@@ -30,8 +28,6 @@ namespace Sosyal_Sorumluluk_Projesi.Models
         public virtual kategoriler kategoriler { get; set; }
 
         public virtual kullanicilar kullanicilar { get; set; }
-
-        public virtual memleket memleket { get; set; }
 
         public virtual urunler urunler { get; set; }
 

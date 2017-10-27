@@ -9,7 +9,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
 {
     public class HomeController : Controller
     {
-        siteDb db = new siteDb();
+        Model1 db = new Model1();
         // GET: Home
         public ActionResult Index()
         {
@@ -25,11 +25,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         {
             return View();
         }
-        public ActionResult ProjePartial()
-        {
-
-            return View(db.projes.ToList());
-        } 
+     
 
       
 

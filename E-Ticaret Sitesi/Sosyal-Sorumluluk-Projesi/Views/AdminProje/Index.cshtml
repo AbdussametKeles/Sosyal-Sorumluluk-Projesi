@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Sosyal_Sorumluluk_Projesi.Models.proje>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+<h2>Proje İşlemleri</h2>
+
+<p>
+    @Html.ActionLink("Proje Ekle", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.kategoriler.kategori_adi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.kullanicilar.ad_soyad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.urunler.urun_adi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.yorum.icerik)
+        </th>
+      
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.kategoriler.kategori_adi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.kullanicilar.ad_soyad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.urunler.urun_adi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.yorum.icerik)
+        </td>
+       
+       
+        <td>
+            @Html.ActionLink("Düzenle", "Edit", new { id=item.proje_id }) |
+            @Html.ActionLink("Detaylar", "Details", new { id=item.proje_id }) |
+            @Html.ActionLink("Sil", "Delete", new { id=item.proje_id })
+        </td>
+    </tr>
+}
+
+</table>

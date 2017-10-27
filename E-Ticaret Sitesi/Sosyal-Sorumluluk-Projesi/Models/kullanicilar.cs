@@ -21,8 +21,6 @@ namespace Sosyal_Sorumluluk_Projesi.Models
 
         public int? yetki_id { get; set; }
 
-        public int? memleket_id { get; set; }
-
         [StringLength(25)]
         public string ad_soyad { get; set; }
 
@@ -37,8 +35,6 @@ namespace Sosyal_Sorumluluk_Projesi.Models
 
         [StringLength(500)]
         public string resim { get; set; }
-
-        public virtual memleket memleket { get; set; }
 
         public virtual yetki yetki { get; set; }
 
