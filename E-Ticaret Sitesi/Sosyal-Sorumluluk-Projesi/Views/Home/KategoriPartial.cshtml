@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Sosyal_Sorumluluk_Projesi.Models.kategoriler>
+
+
+@{ 
+
+    Layout = null;
+}
+
+
+    
+                
+
+
+                @foreach (var item in Model)
+                {
+
+
+                    <ul>
+                        <li><a href="/Home/KategoriUrun/">@item.kategori_adi </a></li>
+                       
+                    </ul>
+
+
+                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       
+
+
+
+
+<!--/category-products-->
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.kategori_adi)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.kategori_adi)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.kategori_id }) |
+                @Html.ActionLink("Details", "Details", new { id=item.kategori_id }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.kategori_id })
+            </td>
+        </tr>
+    }
+
+    </table>*@

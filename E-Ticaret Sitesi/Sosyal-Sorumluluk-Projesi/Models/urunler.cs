@@ -26,6 +26,9 @@ namespace Sosyal_Sorumluluk_Projesi.Models
         [StringLength(500)]
         public string resim { get; set; }
 
+        [StringLength(500)]
+        public string urun_icerik { get; set; }
+
         public virtual kategoriler kategoriler { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

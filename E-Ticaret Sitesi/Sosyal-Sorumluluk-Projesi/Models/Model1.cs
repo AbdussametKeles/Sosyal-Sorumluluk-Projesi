@@ -8,7 +8,7 @@ namespace Sosyal_Sorumluluk_Projesi.Models
     public partial class Model1 : DbContext
     {
         public Model1()
-            : base("name=Model11")
+            : base("name=Model12")
         {
         }
 
@@ -55,6 +55,10 @@ namespace Sosyal_Sorumluluk_Projesi.Models
 
             modelBuilder.Entity<urunler>()
                 .Property(e => e.resim)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<urunler>()
+                .Property(e => e.urun_icerik)
                 .IsUnicode(false);
 
             modelBuilder.Entity<yetki>()

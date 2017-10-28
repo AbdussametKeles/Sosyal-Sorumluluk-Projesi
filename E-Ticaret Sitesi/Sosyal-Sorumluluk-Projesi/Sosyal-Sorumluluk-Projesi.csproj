@@ -258,6 +258,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdminProjeController.cs" />
+    <Compile Include="Controllers\AdminUrunController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UyeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -328,6 +329,8 @@
     <Content Include="Views\Uye\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutUyeKayit.cshtml" />
     <Content Include="Views\AdminProje\Index.cshtml" />
+    <Content Include="Views\Home\KategoriPartial.cshtml" />
+    <Content Include="Views\AdminUrun\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

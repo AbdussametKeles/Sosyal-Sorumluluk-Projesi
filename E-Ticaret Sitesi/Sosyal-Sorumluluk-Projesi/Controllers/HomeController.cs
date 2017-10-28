@@ -25,7 +25,11 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         {
             return View();
         }
-     
+        
+        public ActionResult KategoriPartial()
+        {
+            return View(db.kategorilers.ToList()); 
+        }
 
       
 
