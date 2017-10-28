@@ -15,7 +15,7 @@ class KullaniciController extends Controller
     //kullanıcı kayıt işlemleri fonksiyonu
     public function kayit(Request $request)
     {
-      //Validation
+      //Dooğrulama İşlemleri
       $this->validate($request, [
         'adi_soyadi' => 'required',
         'dogum_tarihi' => 'required|date_format:Y/m/d',
@@ -26,7 +26,7 @@ class KullaniciController extends Controller
         'resim' => 'image',
       ]);
 
-      //Image Upload
+      //Resim Upload İşlemleri
       if($request->file('resim'))
       {
         $image_manager = new ImageManager();
@@ -37,7 +37,7 @@ class KullaniciController extends Controller
         $resim = $filename;
       }
 
-      //Database Insert
+      //Veritabanına Kayıt İşlemi
       $kullanici_id = DB::table('kullanici')->insertGetId([
         'adi_soyadi' => $request->input('adi_soyadi'),
         'dogum_tarihi' => $request->input('dogum_tarihi'),
@@ -48,14 +48,14 @@ class KullaniciController extends Controller
         'resim' => (isset($resim)) ? $resim : Null,
       ]);
 
-      //Generate Session
+      //Oturum İçin Token İşlemi
       $token = uniqid();
       DB::table('oturum')->insert([
         'kullanici_id' => $kullanici_id,
         'token_string' => $token,
       ]);
 
-      //Result
+      //Sonuç İşlemleri
       return response()->json([
         'status' => 200,
         'message' => 'Kayıt başarılı!',
@@ -73,8 +73,42 @@ class KullaniciController extends Controller
     }
 
     //kullanıcı giriş işlemleri fonksiyonu
-    public function giris()
+    public function giris(Request $request)
     {
+      //Doğrulama İşlemi
+      $this->validate($request ,[
+        'mail' => 'required|email',
+        'sifre' => 'required',
+      ]);
+
+      //Veritabanı Sorgulama İşlemi
+      $user = DB::table('kullanici')->where([
+        ['mail', '=', $request->input('mail')],
+        ['sifre', '=', $request->input('sifre')],
+      ])->first();
+
+      //Giriş Doğrulanamıyorsa Aşağıdaki Sorgu Döndürülecek.
+      if(empty($user)){
+        return response()->json([
+          'status' => 401,
+          'message' => 'Giriş Başarısız. Lütfen tekrar deneyiniz.'
+        ]);
+      }
+
+      //Oturum İçin Token İşlemi
+      $token = uniqid();
+      DB::table('oturum')->insert([
+        'kullanici_id' => $user->kullanici_id,
+        'token_string' => $token,
+      ]);
+
+      //Sonuç İşlemleri
+      return response()->json([
+        'status' => 200,
+        'message' => 'Giriş Başarılı',
+        'token' => $token,
+        'kullanıcı' => $user,
+      ]);
     }
 
     //kullanıcı profil güncelleme fonksiyonu
