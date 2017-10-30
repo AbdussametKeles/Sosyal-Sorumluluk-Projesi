@@ -122,7 +122,6 @@ public class KayitActivity extends AppCompatActivity {
                 if(!adSoyad.isEmpty() && !mail.isEmpty() && !dogumTarihi.isEmpty() && !memleket.isEmpty() && !sifre.isEmpty() && !telefon.isEmpty() &&
                         isValidEmail(mail) && sifre.length()>7 && sifre.length() <13){
                     kullaniciKayit(adSoyad,sifre,mail,telefon,dogumTarihi);
-                    sharedPreferenceKaydet(mail,sifre);
                 }
                 else {
                     Toast.makeText(getApplicationContext(),"Lütfen düzgün biçimde doldurun",Toast.LENGTH_LONG).show();
@@ -149,9 +148,12 @@ public class KayitActivity extends AppCompatActivity {
                         pDialog.dismiss();
 
                         try {
+                            //otomatik giriş yapmasını istemiyorsanız bu alanı kaldırın.
+                            sharedPreferenceKaydet(mail,sifre);
 
                             JSONObject object = new JSONObject(response);
                             Toast.makeText(getApplicationContext(),"Kaydınız başarıyla gerçekleştirildi",Toast.LENGTH_LONG).show();
+
                             //kullanıcıyı giriş için login sayfasına yönlendiriyoruz.
                             Intent intent = new Intent(KayitActivity.this,LoginActivity.class);
                             startActivity(intent);
@@ -189,6 +191,14 @@ public class KayitActivity extends AppCompatActivity {
     }
 
 
+    public final static boolean isValidEmail(CharSequence mail) {
+        //textboxın mail şeklinde olup olmadığını kontrol ediyor
+        if (mail == null) {
+            return false;
+        } else {
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(mail).matches();
+        }
+    }
     private void sharedPreferenceKaydet(String mail, String sifre) {
         //SharedPreferences uygulamayı kapatıp açtığımızda dahi uygulamada oturumun devam etmesini sağlıyor
         //Bu methodda ona veri değişkenleri atıyoruz.
@@ -198,14 +208,6 @@ public class KayitActivity extends AppCompatActivity {
         editor.putString("userPassword",sifre);
         editor.putString("userMail",mail);
         editor.commit();
-    }
-    public final static boolean isValidEmail(CharSequence mail) {
-        //textboxın mail şeklinde olup olmadığını kontrol ediyor
-        if (mail == null) {
-            return false;
-        } else {
-            return android.util.Patterns.EMAIL_ADDRESS.matcher(mail).matches();
-        }
     }
 
 

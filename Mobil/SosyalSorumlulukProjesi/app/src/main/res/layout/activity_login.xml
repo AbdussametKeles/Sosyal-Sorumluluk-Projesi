@@ -21,11 +21,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Kullanıcı Adı : "/>
+                    android:text="E-posta : "/>
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/txtKullaniciAdi"
+                    android:id="@+id/txtMail"
                     />
             </LinearLayout>
             <LinearLayout
