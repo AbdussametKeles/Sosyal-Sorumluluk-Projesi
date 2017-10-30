@@ -2,22 +2,21 @@
 
 @{
     ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    Layout = "~/Views/Shared/_LayoutUyeKayit.cshtml";
 }
 
-<h2>Create</h2>
+<h2>Yeni Üye Kaydı</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create","Uye",FormMethod.Post,new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     
-    <div class="form-horizontal col-md-8">
-        <h4>kullanicilar</h4>
+    <div class="form-horizontal">
+        
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-       
+    
 
-      
 
         <div class="form-group">
             @Html.LabelFor(model => model.ad_soyad, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -27,21 +26,25 @@
             </div>
         </div>
 
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.mail, htmlAttributes: new { @class = "control-label col-md-2" ,@type="mail"})
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.mail, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.mail, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
         <div class="form-group">
             @Html.LabelFor(model => model.sifre, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.sifre, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+                @Html.EditorFor(model => model.sifre, new { htmlAttributes = new { @class = "form-control" ,@type="password"} })
                 @Html.ValidationMessageFor(model => model.sifre, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.mail, htmlAttributes: new { @class = "control-label col-md-2", @type = "mail" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.mail, new { htmlAttributes = new { @class = "form-control"} })
-                @Html.ValidationMessageFor(model => model.mail, "", new { @class = "text-danger" })
-            </div>
-        </div>
+      
 
         <div class="form-group">
             @Html.LabelFor(model => model.telefon, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -54,7 +57,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.resim, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                 <input type="file" name="resim" id="resim" value="" accept=".jpg,.png,.gif,.JPEG,.jpeg" class="form-control"/>
+                <input type="file" name="resim" id="resim" value="" accept=".jpg,.png,.gif,.JPEG,.jpeg" class="form-control" />
                 @Html.ValidationMessageFor(model => model.resim, "", new { @class = "text-danger" })
             </div>
         </div>
