@@ -8,12 +8,14 @@ namespace Sosyal_Sorumluluk_Projesi.Models
     public partial class Model1 : DbContext
     {
         public Model1()
-            : base("name=Model12")
+            : base("name=Model17")
         {
         }
 
+        public virtual DbSet<etiket> etikets { get; set; }
         public virtual DbSet<kategoriler> kategorilers { get; set; }
         public virtual DbSet<kullanicilar> kullanicilars { get; set; }
+        public virtual DbSet<memleket> memlekets { get; set; }
         public virtual DbSet<proje> projes { get; set; }
         public virtual DbSet<urunler> urunlers { get; set; }
         public virtual DbSet<yetki> yetkis { get; set; }
@@ -21,6 +23,15 @@ namespace Sosyal_Sorumluluk_Projesi.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<etiket>()
+                .Property(e => e.etiket_adi)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<etiket>()
+                .HasMany(e => e.urunlers)
+                .WithMany(e => e.etikets)
+                .Map(m => m.ToTable("urunetiket").MapLeftKey("etiket_id").MapRightKey("urun_id"));
+
             modelBuilder.Entity<kategoriler>()
                 .Property(e => e.kategori_adi)
                 .IsUnicode(false);
@@ -43,6 +54,10 @@ namespace Sosyal_Sorumluluk_Projesi.Models
 
             modelBuilder.Entity<kullanicilar>()
                 .Property(e => e.resim)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<memleket>()
+                .Property(e => e.memleket_adi)
                 .IsUnicode(false);
 
             modelBuilder.Entity<proje>()

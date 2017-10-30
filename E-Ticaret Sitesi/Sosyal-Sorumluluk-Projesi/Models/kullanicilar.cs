@@ -13,6 +13,7 @@ namespace Sosyal_Sorumluluk_Projesi.Models
         public kullanicilar()
         {
             projes = new HashSet<proje>();
+            urunlers = new HashSet<urunler>();
             yorums = new HashSet<yorum>();
         }
 
@@ -40,6 +41,9 @@ namespace Sosyal_Sorumluluk_Projesi.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<proje> projes { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<urunler> urunlers { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<yorum> yorums { get; set; }

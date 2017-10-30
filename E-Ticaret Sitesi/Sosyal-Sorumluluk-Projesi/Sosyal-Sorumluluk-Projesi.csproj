@@ -264,8 +264,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\etiket.cs" />
     <Compile Include="Models\kategoriler.cs" />
     <Compile Include="Models\kullanicilar.cs" />
+    <Compile Include="Models\memleket.cs" />
     <Compile Include="Models\Model1.cs" />
     <Compile Include="Models\proje.cs" />
     <Compile Include="Models\urunler.cs" />
@@ -331,6 +333,7 @@
     <Content Include="Views\AdminProje\Index.cshtml" />
     <Content Include="Views\Home\KategoriPartial.cshtml" />
     <Content Include="Views\AdminUrun\Index.cshtml" />
+    <Content Include="Views\AdminUrun\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -341,6 +344,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Uploads\resimler\" />
+    <Folder Include="Uploads\urunler\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

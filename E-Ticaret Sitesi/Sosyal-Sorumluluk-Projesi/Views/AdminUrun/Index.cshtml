@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Ürünler</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Ürün Ekle", "Create")
 </p>
 <table class="table">
     <tr>
@@ -17,11 +17,35 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.urun_adi)
+        </th> 
+
+        <th>
+            @Html.DisplayNameFor(model => model.urun_icerik)
         </th>
+
         <th>
             @Html.DisplayNameFor(model => model.resim)
         </th>
-        <th></th>
+      
+        <th>
+
+            @Html.DisplayNameFor(model => model.tarih)
+
+        </th> 
+
+        <th>
+
+            @Html.DisplayNameFor(model => model.kullanici_id)
+
+        </th> 
+
+        <th>
+
+            @Html.DisplayNameFor(model => model.memleket_id)
+
+        </th>
+
+
     </tr>
 
 @foreach (var item in Model) {
@@ -31,16 +55,37 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.urun_adi)
-        </td>
+        </td> 
+
         <td>
-            @Html.DisplayFor(modelItem => item.resim)
+            @Html.DisplayFor(modelItem => item.urun_icerik)
         </td>
+
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.urun_id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.urun_id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.urun_id })
+            <img width="75" src="@item.resim" />
+        </td>
+       
+
+        <td>
+            @Html.DisplayFor(modelItem => item.tarih)
+        </td> 
+
+
+        <td>
+            @Html.DisplayFor(modelItem => item.kullanici_id)
+        </td> 
+
+        <td>
+            @Html.DisplayFor(modelItem => item.memleket_id)
+        </td>
+
+
+        <td>
+            @Html.ActionLink("Düzenle", "Edit", new { id=item.urun_id }) |
+            @Html.ActionLink("Detaylar", "Details", new { id=item.urun_id }) |
+            @Html.ActionLink("Sil", "Delete", new { id=item.urun_id })
         </td>
     </tr>
 }
-
+      
 </table>

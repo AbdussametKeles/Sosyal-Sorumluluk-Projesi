@@ -12,8 +12,7 @@ namespace Sosyal_Sorumluluk_Projesi.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public memleket()
         {
-            kullanicilars = new HashSet<kullanicilar>();
-            projes = new HashSet<proje>();
+            urunlers = new HashSet<urunler>();
         }
 
         [Key]
@@ -23,9 +22,6 @@ namespace Sosyal_Sorumluluk_Projesi.Models
         public string memleket_adi { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<kullanicilar> kullanicilars { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<proje> projes { get; set; }
+        public virtual ICollection<urunler> urunlers { get; set; }
     }
 }
