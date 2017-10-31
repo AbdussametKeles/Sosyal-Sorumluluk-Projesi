@@ -334,6 +334,7 @@
     <Content Include="Views\Home\KategoriPartial.cshtml" />
     <Content Include="Views\AdminUrun\Index.cshtml" />
     <Content Include="Views\AdminUrun\Create.cshtml" />
+    <Content Include="Views\AdminUrun\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

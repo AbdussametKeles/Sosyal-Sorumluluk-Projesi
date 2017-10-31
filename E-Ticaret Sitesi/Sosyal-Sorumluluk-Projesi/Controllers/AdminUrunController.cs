@@ -89,19 +89,58 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         // GET: AdminUrun/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+
+            var urun = db.urunlers.Where(u => u.urun_id == id).SingleOrDefault();
+
+            if (urun == null)
+            {
+
+                return HttpNotFound();
+            }
+
+            ViewBag.kategori_id = new SelectList(db.kategorilers, "kategori_id", "kategori_adi", urun.kategori_id);
+
+
+
+            return View(urun);
         }
 
         // POST: AdminUrun/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(int id, urunler urun,HttpPostedFileBase resim)
         {
             try
             {
-                // TODO: Add update logic here
+                var urun1 = db.urunlers.Where(u => u.urun_id == id).SingleOrDefault();
 
+                    if (resim!=null)
+                   {
+                    if (System.IO.File.Exists(Server.MapPath(urun1.resim)))
+                    {
+                        System.IO.File.Delete(Server.MapPath(urun1.resim)); 
+                    }
+
+                    WebImage img = new WebImage(resim.InputStream);
+
+                    FileInfo resiminfo = new FileInfo(resim.FileName);
+
+                    string newfoto = Guid.NewGuid().ToString() + resiminfo.Extension;
+                    img.Resize(800, 350);
+                    img.Save("~/Uploads/urunler/" + newfoto);
+                    urun1.resim = "/Uploads/urunler/" + newfoto;
+                    urun1.urun_adi = urun.urun_adi;
+                    urun1.urun_icerik = urun.urun_icerik;
+                    urun1.kategori_id = urun.kategori_id;
+                    db.SaveChanges();
+
+
+                }
                 return RedirectToAction("Index");
             }
+
+           
+
+
             catch
             {
                 return View();
