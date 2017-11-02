@@ -15,8 +15,12 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         // GET: Uye
         public ActionResult Index()
         {
-            return View();
-        }
+
+            var uye = db.kullanicilars.ToList();
+         
+
+            return View(uye); 
+        } 
          
 
         public ActionResult Login()
@@ -38,6 +42,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
             }
             else
             {
+                ViewBag.Uyari = "Kullanıcı Login Bilgilerinizi Kontrol Ediniz";
                 return View();
             }
 

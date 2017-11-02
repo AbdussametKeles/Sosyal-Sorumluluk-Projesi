@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Sosyal_Sorumluluk_Projesi.Models.urunler>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.kategoriler.kategori_adi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.kullanicilar.ad_soyad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.memleket.memleket_adi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.urun_adi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.resim)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.urun_icerik)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tarih)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.kategoriler.kategori_adi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.kullanicilar.ad_soyad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.memleket.memleket_adi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.urun_adi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.resim)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.urun_icerik)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tarih)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.urun_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.urun_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.urun_id })
+        </td>
+    </tr>
+}
+     
+
+    @ViewData["urun_id"]="ürünler";
+    @ViewData["kategori_id"] = "kategoriler";
+    @ViewData["urun_adi"] = "ürün isimleri";
+    @ViewData["resim"] = "resimler";
+    @ViewData["urun_icerik"] = "içerikler";
+    @ViewData["tarih"] = "tarihler";
+    @ViewData["memleket_id"] = "memleketler";
+    @ViewData["kullanici_id"] = "kullanıcılar";
+
+
+</table>

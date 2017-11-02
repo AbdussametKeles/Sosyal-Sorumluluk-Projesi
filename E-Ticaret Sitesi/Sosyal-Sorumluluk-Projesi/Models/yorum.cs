@@ -23,9 +23,13 @@ namespace Sosyal_Sorumluluk_Projesi.Models
 
         public int? kullanici_id { get; set; }
 
+        public int? urun_id { get; set; }
+
         public virtual kullanicilar kullanicilar { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<proje> projes { get; set; }
+
+        public virtual urunler urunler { get; set; }
     }
 }

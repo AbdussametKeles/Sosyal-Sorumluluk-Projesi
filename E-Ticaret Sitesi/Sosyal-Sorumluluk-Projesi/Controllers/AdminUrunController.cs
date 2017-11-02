@@ -8,12 +8,12 @@ using System.Web.Helpers;
 using System.IO;
 
 namespace Sosyal_Sorumluluk_Projesi.Controllers
-{ 
+{
     public class AdminUrunController : Controller
     {
         Model1 db = new Model1();
 
-      
+
         // GET: AdminUrun
         public ActionResult Index()
         {
@@ -107,17 +107,17 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
 
         // POST: AdminUrun/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, urunler urun,HttpPostedFileBase resim)
+        public ActionResult Edit(int id, urunler urun, HttpPostedFileBase resim)
         {
             try
             {
                 var urun1 = db.urunlers.Where(u => u.urun_id == id).SingleOrDefault();
 
-                    if (resim!=null)
-                   {
+                if (resim != null)
+                {
                     if (System.IO.File.Exists(Server.MapPath(urun1.resim)))
                     {
-                        System.IO.File.Delete(Server.MapPath(urun1.resim)); 
+                        System.IO.File.Delete(Server.MapPath(urun1.resim));
                     }
 
                     WebImage img = new WebImage(resim.InputStream);
@@ -132,41 +132,110 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                     urun1.urun_icerik = urun.urun_icerik;
                     urun1.kategori_id = urun.kategori_id;
                     db.SaveChanges();
-
+                    return RedirectToAction("Index");
 
                 }
-                return RedirectToAction("Index");
+                return View();
             }
 
-           
+
 
 
             catch
             {
-                return View();
+                ViewBag.kategori_id = new SelectList(db.kategorilers, "kategori_id", "kategori_adi", urun.kategori_id);
+                return View(urun);
             }
         }
 
         // GET: AdminUrun/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+
+
+            ViewData["urun_id"] = "ürünler";
+            ViewData["kategori_id"] = "kategoriler";
+            ViewData["urun_adi"] = "ürün isimleri";
+            ViewData["resim"] = "resimler";
+            ViewData["urun_icerik"] = "içerikler";
+            ViewData["tarih"] = "tarihler";
+            ViewData["memleket_id"] = "memleketler";
+            ViewData["kullanici_id"] = "kullanıcılar";
+
+
+
+
+
+
+
+
+
+            return RedirectToAction("/AdminUrun/AdminArsivSil/Index");
+
         }
 
-        // POST: AdminUrun/Delete/5
+        
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            //try
+            //{
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            //    var urun1 = db.urunlers.Where(u => u.urun_id == id).SingleOrDefault();
+
+            //    if (urun1 == null)
+            //    {
+            //        return HttpNotFound();
+            //    }
+
+            //    if (System.IO.File.Exists(Server.MapPath(urun1.resim)))
+            //    {
+            //        System.IO.File.Delete(Server.MapPath(urun1.resim));
+            //    }
+
+            //    foreach (var i in urun1.yorums.ToList())
+            //    {
+            //        db.yorums.Remove(i);
+            //    }
+
+            //    foreach (var i in urun1.etikets.ToList())
+            //    {
+            //        db.etikets.Remove(i);
+            //    }
+
+            //    db.urunlers.Remove(urun1);
+            //    db.SaveChanges();
+
+            //    return RedirectToAction("Index");
+            //}
+            //catch
+            //{
+            //    return View();
+            //}  
+
+
+
+
+
+            ViewData["urun_id"] = "ürünler";
+            ViewData["kategori_id"] = "kategoriler";
+            ViewData["urun_adi"] = "ürün isimleri";
+            ViewData["resim"] = "resimler";
+            ViewData["urun_icerik"] = "içerikler";
+            ViewData["tarih"] = "tarihler";
+            ViewData["memleket_id"] = "memleketler";
+            ViewData["kullanici_id"] = "kullanıcılar";
+
+
+
+
+
+
+
+
+
+            return RedirectToAction("/AdminUrun/AdminArsivSil/Index");
         }
     }
 }
+

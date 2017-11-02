@@ -1,8 +1,62 @@
-﻿
+﻿@model IEnumerable<Sosyal_Sorumluluk_Projesi.Models.kullanicilar>
+
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_LayoutUye.cshtml";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Üyeler</h2>
 
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.yetki.yetki_adi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ad_soyad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.sifre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.mail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.telefon)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.resim)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.yetki.yetki_adi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ad_soyad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.sifre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.telefon)
+        </td>
+        <td>
+            <img  width="75"  src="@item.resim" alt="Alternate Text" />
+        </td>
+        <td>
+            @Html.ActionLink("Düzenle", "Edit", new { id=item.kullanici_id }) |
+            @Html.ActionLink("Detay", "Details", new { id=item.kullanici_id }) |
+            @Html.ActionLink("Sil", "Delete", new { id=item.kullanici_id })
+        </td>
+    </tr>
+}
+
+</table>

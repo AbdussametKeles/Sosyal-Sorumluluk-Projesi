@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
 }
 
-<h2>Proje İşlemleri</h2>
+<h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Proje Ekle", "Create")
+    @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
@@ -24,7 +24,12 @@
         <th>
             @Html.DisplayNameFor(model => model.yorum.icerik)
         </th>
-      
+        <th>
+            @Html.DisplayNameFor(model => model.tarih)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.resim)
+        </th>
         <th></th>
     </tr>
 
@@ -42,11 +47,15 @@
         <td>
             @Html.DisplayFor(modelItem => item.yorum.icerik)
         </td>
-       
-       
+        <td>
+            @Html.DisplayFor(modelItem => item.tarih)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.resim)
+        </td>
         <td>
             @Html.ActionLink("Düzenle", "Edit", new { id=item.proje_id }) |
-            @Html.ActionLink("Detaylar", "Details", new { id=item.proje_id }) |
+            @Html.ActionLink("Detay", "Details", new { id=item.proje_id }) |
             @Html.ActionLink("Sil", "Delete", new { id=item.proje_id })
         </td>
     </tr>

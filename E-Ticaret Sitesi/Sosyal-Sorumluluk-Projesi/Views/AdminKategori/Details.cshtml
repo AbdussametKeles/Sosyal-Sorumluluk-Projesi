@@ -1,0 +1,27 @@
+﻿@model Sosyal_Sorumluluk_Projesi.Models.kategoriler
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+<h2>Kategori Detayı</h2>
+
+<div>
+    <h4>kategoriler</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.kategori_adi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.kategori_adi)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Düzenle", "Edit", new { id = Model.kategori_id }) |
+    @Html.ActionLink("Geri Dön", "Index")
+</p>

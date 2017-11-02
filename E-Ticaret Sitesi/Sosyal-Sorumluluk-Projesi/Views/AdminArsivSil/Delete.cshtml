@@ -1,0 +1,81 @@
+﻿@model Sosyal_Sorumluluk_Projesi.Models.urunler
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>urunler</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.kategoriler.kategori_adi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.kategoriler.kategori_adi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.kullanicilar.ad_soyad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.kullanicilar.ad_soyad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.memleket.memleket_adi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.memleket.memleket_adi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.urun_adi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.urun_adi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.resim)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.resim)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.urun_icerik)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.urun_icerik)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tarih)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tarih)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
