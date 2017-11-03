@@ -256,7 +256,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\AdminArsivSilController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdminKategoriController.cs" />
     <Compile Include="Controllers\AdminProjeController.cs" />
@@ -266,7 +265,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\arsiv.cs" />
     <Compile Include="Models\etiket.cs" />
     <Compile Include="Models\kategoriler.cs" />
     <Compile Include="Models\kullanicilar.cs" />
@@ -348,11 +346,6 @@
     <Content Include="Views\AdminProje\Details.cshtml" />
     <Content Include="Views\AdminProje\Edit.cshtml" />
     <Content Include="Views\AdminProje\Index.cshtml" />
-    <Content Include="Views\AdminArsivSil\Create.cshtml" />
-    <Content Include="Views\AdminArsivSil\Delete.cshtml" />
-    <Content Include="Views\AdminArsivSil\Details.cshtml" />
-    <Content Include="Views\AdminArsivSil\Edit.cshtml" />
-    <Content Include="Views\AdminArsivSil\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

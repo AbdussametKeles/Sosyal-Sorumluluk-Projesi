@@ -153,88 +153,59 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         {
 
 
-            ViewData["urun_id"] = "ürünler";
-            ViewData["kategori_id"] = "kategoriler";
-            ViewData["urun_adi"] = "ürün isimleri";
-            ViewData["resim"] = "resimler";
-            ViewData["urun_icerik"] = "içerikler";
-            ViewData["tarih"] = "tarihler";
-            ViewData["memleket_id"] = "memleketler";
-            ViewData["kullanici_id"] = "kullanıcılar";
+            var urun = db.urunlers.Where(u => u.urun_id == id).SingleOrDefault();
+
+            if (urun==null)
+            {
+                return HttpNotFound();
+            }
 
 
 
 
-
-
-
-
-
-            return RedirectToAction("/AdminUrun/AdminArsivSil/Index");
-
+            return View(urun);
         }
 
-        
+        // POST: AdminUrun/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
-            //try
-            //{
+            try
+            {
 
-            //    var urun1 = db.urunlers.Where(u => u.urun_id == id).SingleOrDefault();
+                var urun1 = db.urunlers.Where(u => u.urun_id == id).SingleOrDefault();
 
-            //    if (urun1 == null)
-            //    {
-            //        return HttpNotFound();
-            //    }
+                if (urun1 == null)
+                {
+                    return HttpNotFound();
+                }
 
-            //    if (System.IO.File.Exists(Server.MapPath(urun1.resim)))
-            //    {
-            //        System.IO.File.Delete(Server.MapPath(urun1.resim));
-            //    }
+                if (System.IO.File.Exists(Server.MapPath(urun1.resim)))
+                {
+                    System.IO.File.Delete(Server.MapPath(urun1.resim));
+                }
 
-            //    foreach (var i in urun1.yorums.ToList())
-            //    {
-            //        db.yorums.Remove(i);
-            //    }
+                foreach (var i in urun1.yorums.ToList())
+                {
+                    db.yorums.Remove(i);
+                }
 
-            //    foreach (var i in urun1.etikets.ToList())
-            //    {
-            //        db.etikets.Remove(i);
-            //    }
+                foreach (var i in urun1.etikets.ToList())
+                {
+                    db.etikets.Remove(i);
+                }
 
-            //    db.urunlers.Remove(urun1);
-            //    db.SaveChanges();
+                db.urunlers.Remove(urun1);
+                db.SaveChanges();
 
-            //    return RedirectToAction("Index");
-            //}
-            //catch
-            //{
-            //    return View();
-            //}  
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
 
-
-
-
-
-            ViewData["urun_id"] = "ürünler";
-            ViewData["kategori_id"] = "kategoriler";
-            ViewData["urun_adi"] = "ürün isimleri";
-            ViewData["resim"] = "resimler";
-            ViewData["urun_icerik"] = "içerikler";
-            ViewData["tarih"] = "tarihler";
-            ViewData["memleket_id"] = "memleketler";
-            ViewData["kullanici_id"] = "kullanıcılar";
-
-
-
-
-
-
-
-
-
-            return RedirectToAction("/AdminUrun/AdminArsivSil/Index");
+             
         }
     }
 }
