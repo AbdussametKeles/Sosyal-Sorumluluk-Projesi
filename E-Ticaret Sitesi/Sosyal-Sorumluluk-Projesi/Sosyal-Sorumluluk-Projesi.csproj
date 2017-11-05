@@ -258,7 +258,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdminKategoriController.cs" />
-    <Compile Include="Controllers\AdminProjeController.cs" />
     <Compile Include="Controllers\AdminUrunController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UyeController.cs" />
@@ -341,11 +340,6 @@
     <Content Include="Views\AdminKategori\Details.cshtml" />
     <Content Include="Views\AdminKategori\Edit.cshtml" />
     <Content Include="Views\AdminKategori\Index.cshtml" />
-    <Content Include="Views\AdminProje\Create.cshtml" />
-    <Content Include="Views\AdminProje\Delete.cshtml" />
-    <Content Include="Views\AdminProje\Details.cshtml" />
-    <Content Include="Views\AdminProje\Edit.cshtml" />
-    <Content Include="Views\AdminProje\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
