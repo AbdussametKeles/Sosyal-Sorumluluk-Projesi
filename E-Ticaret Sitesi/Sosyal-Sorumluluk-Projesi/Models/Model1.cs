@@ -8,7 +8,7 @@ namespace Sosyal_Sorumluluk_Projesi.Models
     public partial class Model1 : DbContext
     {
         public Model1()
-            : base("name=Model20")
+            : base("name=Model21")
         {
         }
 
@@ -37,7 +37,7 @@ namespace Sosyal_Sorumluluk_Projesi.Models
                 .IsUnicode(false);
 
             modelBuilder.Entity<kullanicilar>()
-                .Property(e => e.ad_soyad)
+                .Property(e => e.adSoyad)
                 .IsUnicode(false);
 
             modelBuilder.Entity<kullanicilar>()

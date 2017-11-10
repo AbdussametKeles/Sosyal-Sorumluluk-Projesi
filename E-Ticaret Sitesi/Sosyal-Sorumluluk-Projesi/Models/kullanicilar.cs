@@ -23,7 +23,7 @@ namespace Sosyal_Sorumluluk_Projesi.Models
         public int? yetki_id { get; set; }
 
         [StringLength(25)]
-        public string ad_soyad { get; set; }
+        public string adSoyad { get; set; }
 
         [StringLength(20)]
         public string sifre { get; set; }

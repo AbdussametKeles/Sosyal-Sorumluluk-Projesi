@@ -103,7 +103,10 @@
                                 @if (Session["kullaniciid"] != null)
                                 {
 
-
+                                   
+                                    <li>
+                                        <a href="/Uye/Index/@Session["kullaniciid"]"></a> 
+                                    </li>
 
                                     <li>
                                         <a href="/Uye/Logout/">Çıkış</a>
@@ -111,7 +114,7 @@
                                     </li>
 
                                     if (Convert.ToInt32(Session["yetkiid"]) == 1)
-                                    {
+                                    {  
                                         <li>
                                             <a href="/Admin/Index">Admin Paneli</a>
                                         </li>

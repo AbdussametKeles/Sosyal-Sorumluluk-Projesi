@@ -15,11 +15,10 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         // GET: Uye
         public ActionResult Index()
         {
-
-            var uye = db.kullanicilars.ToList();
+            var uyeler = db.kullanicilars.ToList();
          
 
-            return View(uye); 
+            return View(uyeler); 
         } 
          
 
@@ -79,7 +78,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                     db.kullanicilars.Add(uye);
                     db.SaveChanges();
                     Session["kullaniciid"] = uye.kullanici_id;
-                    Session["kullaniciadi"] = uye.ad_soyad;
+                    Session["kullaniciadi"] = uye.adSoyad;
                     return RedirectToAction("Index", "Home");
                     
                 }
