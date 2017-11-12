@@ -12,18 +12,14 @@ namespace Sosyal_Sorumluluk_Projesi.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public kategoriler()
         {
-            projes = new HashSet<proje>();
             urunlers = new HashSet<urunler>();
         }
 
         [Key]
-        public int kategori_id { get; set; }
+        public int kategoriID { get; set; }
 
-        [StringLength(20)]
-        public string kategori_adi { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<proje> projes { get; set; }
+        [StringLength(25)]
+        public string kategoriAdi { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<urunler> urunlers { get; set; }

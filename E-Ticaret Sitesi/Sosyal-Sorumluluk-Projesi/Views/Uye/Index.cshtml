@@ -11,10 +11,15 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.yetki.yetki_adi)
+            @Html.DisplayNameFor(model => model.yetki.yetkiAdi)
         </th>
+
         <th>
-            @Html.DisplayNameFor(model => model.adSoyad)
+            @Html.DisplayNameFor(model => model.kullaniciAdi)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.adsoyad)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.sifre)
@@ -34,10 +39,15 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.yetki.yetki_adi)
+            @Html.DisplayFor(modelItem => item.yetki.yetkiAdi)
         </td>
+
         <td>
-            @Html.DisplayFor(modelItem => item.adSoyad)
+            @Html.DisplayFor(modelItem => item.kullaniciAdi)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.adsoyad)
         </td> 
         <td>
             @Html.DisplayFor(modelItem => item.sifre)
@@ -52,9 +62,9 @@
             <img  width="75"  src="@item.resim" alt="Alternate Text" />
         </td>
         <td>
-            @Html.ActionLink("Düzenle", "Edit", new { id=item.kullanici_id }) |
-            @Html.ActionLink("Detay", "Details", new { id=item.kullanici_id }) |
-            @Html.ActionLink("Sil", "Delete", new { id=item.kullanici_id })
+            @Html.ActionLink("Düzenle", "Edit", new { id=item.kullaniciID }) |
+            @Html.ActionLink("Detay", "Details", new { id=item.kullaniciID }) |
+            @Html.ActionLink("Sil", "Delete", new { id=item.kullaniciID })
         </td>
     </tr>
 }

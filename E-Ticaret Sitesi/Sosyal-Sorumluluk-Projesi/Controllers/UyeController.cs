@@ -13,12 +13,12 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
     {
         Model1 db = new Model1();
         // GET: Uye
-        public ActionResult Index()
+        public ActionResult Index(int id)
         {
-            var uyeler = db.kullanicilars.ToList();
+          
          
 
-            return View(uyeler); 
+            return View(); 
         } 
          
 
@@ -32,9 +32,9 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
             var login = db.kullanicilars.Where(k => k.mail == uye.mail).SingleOrDefault();
             if(login.mail==uye.mail && login.sifre == uye.sifre)
             {
-                Session["kullaniciid"] = login.kullanici_id;
+                Session["kullaniciid"] = login.kullaniciID;
                 Session["mail"] = login.mail;
-                Session["yetkiid"] = login.yetki_id;
+                Session["yetkiid"] = login.yetkiID;
 
                 return RedirectToAction("Index", "Home");
                     
@@ -74,11 +74,11 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                     img.Resize(150, 150);
                     img.Save("~/Uploads/resimler/" + newfoto);
                     uye.resim = "/Uploads/resimler/" + newfoto;
-                    uye.yetki_id = 2;  
+                    uye.yetkiID = 2;  
                     db.kullanicilars.Add(uye);
                     db.SaveChanges();
-                    Session["kullaniciid"] = uye.kullanici_id;
-                    Session["kullaniciadi"] = uye.adSoyad;
+                    Session["kullaniciid"] = uye.kullaniciID;
+                    Session["kullaniciadi"] = uye.kullaniciAdi;
                     return RedirectToAction("Index", "Home");
                     
                 }

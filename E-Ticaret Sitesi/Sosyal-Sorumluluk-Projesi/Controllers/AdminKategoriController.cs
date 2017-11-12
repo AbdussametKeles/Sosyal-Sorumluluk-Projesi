@@ -46,7 +46,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "kategori_id,kategori_adi")] kategoriler kategoriler)
+        public ActionResult Create([Bind(Include = "kategoriID,kategoriAdi")] kategoriler kategoriler)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "kategori_id,kategori_adi")] kategoriler kategoriler)
+        public ActionResult Edit([Bind(Include = "kategoriID,kategoriAdi")] kategoriler kategoriler)
         {
             if (ModelState.IsValid)
             {

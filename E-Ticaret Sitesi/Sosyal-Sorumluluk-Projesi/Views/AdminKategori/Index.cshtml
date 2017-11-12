@@ -5,15 +5,15 @@
     Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
 }
 
-<h2>Kategoriler</h2>
+<h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Yeni Kategori", "Create")
+    @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.kategori_adi)
+            @Html.DisplayNameFor(model => model.kategoriAdi)
         </th>
         <th></th>
     </tr>
@@ -21,12 +21,12 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.kategori_adi)
+            @Html.DisplayFor(modelItem => item.kategoriAdi)
         </td>
         <td>
-            @Html.ActionLink("Düzenle", "Edit", new { id=item.kategori_id }) |
-            @Html.ActionLink("Detay", "Details", new { id=item.kategori_id }) |
-            @Html.ActionLink("Sil", "Delete", new { id=item.kategori_id })
+            @Html.ActionLink("Edit", "Edit", new { id=item.kategoriID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.kategoriID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.kategoriID })
         </td>
     </tr>
 }

@@ -64,7 +64,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                     String[] etiketdizi = etiketler.Split(',');
                     foreach (var i in etiketdizi)
                     {
-                        var yenietiket = new etiket { etiket_adi = i };
+                        var yenietiket = new etiket { etiketAdi = i };
 
 
                         db.etikets.Add(yenietiket);
@@ -90,7 +90,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         public ActionResult Edit(int id)
         {
 
-            var urun = db.urunlers.Where(u => u.urun_id == id).SingleOrDefault();
+            var urun = db.urunlers.Where(u => u.urunID == id).SingleOrDefault();
 
             if (urun == null)
             {
@@ -98,7 +98,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.kategori_id = new SelectList(db.kategorilers, "kategori_id", "kategori_adi", urun.kategori_id);
+            ViewBag.kategori_id = new SelectList(db.kategorilers, "kategori_id", "kategori_adi", urun.kategoriID);
 
 
 
@@ -111,7 +111,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         {
             try
             {
-                var urun1 = db.urunlers.Where(u => u.urun_id == id).SingleOrDefault();
+                var urun1 = db.urunlers.Where(u => u.urunID == id).SingleOrDefault();
 
                 if (resim != null)
                 {
@@ -128,9 +128,9 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                     img.Resize(800, 350);
                     img.Save("~/Uploads/urunler/" + newfoto);
                     urun1.resim = "/Uploads/urunler/" + newfoto;
-                    urun1.urun_adi = urun.urun_adi;
-                    urun1.urun_icerik = urun.urun_icerik;
-                    urun1.kategori_id = urun.kategori_id;
+                    urun1.urunAdi = urun.urunAdi;
+                    urun1.urunİcerik = urun.urunİcerik;
+                    urun1.kategoriID = urun.kategoriID;
                     db.SaveChanges();
                     return RedirectToAction("Index");
 
@@ -143,7 +143,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
 
             catch
             {
-                ViewBag.kategori_id = new SelectList(db.kategorilers, "kategori_id", "kategori_adi", urun.kategori_id);
+                ViewBag.kategori_id = new SelectList(db.kategorilers, "kategori_id", "kategori_adi", urun.kategoriID);
                 return View(urun);
             }
         }
@@ -153,7 +153,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         {
 
 
-            var urun = db.urunlers.Where(u => u.urun_id == id).SingleOrDefault();
+            var urun = db.urunlers.Where(u => u.urunID == id).SingleOrDefault();
 
             if (urun==null)
             {
@@ -173,7 +173,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
             try
             {
 
-                var urun1 = db.urunlers.Where(u => u.urun_id == id).SingleOrDefault();
+                var urun1 = db.urunlers.Where(u => u.urunID == id).SingleOrDefault();
 
                 if (urun1 == null)
                 {
@@ -188,7 +188,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                 foreach (var i in urun1.yorums.ToList())
                 {
                     db.yorums.Remove(i);
-                }
+                } 
 
                 foreach (var i in urun1.etikets.ToList())
                 {

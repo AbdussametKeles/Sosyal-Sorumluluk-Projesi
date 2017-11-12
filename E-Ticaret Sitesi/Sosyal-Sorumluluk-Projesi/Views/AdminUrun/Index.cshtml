@@ -13,14 +13,14 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.kategoriler.kategori_adi)
+            @Html.DisplayNameFor(model => model.kategoriler.kategoriAdi)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.urun_adi)
+            @Html.DisplayNameFor(model => model.urunAdi)
         </th> 
 
         <th>
-            @Html.DisplayNameFor(model => model.urun_icerik)
+            @Html.DisplayNameFor(model => model.urunİcerik)
         </th>
 
         <th>
@@ -35,13 +35,13 @@
 
         <th>
 
-            @Html.DisplayNameFor(model => model.kullanici_id)
+            @Html.DisplayNameFor(model => model.kullaniciID)
 
         </th> 
 
         <th>
 
-            @Html.DisplayNameFor(model => model.memleket_id)
+            @Html.DisplayNameFor(model => model.memleketID)
 
         </th>
 
@@ -51,14 +51,14 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.kategoriler.kategori_adi)
+            @Html.DisplayFor(modelItem => item.kategoriler.kategoriAdi)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.urun_adi)
+            @Html.DisplayFor(modelItem => item.urunAdi)
         </td> 
 
         <td>
-            @Html.DisplayFor(modelItem => item.urun_icerik)
+            @Html.DisplayFor(modelItem => item.urunİcerik)
         </td>
 
         <td>
@@ -72,18 +72,18 @@
 
 
         <td>
-            @Html.DisplayFor(modelItem => item.kullanici_id)
+            @Html.DisplayFor(modelItem => item.kullaniciID)
         </td> 
 
         <td>
-            @Html.DisplayFor(modelItem => item.memleket_id)
+            @Html.DisplayFor(modelItem => item.memleketID)
         </td>
 
 
         <td>
-            @Html.ActionLink("Düzenle", "Edit", new { id=item.urun_id }) |
-            @Html.ActionLink("Detaylar", "Details", new { id=item.urun_id }) |
-            @Html.ActionLink("Sil", "Delete", new { id=item.urun_id })
+            @Html.ActionLink("Düzenle", "Edit", new { id=item.urunID }) |
+            @Html.ActionLink("Detaylar", "Details", new { id=item.urunID }) |
+            @Html.ActionLink("Sil", "Delete", new { id=item.urunID })
         </td>
     </tr>
 }

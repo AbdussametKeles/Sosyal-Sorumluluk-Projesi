@@ -15,11 +15,10 @@ namespace Sosyal_Sorumluluk_Projesi.Models
             urunlers = new HashSet<urunler>();
         }
 
-        [Key]
-        public int etiket_id { get; set; }
+        public int etiketID { get; set; }
 
-        [StringLength(25)]
-        public string etiket_adi { get; set; }
+        [StringLength(50)]
+        public string etiketAdi { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<urunler> urunlers { get; set; }

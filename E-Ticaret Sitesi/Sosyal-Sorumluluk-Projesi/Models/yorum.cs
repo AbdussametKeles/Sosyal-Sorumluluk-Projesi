@@ -9,26 +9,19 @@ namespace Sosyal_Sorumluluk_Projesi.Models
     [Table("yorum")]
     public partial class yorum
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public yorum()
-        {
-            projes = new HashSet<proje>();
-        }
+        public int yorumID { get; set; }
 
-        [Key]
-        public int yorum_id { get; set; }
+        [StringLength(50)]
+        public string yorumIcerik { get; set; }
 
-        [StringLength(500)]
-        public string icerik { get; set; }
+        public int? kullaniciID { get; set; }
 
-        public int? kullanici_id { get; set; }
+        public int? urunID { get; set; }
 
-        public int? urun_id { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? tarih { get; set; }
 
         public virtual kullanicilar kullanicilar { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<proje> projes { get; set; }
 
         public virtual urunler urunler { get; set; }
     }

@@ -19,12 +19,30 @@
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.ad_soyad, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.adsoyad, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ad_soyad, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ad_soyad, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.adsoyad, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.adsoyad, "", new { @class = "text-danger" })
+            </div>
+        </div> 
+
+
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.kullaniciAdi, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.kullaniciAdi, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.kullaniciAdi, "", new { @class = "text-danger" })
             </div>
         </div>
+
+
+
+
+
+
+
 
 
         <div class="form-group">

@@ -269,7 +269,6 @@
     <Compile Include="Models\kullanicilar.cs" />
     <Compile Include="Models\memleket.cs" />
     <Compile Include="Models\Model1.cs" />
-    <Compile Include="Models\proje.cs" />
     <Compile Include="Models\urunler.cs" />
     <Compile Include="Models\yetki.cs" />
     <Compile Include="Models\yorum.cs" />

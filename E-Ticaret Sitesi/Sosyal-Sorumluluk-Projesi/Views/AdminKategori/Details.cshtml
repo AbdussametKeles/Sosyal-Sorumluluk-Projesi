@@ -5,23 +5,23 @@
     Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
 }
 
-<h2>Kategori Detayı</h2>
+<h2>Details</h2>
 
 <div>
     <h4>kategoriler</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.kategori_adi)
+            @Html.DisplayNameFor(model => model.kategoriAdi)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.kategori_adi)
+            @Html.DisplayFor(model => model.kategoriAdi)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Düzenle", "Edit", new { id = Model.kategori_id }) |
-    @Html.ActionLink("Geri Dön", "Index")
+    @Html.ActionLink("Edit", "Edit", new { id = Model.kategoriID }) |
+    @Html.ActionLink("Back to List", "Index")
 </p>

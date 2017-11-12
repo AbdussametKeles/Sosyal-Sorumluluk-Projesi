@@ -12,24 +12,28 @@ namespace Sosyal_Sorumluluk_Projesi.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public kullanicilar()
         {
-            projes = new HashSet<proje>();
             urunlers = new HashSet<urunler>();
             yorums = new HashSet<yorum>();
         }
 
         [Key]
-        public int kullanici_id { get; set; }
+        public int kullaniciID { get; set; }
 
-        public int? yetki_id { get; set; }
+        public int? yetkiID { get; set; }
+
+        public int? memleketID { get; set; }
+
+        [StringLength(30)]
+        public string adsoyad { get; set; }
+
+        [StringLength(20)]
+        public string kullaniciAdi { get; set; }
 
         [StringLength(25)]
-        public string adSoyad { get; set; }
+        public string mail { get; set; }
 
         [StringLength(20)]
         public string sifre { get; set; }
-
-        [StringLength(30)]
-        public string mail { get; set; }
 
         [StringLength(11)]
         public string telefon { get; set; }
@@ -37,10 +41,9 @@ namespace Sosyal_Sorumluluk_Projesi.Models
         [StringLength(500)]
         public string resim { get; set; }
 
-        public virtual yetki yetki { get; set; }
+        public virtual memleket memleket { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<proje> projes { get; set; }
+        public virtual yetki yetki { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<urunler> urunlers { get; set; }
