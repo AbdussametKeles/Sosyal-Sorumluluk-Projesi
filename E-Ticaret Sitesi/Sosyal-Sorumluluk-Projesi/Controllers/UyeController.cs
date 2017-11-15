@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Sosyal_Sorumluluk_Projesi.Models;
@@ -11,88 +14,242 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
 {
     public class UyeController : Controller
     {
-        Model1 db = new Model1();
+        private Model1 db = new Model1();
+
         // GET: Uye
         public ActionResult Index(int id)
         {
-          
-         
+            var uye = db.kullanicilars.Where(k => k.kullaniciID == id).SingleOrDefault();
+            if (Convert.ToInt32(Session["kullaniciID"]) != uye.kullaniciID)
+            {
+                return HttpNotFound();
+            }
 
-            return View(); 
-        } 
-         
+
+            return View(uye);
+        }
+
+        // GET: Uye/Details/5 
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            kullanicilar kullanicilar = db.kullanicilars.Find(id);
+            if (kullanicilar == null)
+            {
+                return HttpNotFound();
+            }
+            return View(kullanicilar);
+        }
 
         public ActionResult Login()
         {
             return View();
-        } 
+        }
         [HttpPost]
         public ActionResult Login(kullanicilar uye)
         {
             var login = db.kullanicilars.Where(k => k.mail == uye.mail).SingleOrDefault();
-            if(login.mail==uye.mail && login.sifre == uye.sifre)
+            if (login.mail == uye.mail && login.sifre == uye.sifre)
             {
-                Session["kullaniciid"] = login.kullaniciID;
+               
                 Session["mail"] = login.mail;
-                Session["yetkiid"] = login.yetkiID;
+                Session["sifre"] = login.sifre;
+                Session["kullaniciID"] = login.kullaniciID;
+                Session["yetkiID"] = login.yetkiID;
 
                 return RedirectToAction("Index", "Home");
-                    
+
             }
+
+
+             if (login.mail != uye.mail && login.sifre != uye.sifre)
+            {
+
+                ViewBag.Uyari = "Kullanıcı Login Bilgilerinizi Kontrol Ediniz";
+
+            }
+             
+
             else
             {
                 ViewBag.Uyari = "Kullanıcı Login Bilgilerinizi Kontrol Ediniz";
-                return View();
+               
             }
+                 return View(login);
 
 
-            
-        } 
+
+        }
         public ActionResult Logout()
         {
-            Session["kullaniciid"] = null;
+            Session["kullaniciID"] = null;
             Session.Abandon();
             return RedirectToAction("Index", "Home");
         }
 
 
+        // GET: Uye/Create
         public ActionResult Create()
         {
+            ViewBag.memleketID = new SelectList(db.memlekets, "memleketID", "memleketAdi");
+            
             return View();
+        }
+
+        // POST: Uye/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "kullaniciID,yetkiID,memleketID,adsoyad,kullaniciAdi,mail,sifre,telefon,resim")] kullanicilar kullanicilar,HttpPostedFileBase resim)
+        {   
+                if (ModelState.IsValid)
+                {
+
+
+                    if (resim != null)
+                    {
+
+                        WebImage img = new WebImage(resim.InputStream);
+                        FileInfo fotoinfo = new FileInfo(resim.FileName);
+
+                        string newfoto = Guid.NewGuid().ToString() + fotoinfo.Extension;
+                        img.Resize(150, 150);
+                        img.Save("~/Uploads/resimler/" + newfoto);
+                        kullanicilar.resim = "/Uploads/resimler/" + newfoto;
+                        kullanicilar.yetkiID = 2;
+
+                    //Session["kullaniciID"] = kullanicilar.kullaniciID;
+                    //Session["yetkiID"] = kullanicilar.yetkiID;
+
+
+                        db.kullanicilars.Add(kullanicilar);
+                        db.SaveChanges();
+                        return RedirectToAction("Index", "Home");
+                    }
+
+                    else
+                    {
+                        ModelState.AddModelError("Foto", "Foto Seçiniz:");
+                    }
+                     
+                } 
+          
+            ViewBag.memleketID = new SelectList(db.memlekets, "memleketID", "memleketAdi", kullanicilar.memleketID);
+            //Response.Write("Kayıt İşlemi Başarıyla Gerçekleşti");
+            ViewBag.Uyari = "Kayıt İşlemi Başarıyla Gerçekleşti";
+            return View(kullanicilar);
+        }
+
+        // GET: Uye/Edit/5
+        public ActionResult Edit(int id)
+        {
+            var uye = db.kullanicilars.Where(k => k.kullaniciID == id).SingleOrDefault();
+
+            if (Convert.ToInt32(Session["kullaniciID"])!=uye.kullaniciID)
+            {
+                return HttpNotFound();
+            }
+
+
+            return View(uye);
+
         } 
-          [HttpPost]
-        public ActionResult Create(kullanicilar uye,HttpPostedFileBase resim)
+
+        // POST: Uye/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit([Bind(Include = "kullaniciID,yetkiID,memleketID,adsoyad,kullaniciAdi,mail,sifre,telefon,resim")] kullanicilar kullanicilar, HttpPostedFileBase resim, int id)
         {
             if (ModelState.IsValid)
-            { 
-                if (resim != null)
+            {
+                var uye1 = db.kullanicilars.Where(k => k.kullaniciID == id).SingleOrDefault();
+
+                if (resim!=null)
                 {
+
+                    if (System.IO.File.Exists(Server.MapPath(kullanicilar.resim)))
+                    {
+                        System.IO.File.Delete(Server.MapPath(uye1.resim));
+                    }
+
                     WebImage img = new WebImage(resim.InputStream);
-                    FileInfo fotoinfo = new FileInfo(resim.FileName);
 
-                    string newfoto = Guid.NewGuid().ToString() + fotoinfo.Extension;
+                    FileInfo resiminfo = new FileInfo(resim.FileName);
+
+                    string newfoto = Guid.NewGuid().ToString() + resiminfo.Extension;
                     img.Resize(150, 150);
-                    img.Save("~/Uploads/resimler/" + newfoto);
-                    uye.resim = "/Uploads/resimler/" + newfoto;
-                    uye.yetkiID = 2;  
-                    db.kullanicilars.Add(uye);
+                    img.Save("~/Uploads/uyeler/" + newfoto);
+                    uye1.resim = "/Uploads/uyeler/" + newfoto;
+
+                    }
+
+                    uye1.adsoyad = kullanicilar.adsoyad;
+                    uye1.kullaniciAdi = kullanicilar.kullaniciAdi;
+                    uye1.mail = kullanicilar.mail;
+                    uye1.sifre = kullanicilar.sifre;
+                  
+                    uye1.telefon = kullanicilar.telefon;
                     db.SaveChanges();
-                    Session["kullaniciid"] = uye.kullaniciID;
-                    Session["kullaniciadi"] = uye.kullaniciAdi;
-                    return RedirectToAction("Index", "Home");
+                    Session["kullaniciadi"] = kullanicilar.kullaniciID;
+              
+                    return RedirectToAction("Index", "Home", new { id = uye1.kullaniciID });
+
                     
-                }
-                else
-                {
-                    ModelState.AddModelError("Foto", "Foto Seçiniz:");
-                }
 
-            }    return View(uye);
 
+                
+
+
+
+
+                db.Entry(kullanicilar).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.memleketID = new SelectList(db.memlekets, "memleketID", "memleketAdi", kullanicilar.memleketID);
+          
+            return View(kullanicilar);
         }
-       
 
-     
+        // GET: Uye/Delete/5
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            kullanicilar kullanicilar = db.kullanicilars.Find(id);
+            if (kullanicilar == null)
+            {
+                return HttpNotFound();
+            }
+            return View(kullanicilar);
+        }
 
+        // POST: Uye/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(int id)
+        {
+            kullanicilar kullanicilar = db.kullanicilars.Find(id);
+            db.kullanicilars.Remove(kullanicilar);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
+        }
     }
 }

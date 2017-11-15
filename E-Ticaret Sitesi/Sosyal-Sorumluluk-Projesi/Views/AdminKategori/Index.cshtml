@@ -5,10 +5,10 @@
     Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Kategoriler</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Kategori Ekle", "Create")
 </p>
 <table class="table">
     <tr>
@@ -24,9 +24,9 @@
             @Html.DisplayFor(modelItem => item.kategoriAdi)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.kategoriID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.kategoriID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.kategoriID })
+            @Html.ActionLink("Düzenle", "Edit", new { id=item.kategoriID }) |
+            @Html.ActionLink("Detaylar", "Details", new { id=item.kategoriID }) |
+            @Html.ActionLink("Sil", "Delete", new { id=item.kategoriID })
         </td>
     </tr>
 }

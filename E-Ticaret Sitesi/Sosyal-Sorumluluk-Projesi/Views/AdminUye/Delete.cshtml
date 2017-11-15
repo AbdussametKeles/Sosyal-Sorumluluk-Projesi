@@ -1,12 +1,13 @@
 ﻿@model Sosyal_Sorumluluk_Projesi.Models.kullanicilar
 
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Delete</h2>
 
+<h3>Are you sure you want to delete this?</h3>
 <div>
     <h4>kullanicilar</h4>
     <hr />
@@ -20,7 +21,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.yetki.yetkiAdi) 
+            @Html.DisplayNameFor(model => model.yetki.yetkiAdi)
         </dt>
 
         <dd>
@@ -72,13 +73,17 @@
         </dt>
 
         <dd>
-            <img src="@Model.resim" width="75"/>
+            @Html.DisplayFor(model => model.resim)
         </dd>
 
     </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
 </div>
-<p>
-    @Html.ActionLink("Düzenle", "Edit", new { id = Model.kullaniciID }) |
-    @Html.ActionLink("Sil", "Delete", new { id = Model.kullaniciID })
- 
-</p>

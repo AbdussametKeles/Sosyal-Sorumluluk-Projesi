@@ -1,11 +1,11 @@
 ﻿@model Sosyal_Sorumluluk_Projesi.Models.kullanicilar
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Kullanıcı Detayları</h2>
 
 <div>
     <h4>kullanicilar</h4>
@@ -20,7 +20,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.yetki.yetkiAdi) 
+            @Html.DisplayNameFor(model => model.yetki.yetkiAdi)
         </dt>
 
         <dd>
@@ -72,13 +72,12 @@
         </dt>
 
         <dd>
-            <img src="@Model.resim" width="75"/>
+            <img src="@Model.resim" width="75" alt="@Model.kullaniciAdi" />
         </dd>
 
     </dl>
 </div>
 <p>
     @Html.ActionLink("Düzenle", "Edit", new { id = Model.kullaniciID }) |
-    @Html.ActionLink("Sil", "Delete", new { id = Model.kullaniciID })
- 
+    @Html.ActionLink("Geri Dön", "Index")
 </p>

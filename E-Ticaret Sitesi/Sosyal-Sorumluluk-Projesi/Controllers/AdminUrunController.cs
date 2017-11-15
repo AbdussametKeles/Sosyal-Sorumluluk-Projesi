@@ -31,9 +31,9 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         public ActionResult Create()
         {
 
-            ViewBag.kategori_id = new SelectList(db.kategorilers, "kategori_id", "kategori_adi");
-            ViewBag.kullanici_id = new SelectList(db.kullanicilars, "kullanici_id", "ad_soyad");
-            ViewBag.memleket_id = new SelectList(db.memlekets, "memleket_id", "memleket_adi");
+            ViewBag.kategoriID = new SelectList(db.kategorilers, "kategoriID", "kategoriAdi");
+            ViewBag.kullaniciID = new SelectList(db.kullanicilars, "kullaniciID", "adsoyad");
+            ViewBag.memleketID = new SelectList(db.memlekets, "memleketID", "memleketAdi");
 
             return View();
         }
@@ -98,7 +98,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.kategori_id = new SelectList(db.kategorilers, "kategori_id", "kategori_adi", urun.kategoriID);
+            ViewBag.kategori_id = new SelectList(db.kategorilers, "kategoriID", "kategoriAdi", urun.kategoriID);
 
 
 

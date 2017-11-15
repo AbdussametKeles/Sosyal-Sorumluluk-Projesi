@@ -259,6 +259,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdminKategoriController.cs" />
     <Compile Include="Controllers\AdminUrunController.cs" />
+    <Compile Include="Controllers\AdminUyeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\UyeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -339,6 +340,14 @@
     <Content Include="Views\AdminKategori\Details.cshtml" />
     <Content Include="Views\AdminKategori\Edit.cshtml" />
     <Content Include="Views\AdminKategori\Index.cshtml" />
+    <Content Include="Views\AdminUye\Create.cshtml" />
+    <Content Include="Views\AdminUye\Delete.cshtml" />
+    <Content Include="Views\AdminUye\Details.cshtml" />
+    <Content Include="Views\AdminUye\Edit.cshtml" />
+    <Content Include="Views\AdminUye\Index.cshtml" />
+    <Content Include="Views\Uye\Delete.cshtml" />
+    <Content Include="Views\Uye\Details.cshtml" />
+    <Content Include="Views\Uye\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -350,6 +359,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Uploads\resimler\" />
     <Folder Include="Uploads\urunler\" />
+    <Folder Include="Uploads\uyeler\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

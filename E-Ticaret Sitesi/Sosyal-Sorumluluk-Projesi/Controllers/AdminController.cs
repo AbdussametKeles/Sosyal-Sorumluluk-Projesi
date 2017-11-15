@@ -12,10 +12,6 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         public ActionResult Index()
         {
             return View();
-        } 
-
-     
-
-
+        }
     }
 }
