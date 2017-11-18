@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Sosyal_Sorumluluk_Projesi.Models;
 using System.Web.Helpers;
 using System.IO;
+using System.Net;
 
 namespace Sosyal_Sorumluluk_Projesi.Controllers
 {
@@ -22,9 +23,18 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         }
 
         // GET: AdminUrun/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            urunler urun = db.urunlers.Find(id);
+            if (urun== null)
+            {
+                return HttpNotFound();
+            }
+            return View(urun); 
         }
 
         // GET: AdminUrun/Create

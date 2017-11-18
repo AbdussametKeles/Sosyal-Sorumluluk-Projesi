@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
 }
 
-<h2>Details</h2>
+<h2>Üye Detayları</h2>
 
 <div>
     <h4>kullanicilar</h4>
@@ -72,12 +72,12 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.resim)
+            <img src="@Model.resim" width="75" alt="@Model.kullaniciAdi" />
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.kullaniciID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Düzenle", "Edit", new { id = Model.kullaniciID }) |
+    @Html.ActionLink("Geri Dön", "Index")
 </p>

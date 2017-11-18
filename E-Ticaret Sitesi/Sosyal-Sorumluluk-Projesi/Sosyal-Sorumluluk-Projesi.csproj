@@ -343,11 +343,10 @@
     <Content Include="Views\AdminUye\Create.cshtml" />
     <Content Include="Views\AdminUye\Delete.cshtml" />
     <Content Include="Views\AdminUye\Details.cshtml" />
-    <Content Include="Views\AdminUye\Edit.cshtml" />
     <Content Include="Views\AdminUye\Index.cshtml" />
     <Content Include="Views\Uye\Delete.cshtml" />
-    <Content Include="Views\Uye\Details.cshtml" />
     <Content Include="Views\Uye\Edit.cshtml" />
+    <Content Include="Views\Uye\Details.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

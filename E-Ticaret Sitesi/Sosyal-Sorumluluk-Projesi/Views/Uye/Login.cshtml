@@ -7,7 +7,7 @@
 
 <h2>Üye Girişi</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Login", "Uye", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 

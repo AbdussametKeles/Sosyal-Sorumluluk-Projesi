@@ -63,10 +63,10 @@
             @Html.DisplayFor(modelItem => item.telefon)
         </td>
         <td>
-            <img src="@item.resim" width="75" />
+            <img src="@item.resim" width="50" alt="" />
         </td>
         <td>
-            @Html.ActionLink("Düzenle", "Edit", new { id=item.kullaniciID }) |
+          
             @Html.ActionLink("Detaylar", "Details", new { id=item.kullaniciID }) |
             @Html.ActionLink("Sil", "Delete", new { id=item.kullaniciID })
         </td>

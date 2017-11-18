@@ -54,31 +54,43 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
             var login = db.kullanicilars.Where(k => k.mail == uye.mail).SingleOrDefault();
             if (login.mail == uye.mail && login.sifre == uye.sifre)
             {
-               
-                Session["mail"] = login.mail;
-                Session["sifre"] = login.sifre;
+
                 Session["kullaniciID"] = login.kullaniciID;
+                Session["mail"] = login.mail;
+                Session["sifre"] = login.sifre; 
                 Session["yetkiID"] = login.yetkiID;
 
                 return RedirectToAction("Index", "Home");
 
-            }
 
 
-             if (login.mail != uye.mail && login.sifre != uye.sifre)
+
+                }
+
+
+           
+
+            else if (login.mail != uye.mail && login.sifre != uye.sifre)
             {
+
+
+                
 
                 ViewBag.Uyari = "Kullanıcı Login Bilgilerinizi Kontrol Ediniz";
 
-            }
-             
+                return View(login);
 
+
+
+
+            }
             else
             {
                 ViewBag.Uyari = "Kullanıcı Login Bilgilerinizi Kontrol Ediniz";
-               
             }
-                 return View(login);
+        
+
+        return View(login);
 
 
 
@@ -128,7 +140,9 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
 
                         db.kullanicilars.Add(kullanicilar);
                         db.SaveChanges();
-                        return RedirectToAction("Index", "Home");
+                         return RedirectToAction("Index", "Home");
+                   
+                  
                     }
 
                     else
@@ -140,7 +154,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
           
             ViewBag.memleketID = new SelectList(db.memlekets, "memleketID", "memleketAdi", kullanicilar.memleketID);
             //Response.Write("Kayıt İşlemi Başarıyla Gerçekleşti");
-            ViewBag.Uyari = "Kayıt İşlemi Başarıyla Gerçekleşti";
+           
             return View(kullanicilar);
         }
 
@@ -217,7 +231,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
             return View(kullanicilar);
         }
 
-        // GET: Uye/Delete/5
+        // GET: AdminUye/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -232,16 +246,30 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
             return View(kullanicilar);
         }
 
-        // POST: Uye/Delete/5
+        // POST: AdminUye/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+
+
             kullanicilar kullanicilar = db.kullanicilars.Find(id);
+
+            Session["kullaniciID"] = kullanicilar.kullaniciID;
+
             db.kullanicilars.Remove(kullanicilar);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+
+
+            Session["kullaniciID"] = null;
+            Session.Abandon();
+            return RedirectToAction("Index", "Home");
+
+
+
         }
+
 
         protected override void Dispose(bool disposing)
         {
