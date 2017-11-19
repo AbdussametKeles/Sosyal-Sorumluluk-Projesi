@@ -70,8 +70,76 @@
                     <div class="col-sm-8">
                         <div class="shop-menu pull-right">
                             <ul class="nav navbar-nav">
-                                <li><a href="/Uye/Create/"><i class="fa fa-user"></i>Üye Ol</a></li>
-                                <li><a href="/Uye/Login"><i class="fa fa-lock"></i>Giriş Yap</a></li>
+
+                                @if (Session["kullaniciid"] != null)
+                                {
+
+                                    <li class="dropdown">
+
+
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-user"></i> @Session["mail"].ToString()<b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+
+
+
+                                            <li>
+                                                <a href="/Uye/Index/@Session["kullaniciid"]"><i class="fa fa-fw fa-user"></i>Profil</a>
+                                            </li>
+
+
+
+                                            <li>
+                                                <a href="#"><i class="fa fa-fw fa-envelope"></i>Gelen Mailler</a>
+                                            </li>
+
+                                            @if (Convert.ToInt32(Session["yetkiid"]) == 1)
+                                            {
+                                                <li>
+                                                    <a href="/Admin/Index/" target="_blank"><i class="fa fa-fw fa-gear"></i>Admin Paneli</a>
+                                                </li>
+                                            }
+
+                                            <li class="divider"></li>
+                                            <li>
+                                                <a href="/Uye/Logout/"><i class="fa fa-fw fa-power-off"></i>Çıkış</a>
+                                            </li>
+
+
+
+                                        </ul>
+
+                                    </li>
+
+
+
+
+
+
+                                }
+
+
+
+                                else
+                                {
+
+                                    <li><a href="/Uye/Create/"><i class="fa fa-user"></i>Üye Ol</a></li>
+                                    <li><a href="/Uye/Login"><i class="fa fa-lock"></i>Giriş Yap</a></li>
+
+
+
+                                }
+
+
+
+
+
+
+
+
+
+
+
+
                             </ul>
                         </div>
                     </div>
@@ -100,33 +168,11 @@
                                 <li><a href="/Home/Hakkimizda/">Hakkımızda</a></li>
                                 <li><a href="/Home/Iletisim/">İletişim</a></li>
 
-                                @if (Session["kullaniciid"] != null)
-                                {
-
+                           
                                    
-                                    <li>
-                                        <a href="/Uye/Index/@Session["kullaniciid"]">@Session["mail"].ToString()</a> 
-                                    </li>
+                                  
 
-                                    <li>
-                                        <a href="/Uye/Logout/">Çıkış</a>
-
-                                    </li>
-
-                                    if (Convert.ToInt32(Session["yetkiid"]) == 1)
-                                    {  
-                                        <li>
-                                            <a href="/Admin/Index/" target="_blank">Admin Paneli</a>
-                                        </li>
-                                    }
-
-
-                                }
-                                else
-                                {
-                                    <li><a href="/Uye/Login">Giriş</a></li>
-                                }
-
+                              
 
 
 

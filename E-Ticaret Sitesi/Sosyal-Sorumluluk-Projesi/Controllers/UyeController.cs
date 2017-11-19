@@ -52,45 +52,60 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         public ActionResult Login(kullanicilar uye)
         {
             var login = db.kullanicilars.Where(k => k.mail == uye.mail).SingleOrDefault();
-            if (login.mail == uye.mail && login.sifre == uye.sifre)
+
+            try
             {
 
-                Session["kullaniciID"] = login.kullaniciID;
-                Session["mail"] = login.mail;
-                Session["sifre"] = login.sifre; 
-                Session["yetkiID"] = login.yetkiID;
+                if (login.mail == uye.mail && login.sifre == uye.sifre)
+                {
 
-                return RedirectToAction("Index", "Home");
+                    Session["kullaniciID"] = login.kullaniciID;
+                    Session["mail"] = login.mail;
+                    Session["sifre"] = login.sifre;
+                    Session["yetkiID"] = login.yetkiID;
+
+                    return RedirectToAction("Index", "Home");
 
 
 
 
                 }
 
+                else if (login.mail != uye.mail)
+                {
+                    Session["kullaniciID"] = login.kullaniciID;
+                    Session["mail"] = login.mail;
+                    Session["sifre"] = login.sifre;
+                    Session["yetkiID"] = login.yetkiID;
 
+
+
+                    ViewBag.Uyari = "Kullanıcı Login Bilgilerinizi Kontrol Ediniz";
+                }
+
+
+                else
+                {
+                    ViewBag.Uyari = "Kullanıcı Login Bilgilerinizi Kontrol Ediniz";
+                }
+
+
+
+
+            }
+            catch (NullReferenceException)
+            {
+
+               
+
+                ViewBag.Uyari = "Kullanıcı Login Bilgilerinizi Kontrol Ediniz";
+
+                //return RedirectToAction("Login", "Uye");
+
+            }
            
 
-            else if (login.mail != uye.mail && login.sifre != uye.sifre)
-            {
-
-
-                
-
-                ViewBag.Uyari = "Kullanıcı Login Bilgilerinizi Kontrol Ediniz";
-
-                return View(login);
-
-
-
-
-            }
-            else
-            {
-                ViewBag.Uyari = "Kullanıcı Login Bilgilerinizi Kontrol Ediniz";
-            }
-        
-
-        return View(login);
+            return View(login);
 
 
 
