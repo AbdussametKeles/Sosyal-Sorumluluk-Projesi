@@ -5,6 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\ImageManager;
+/* use Illuminate\Support\Facades\Mail;
+use App\User;
+use Illuminate\Mail\Mailer;
+use Illuminate\Mail\MailServiceProvider;
+//use Mail;
+use Swift_Transport;
+use Swift_Message;
+use Swift_Mailer; */
 
 class KullaniciController extends Controller
 {
@@ -206,7 +214,22 @@ class KullaniciController extends Controller
     }
 
     //kullanıcı şifremi unuttum fonksiyonu
-    public function sifremi_unuttum()
+    public function sifremi_unuttum(Request $request)
     {
+      $this->validate($request, [
+        'mail' => 'required|email',
+      ]);
+
+      $kullanici = DB::table('kullanici')->where([
+        ['mail', '=', $request->input('mail')],
+      ])->first();
+
+      $data = ['mail' => $kullanici->mail, 'sifre' => $kullanici->sifre];
+
+      return response()-> json([
+        'status' => 200,
+        'message' => 'Basarili',
+        'kullanici' => $kullanici,
+      ]);
     }
-}
+  }
