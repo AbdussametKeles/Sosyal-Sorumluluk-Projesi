@@ -93,4 +93,7 @@ C:\Users\Mehmet Kocak\Documents\Visual Studio 2015\Projects\E-Ticaret Sitesi\Sos
 C:\Users\Mehmet Kocak\Documents\Visual Studio 2015\Projects\E-Ticaret Sitesi\Sosyal-Sorumluluk-Projesi\bin\EntityFramework.SqlServer.dll
 C:\Users\Mehmet Kocak\Documents\Visual Studio 2015\Projects\E-Ticaret Sitesi\Sosyal-Sorumluluk-Projesi\bin\EntityFramework.xml
 C:\Users\Mehmet Kocak\Documents\Visual Studio 2015\Projects\E-Ticaret Sitesi\Sosyal-Sorumluluk-Projesi\bin\EntityFramework.SqlServer.xml
-C:\Users\Mehmet Kocak\Documents\Visual Studio 2015\Projects\E-Ticaret Sitesi\Sosyal-Sorumluluk-Projesi\obj\Debug\Sosyal-Sorumluluk-Projesi.csprojResolveAssemblyReference.cache
+C:\Users\Mehmet Kocak\Documents\Visual Studio 2015\Projects\E-Ticaret Sitesi\Sosyal-Sorumluluk-Projesi\bin\PagedList.dll
+C:\Users\Mehmet Kocak\Documents\Visual Studio 2015\Projects\E-Ticaret Sitesi\Sosyal-Sorumluluk-Projesi\bin\PagedList.Mvc.dll
+C:\Users\Mehmet Kocak\Documents\Visual Studio 2015\Projects\E-Ticaret Sitesi\Sosyal-Sorumluluk-Projesi\bin\PagedList.xml
+C:\Users\Mehmet Kocak\Documents\Visual Studio 2015\Projects\E-Ticaret Sitesi\Sosyal-Sorumluluk-Projesi\bin\PagedList.Mvc.xml

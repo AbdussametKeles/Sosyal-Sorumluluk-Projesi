@@ -1,4 +1,14 @@
-﻿@model IEnumerable<Sosyal_Sorumluluk_Projesi.Models.kullanicilar>
+﻿@model IPagedList<Sosyal_Sorumluluk_Projesi.Models.kullanicilar>
+
+
+
+@using PagedList
+@using PagedList.Mvc
+
+
+
+
+
 
 @{
     ViewBag.Title = "Index";
@@ -9,33 +19,74 @@
 
 <p>
     @Html.ActionLink("Üye Ekle", "Create")
-</p>
+</p> 
+
+
+@using (Html.BeginForm("Index", "AdminUye", FormMethod.Get))
+{
+    <p>
+        Find by name: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+
+
+
+
 <table class="table">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.memleket.memleketAdi)
+        <th> 
+            @Html.ActionLink("memleketAdi", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+           
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.yetki.yetkiAdi)
-        </th>
+          @Html.ActionLink("yetkiAdi", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+           
+        </th> 
+
         <th>
-            @Html.DisplayNameFor(model => model.adsoyad)
-        </th>
+            @Html.Label("Ad Soyad")
+
+        </th>  
+
+
+
         <th>
-            @Html.DisplayNameFor(model => model.kullaniciAdi)
-        </th>
+            @Html.Label("Kullanıcı Adı")
+
+        </th>  
+
         <th>
-            @Html.DisplayNameFor(model => model.mail)
-        </th>
+            @Html.Label("E-mail")
+
+        </th> 
+
+
         <th>
-            @Html.DisplayNameFor(model => model.sifre)
+            @Html.Label("Şifre")
+
         </th>
+
+
+
         <th>
-            @Html.DisplayNameFor(model => model.telefon)
+            @Html.Label("Telefon")
+
         </th>
+
         <th>
-            @Html.DisplayNameFor(model => model.resim)
+            @Html.Label("Üye Fotosu")
+
         </th>
+
+
+
+
+
+
+
+
+
         <th></th>
     </tr>
 
@@ -73,4 +124,11 @@
     </tr>
 }
 
-</table> 
+</table>  
+
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", 
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

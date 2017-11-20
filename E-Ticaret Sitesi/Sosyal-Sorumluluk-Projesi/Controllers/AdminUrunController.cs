@@ -7,6 +7,8 @@ using Sosyal_Sorumluluk_Projesi.Models;
 using System.Web.Helpers;
 using System.IO;
 using System.Net;
+using PagedList;
+using PagedList.Mvc;
 
 namespace Sosyal_Sorumluluk_Projesi.Controllers
 {
@@ -16,11 +18,11 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
 
 
         // GET: AdminUrun
-        public ActionResult Index()
+        public ActionResult Index(int Page=1)
         {
-            var urunler = db.urunlers.ToList();
+            var urunler = db.urunlers.OrderByDescending(u=>u.urunID).ToPagedList(Page, 10);
             return View(urunler);
-        }
+        } 
 
         // GET: AdminUrun/Details/5
         public ActionResult Details(int? id)

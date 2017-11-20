@@ -1,4 +1,12 @@
-﻿@model IEnumerable<Sosyal_Sorumluluk_Projesi.Models.urunler>
+﻿
+
+@model IPagedList<Sosyal_Sorumluluk_Projesi.Models.urunler>
+
+
+@using PagedList
+@using PagedList.Mvc
+
+
 
 @{
     ViewBag.Title = "Index";
@@ -13,38 +21,38 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.kategoriler.kategoriAdi)
+            @Html.Label("kategoriAdi")
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.urunAdi)
+            @Html.Label("urunAdi")
         </th> 
 
         <th>
-            @Html.DisplayNameFor(model => model.urunİcerik)
+            @Html.Label("urunİcerik")
         </th>
 
         <th>
-            @Html.DisplayNameFor(model => model.resim)
+            @Html.Label("resim")
         </th>
       
         <th>
 
-            @Html.DisplayNameFor(model => model.tarih)
+            @Html.Label("tarih")
 
         </th> 
 
         <th>
 
-            @Html.DisplayNameFor(model => model.kullaniciID)
+            @Html.Label("kullaniciID")
 
         </th> 
 
         <th>
 
-            @Html.DisplayNameFor(model => model.memleketID)
+            @Html.Label("memleketID")
 
         </th>
-
+         
         <th></th>
     </tr>
 
@@ -92,3 +100,16 @@
 
 
 </table>
+
+<div class="row">
+    <div class="col-md-12" text-center>
+
+        <div class="pagedList pagination-lg">
+            @Html.PagedListPager(Model, Page => Url.Action("Index", new { Page }), PagedListRenderOptions.Classic)
+
+        </div>
+
+
+    </div> 
+
+</div>

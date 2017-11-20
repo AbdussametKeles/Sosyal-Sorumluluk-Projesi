@@ -9,18 +9,54 @@ using System.Web.Mvc;
 using Sosyal_Sorumluluk_Projesi.Models;
 using System.Web.Helpers;
 using System.IO;
+using PagedList;
+using PagedList.Mvc;
 
 namespace Sosyal_Sorumluluk_Projesi.Controllers
-{
+{ 
     public class AdminUyeController : Controller
     {
         private Model1 db = new Model1();
 
         // GET: AdminUye
-        public ActionResult Index()
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            var kullanicilars = db.kullanicilars.Include(k => k.memleket).Include(k => k.yetki);
-            return View(kullanicilars.ToList());
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+          
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var uye = from s in db.kullanicilars
+                           select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                uye = uye.Where(s => s.yetki.yetkiAdi.Contains(searchString)
+                                       || s.memleket.memleketAdi.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    uye = uye.OrderByDescending(s => s.yetki.yetkiAdi);
+                    break;
+                  
+                default: 
+                    uye = uye.OrderBy(s => s.yetki.yetkiAdi);
+                    break;
+            }
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(uye.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: AdminUye/Details/5
