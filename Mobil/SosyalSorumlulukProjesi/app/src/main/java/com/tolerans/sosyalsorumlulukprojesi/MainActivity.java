@@ -5,20 +5,36 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
-import android.support.transition.Visibility;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    String bundleJson;
+    RecyclerView recyclerView;
+    List<Projeler> projelerList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,36 +50,67 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
 
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        Button btnCikis = (Button) findViewById(R.id.logout);
-        btnCikis.setVisibility(View.GONE);
         Bundle bundle = getIntent().getExtras();
 
 
         if(bundle!= null){
-            String bundleMail =bundle.getString("mail");
-            btnCikis.setVisibility(View.VISIBLE);
+            bundleJson =bundle.getString("jsonveri");
+            Toast.makeText(this,bundleJson,Toast.LENGTH_LONG).show();
+            //navigation bardaki butonlara ulaşmamızı sağlayacak
+            Menu menu = navigationView.getMenu();
+            menu.findItem(R.id.nav_cikis).setVisible(true);
+            menu.findItem(R.id.nav_proje_ekle).setVisible(true);
+            menu.findItem(R.id.nav_profil).setVisible(true);
         }
 
-        btnCikis.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.clear();
-                editor.commit();
-                finish();
 
-                Intent intent = new Intent(MainActivity.this,MainActivity.class);
-                startActivity(intent);
+        recyclerView = (RecyclerView) findViewById(R.id.rvProjeler);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        projelerList = new ArrayList<>();
+
+        //projeleriCek();
+    }
+
+    public void projeleriCek(){
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "projeler için url gir", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray array = new JSONArray(response);
+
+                    for(int i=0;i<array.length();i++){
+
+                        JSONObject proje = array.getJSONObject(i);
+
+                        //buraya projeler classından bir nesne oluşturacağız ve
+                        //projelerList.add(new Proje(proje.getInt("id"))) şeklinde olacak
+
+                    }
+                    MyAdapter adapter = new MyAdapter(MainActivity.this,projelerList);
+                    recyclerView.setAdapter(adapter);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
             }
         });
-
-
+        Volley.newRequestQueue(this).add(stringRequest);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -81,6 +128,11 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         //toolbara eklediğimiz iconların olduğu menüyü temsil edilyor
         getMenuInflater().inflate(R.menu.main, menu);
+        //bundle içindeki veriye bakıp giriş butonunun göörünürlüğünü kapatıyor
+        //true yapmamıza gerek yok zaten otomatik olarak her defasında yeniden oluşturuyor.
+        if(bundleJson!=null){
+            menu.findItem(R.id.action_profil).setVisible(false);
+        }
         return true;
     }
 
@@ -92,9 +144,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if(id == R.id.action_profil) {
+
             Intent intent = new Intent(MainActivity.this,LoginActivity.class);
             startActivity(intent);
-
         }
 
         return super.onOptionsItemSelected(item);
@@ -106,18 +158,24 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_proje_ekle) {
+            Intent intent = new Intent(MainActivity.this,ProjeEkleActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_profil) {
+            Intent intent = new Intent(MainActivity.this,ProfilActivity.class);
+            intent.putExtra("jsonveriler",bundleJson);
+            startActivity(intent);
 
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.nav_cikis) {
+            //shared preferenceyi temizliyor.
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.clear();
+            editor.commit();
+            finish();
+            //uygulamayı baştan başlattık.
+            Intent intent = new Intent(MainActivity.this,MainActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

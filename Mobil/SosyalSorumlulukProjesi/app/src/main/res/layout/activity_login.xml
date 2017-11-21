@@ -42,6 +42,36 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/txtSifre"/>
             </LinearLayout>
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ben robot değilim"
+                android:id="@+id/dogrulama"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="5dp"
+                android:id="@+id/linear"
+                android:visibility="gone">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/sayi"
+                    android:text="sayi "
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="karesi? : "/>
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtCevap"
+                    />
+            </LinearLayout>
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -53,6 +83,7 @@
                 android:layout_height="wrap_content"
                 android:text="Şifremi Unuttum"
                 android:layout_gravity="right"
+                android:id="@+id/btnSifremiUnuttum"
                 android:textColor="@android:color/holo_blue_dark"
                 android:background="?android:attr/selectableItemBackground"/>
         </LinearLayout>
