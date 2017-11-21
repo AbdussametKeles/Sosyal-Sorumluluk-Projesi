@@ -3,6 +3,9 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
+  
+
+@model IEnumerable<Sosyal_Sorumluluk_Projesi.Models.urunler>
  
 <div class="container">
     <div class="row">
@@ -51,14 +54,17 @@
         <div class="col-sm-9 padding-right">
             <div class="features_items">
                 <!--features_items-->
-                <h2 class="title text-center">Son Eklenen Ürünler</h2>
+                <h2 class="title text-center">Son Eklenen Ürünler</h2> 
+                
+              @foreach (var urunler in Model)
+              {
                 <div class="col-sm-4">
                     <div class="product-image-wrapper">
                         <div class="single-products">
                             <div class="productinfo text-center">
-                                <img src="images/home/product1.jpg" alt="" />
-                                <h2>Ürün1</h2>
-                                <p>Ürün Resmi Gelicek</p>
+                                <img src="@urunler.resim" alt="@urunler.urunAdi" />
+                                <h2>@urunler.urunAdi</h2>
+                                
 
                             </div>
 
@@ -66,83 +72,14 @@
 
                     </div>
                 </div>
-
-                <div class="col-sm-4">
-                    <div class="product-image-wrapper">
-                        <div class="single-products">
-                            <div class="productinfo text-center">
-                                <img src="images/home/product1.jpg" alt="" />
-                                <h2>Ürün2</h2>
-                                <p>Ürün Resmi Gelicek</p>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
+              }
 
 
-                <div class="col-sm-4">
-                    <div class="product-image-wrapper">
-                        <div class="single-products">
-                            <div class="productinfo text-center">
-                                <img src="images/home/product1.jpg" alt="" />
-                                <h2>Ürün3</h2>
-                                <p>Ürün Resmi Gelicek</p>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="col-sm-4">
-                    <div class="product-image-wrapper">
-                        <div class="single-products">
-                            <div class="productinfo text-center">
-                                <img src="images/home/product1.jpg" alt="" />
-                                <h2>Ürün4</h2>
-                                <p>Ürün Resmi Gelicek</p>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="col-sm-4">
-                    <div class="product-image-wrapper">
-                        <div class="single-products">
-                            <div class="productinfo text-center">
-                                <img src="images/home/product1.jpg" alt="" />
-                                <h2>Ürün5</h2>
-                                <p>Ürün Resmi Gelicek</p>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
 
 
-                <div class="col-sm-4">
-                    <div class="product-image-wrapper">
-                        <div class="single-products">
-                            <div class="productinfo text-center">
-                                <img src="images/home/product1.jpg" alt="" />
-                                <h2>Ürün6</h2>
-                                <p>Ürün Resmi Gelicek</p>
+              
 
-                            </div>
-
-                        </div>
-
-                    </div>
-                </div>
+                
 
             </div><!--features_items-->
 

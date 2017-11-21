@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using Sosyal_Sorumluluk_Projesi.Models;
 using System.Web.Helpers;
 using System.IO;
+using System.Web.Security;
 
 namespace Sosyal_Sorumluluk_Projesi.Controllers
 {
@@ -116,6 +117,8 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
             Session.Abandon();
             return RedirectToAction("Index", "Home");
         }
+         
+          
 
 
         // GET: Uye/Create
@@ -135,7 +138,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         {   
                 if (ModelState.IsValid)
                 {
-
+                 
 
                     if (resim != null)
                     {

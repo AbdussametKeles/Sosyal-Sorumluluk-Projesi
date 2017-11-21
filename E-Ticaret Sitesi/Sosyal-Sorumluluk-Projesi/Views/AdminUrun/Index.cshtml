@@ -17,39 +17,58 @@
 
 <p>
     @Html.ActionLink("Ürün Ekle", "Create")
-</p>
+</p> 
+
+
+
+@using (Html.BeginForm("Index", "AdminUrun", FormMethod.Get))
+{
+    <p>
+        İsme Göre Bul: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Ara" />
+    </p>
+}
+
+
+
+
+
+
+
+
+
 <table class="table">
     <tr>
         <th>
-            @Html.Label("kategoriAdi")
+            @Html.ActionLink("kategoriAdi", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
-            @Html.Label("urunAdi")
+            @Html.Label("Ürün Adı")
         </th> 
 
         <th>
-            @Html.Label("urunİcerik")
+            @Html.Label("Ürün İçerik")
         </th>
 
         <th>
-            @Html.Label("resim")
+            @Html.Label("Ürün Resmi")
         </th>
       
         <th>
 
-            @Html.Label("tarih")
+            @Html.Label("Tarih")
 
         </th> 
 
         <th>
 
-            @Html.Label("kullaniciID")
+           @Html.Label("kullaniciID")
 
         </th> 
 
         <th>
 
-            @Html.Label("memleketID")
+            @Html.ActionLink("memleketID", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
 
         </th>
          
@@ -101,15 +120,8 @@
 
 </table>
 
-<div class="row">
-    <div class="col-md-12" text-center>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
 
-        <div class="pagedList pagination-lg">
-            @Html.PagedListPager(Model, Page => Url.Action("Index", new { Page }), PagedListRenderOptions.Classic)
-
-        </div>
-
-
-    </div> 
-
-</div>
+@Html.PagedListPager(Model, page => Url.Action("Index", 
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))

@@ -18,10 +18,50 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
 
 
         // GET: AdminUrun
-        public ActionResult Index(int Page=1)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            var urunler = db.urunlers.OrderByDescending(u=>u.urunID).ToPagedList(Page, 10);
-            return View(urunler);
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+        
+
+
+
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var urun = from s in db.urunlers
+                      select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                urun = urun.Where(s => s.kategoriler.kategoriAdi.Contains(searchString)
+                                       || s.memleket.memleketAdi.Contains(searchString));
+                                        
+            }  
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    urun = urun.OrderByDescending(s => s.kategoriler.kategoriAdi);
+                    break;
+
+               
+
+                default:
+                    urun = urun.OrderBy(s => s.kategoriler.kategoriAdi);
+                    break;
+            }
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(urun.ToPagedList(pageNumber, pageSize));
         } 
 
         // GET: AdminUrun/Details/5
