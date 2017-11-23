@@ -33,8 +33,23 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         {
             return View(db.kategorilers.ToList()); 
         }
+         
+        public ActionResult GizlilikPolitikasi()
+        {
+            return View();
 
-      
+        }
+
+        public ActionResult KullaniciSozlesmesi()
+        {
+            return View();
+
+        }
+
+
+
+
+
 
     }
 }

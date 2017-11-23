@@ -1,0 +1,148 @@
+﻿
+
+
+@model IPagedList<Sosyal_Sorumluluk_Projesi.Models.urunler>
+
+
+
+
+
+@using PagedList
+@using PagedList.Mvc
+
+
+
+
+
+
+
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+
+
+
+
+
+
+
+
+
+<h2>Ürünler</h2>
+
+@*<p>
+    @Html.ActionLink("Ürün Ekle", "Create")
+</p>*@
+
+
+
+@using (Html.BeginForm("Index", "KategoriUrun", FormMethod.Get))
+{
+    <p>
+        İsme Göre Bul: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Ara" />
+    </p>
+}
+
+
+
+
+
+
+
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Kategori Adı", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.Label("Ürün Adı")
+        </th>
+
+        <th>
+            @Html.Label("Ürün İçerik")
+        </th>
+
+        <th>
+            @Html.Label("Ürün Resmi")
+        </th>
+
+        <th>
+
+            @Html.Label("Tarih")
+
+        </th>
+
+        <th>
+
+            @Html.Label("Kullanici Bilgileri")
+
+        </th>
+
+        <th>
+
+            @Html.ActionLink("Memleket", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.kategoriler.kategoriAdi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.urunAdi)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.urunİcerik)
+            </td>
+
+            <td>
+               <a href="/Urunler/Detay/@item.urunID">  <img width="75" src="@item.resim" />  </a> 
+            </td> 
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.tarih)
+            </td>
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.kullanicilar.adsoyad)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.memleket.memleketAdi)
+            </td>
+
+
+            <td>
+                @Html.ActionLink("Düzenle", "Edit", new { id = item.urunID }) |
+                @Html.ActionLink("Sil", "Delete", new { id = item.urunID })
+
+            </td>
+        </tr>
+    }
+
+
+
+
+</table>
+
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+    new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
+

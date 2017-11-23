@@ -118,8 +118,20 @@
         </td>
         <td>
           
-            @Html.ActionLink("Detaylar", "Details", new { id=item.kullaniciID }) |
-            @Html.ActionLink("Sil", "Delete", new { id=item.kullaniciID })
+            @Html.ActionLink("Detaylar", "Details", new { id=item.kullaniciID }) 
+
+            @if (item.yetkiID == 1)
+            {
+               
+                @Html.Hidden("Sil", "Delete", new { id = item.kullaniciID })
+            } 
+
+            else
+            {
+                @Html.ActionLink("Sil", "Delete", new { id = item.kullaniciID })
+            }
+            
+           
         </td>
     </tr>
 }

@@ -40,7 +40,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.ActionLink("kategoriAdi", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink("Kategori Adı", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
         </th>
         <th>
             @Html.Label("Ürün Adı")
@@ -62,13 +62,13 @@
 
         <th>
 
-           @Html.Label("kullaniciID")
+           @Html.Label("Kullanici Bilgileri")
 
         </th> 
 
         <th>
 
-            @Html.ActionLink("memleketID", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
+            @Html.ActionLink("Memleket", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
 
         </th>
          
@@ -99,11 +99,11 @@
 
 
         <td>
-            @Html.DisplayFor(modelItem => item.kullaniciID)
+            @Html.DisplayFor(modelItem => item.kullanicilar.adsoyad)
         </td> 
 
         <td>
-            @Html.DisplayFor(modelItem => item.memleketID)
+            @Html.DisplayFor(modelItem => item.memleket.memleketAdi)
         </td>
 
 

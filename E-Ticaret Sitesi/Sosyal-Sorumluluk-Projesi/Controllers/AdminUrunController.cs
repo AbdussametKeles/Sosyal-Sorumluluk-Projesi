@@ -22,7 +22,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         {
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-        
+
 
 
 
@@ -39,30 +39,30 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
             ViewBag.CurrentFilter = searchString;
 
             var urun = from s in db.urunlers
-                      select s;
+                       select s;
             if (!String.IsNullOrEmpty(searchString))
             {
                 urun = urun.Where(s => s.kategoriler.kategoriAdi.Contains(searchString)
                                        || s.memleket.memleketAdi.Contains(searchString));
-                                        
-            }  
+
+            }
             switch (sortOrder)
             {
                 case "name_desc":
                     urun = urun.OrderByDescending(s => s.kategoriler.kategoriAdi);
                     break;
 
-               
+
 
                 default:
                     urun = urun.OrderBy(s => s.kategoriler.kategoriAdi);
                     break;
-            }
+            } 
 
             int pageSize = 3;
             int pageNumber = (page ?? 1);
             return View(urun.ToPagedList(pageNumber, pageSize));
-        } 
+        }
 
         // GET: AdminUrun/Details/5
         public ActionResult Details(int? id)
@@ -72,11 +72,11 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             urunler urun = db.urunlers.Find(id);
-            if (urun== null)
+            if (urun == null)
             {
                 return HttpNotFound();
             }
-            return View(urun); 
+            return View(urun);
         }
 
         // GET: AdminUrun/Create
@@ -84,7 +84,6 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         {
 
             ViewBag.kategoriID = new SelectList(db.kategorilers, "kategoriID", "kategoriAdi");
-            ViewBag.kullaniciID = new SelectList(db.kullanicilars, "kullaniciID", "adsoyad");
             ViewBag.memleketID = new SelectList(db.memlekets, "memleketID", "memleketAdi");
 
             return View();
@@ -161,45 +160,47 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         [HttpPost]
         public ActionResult Edit(int id, urunler urun, HttpPostedFileBase resim)
         {
-            try
-            {
-                var urun1 = db.urunlers.Where(u => u.urunID == id).SingleOrDefault();
 
-                if (resim != null)
+            ViewBag.kategori_id = new SelectList(db.kategorilers, "kategoriID", "kategoriAdi", urun.kategoriID);
+
+            var urun1 = db.urunlers.Where(u => u.urunID == id).SingleOrDefault();
+
+            if (resim != null)
+            {
+                if (System.IO.File.Exists(Server.MapPath(urun1.resim)))
                 {
-                    if (System.IO.File.Exists(Server.MapPath(urun1.resim)))
-                    {
-                        System.IO.File.Delete(Server.MapPath(urun1.resim));
-                    }
-
-                    WebImage img = new WebImage(resim.InputStream);
-
-                    FileInfo resiminfo = new FileInfo(resim.FileName);
-
-                    string newfoto = Guid.NewGuid().ToString() + resiminfo.Extension;
-                    img.Resize(800, 350);
-                    img.Save("~/Uploads/urunler/" + newfoto);
-                    urun1.resim = "/Uploads/urunler/" + newfoto;
-                    urun1.urunAdi = urun.urunAdi;
-                    urun1.urunİcerik = urun.urunİcerik;
-                    urun1.kategoriID = urun.kategoriID;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-
+                    System.IO.File.Delete(Server.MapPath(urun1.resim));
                 }
-                return View();
-            }
 
+                WebImage img = new WebImage(resim.InputStream);
 
+                FileInfo resiminfo = new FileInfo(resim.FileName);
 
+                string newfoto = Guid.NewGuid().ToString() + resiminfo.Extension;
+                img.Resize(800, 350);
+                img.Save("~/Uploads/urunler/" + newfoto);
+                urun1.resim = "/Uploads/urunler/" + newfoto;
+                urun1.urunAdi = urun.urunAdi;
+                urun1.urunİcerik = urun.urunİcerik;
+                urun1.kategoriID = urun.kategoriID;
+                db.SaveChanges();
+                return RedirectToAction("Index");
 
-            catch
-            {
-                ViewBag.kategori_id = new SelectList(db.kategorilers, "kategori_id", "kategori_adi", urun.kategoriID);
-                return View(urun);
-            }
+              
+
+            } 
+
+          
+           
+
+              return View(urun);
+
         }
 
+                 
+
+
+  
         // GET: AdminUrun/Delete/5
         public ActionResult Delete(int id)
         {
