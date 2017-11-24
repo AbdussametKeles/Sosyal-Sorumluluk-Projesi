@@ -12,15 +12,17 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
     public class KategoriUrunController : Controller
     { Model1 db = new Model1();
         // GET: KategoriUrun
-        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page,int id)
         {
-            ViewBag.CurrentSort = sortOrder;
+            ViewBag.CurrentSort = sortOrder; 
             ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
 
 
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
 
 
-
+             
             if (searchString != null)
             {
                 page = 1;
@@ -28,33 +30,34 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
             else
             {
                 searchString = currentFilter;
-            }
+            } 
 
             ViewBag.CurrentFilter = searchString;
 
-            var urun = from s in db.urunlers
+            var urun = from s in db.urunlers.Where(u=>u.kategoriID==id)
                        select s;
             if (!String.IsNullOrEmpty(searchString))
             {
-                urun = urun.Where(s => s.kategoriler.kategoriAdi.Contains(searchString)
-                                       || s.memleket.memleketAdi.Contains(searchString));
+                urun = urun.Where(s =>s.memleket.memleketAdi.Contains(searchString));
+                                        
 
             }
             switch (sortOrder)
             {
                 case "name_desc":
-                    urun = urun.OrderByDescending(s => s.kategoriler.kategoriAdi);
+                    urun = urun.OrderByDescending(s => s.memleket.memleketAdi);
                     break;
 
 
 
                 default:
-                    urun = urun.OrderBy(s => s.kategoriler.kategoriAdi);
+                    urun = urun.OrderBy(s => s.memleket.memleketAdi);
                     break;
-            }
+            } 
+             
+          
+          
 
-            int pageSize = 3;
-            int pageNumber = (page ?? 1);
             return View(urun.ToPagedList(pageNumber, pageSize));
         }
 
@@ -69,4 +72,4 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
 
 
     }
-}
+} 

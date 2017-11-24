@@ -58,9 +58,7 @@
 
 <table class="table">
     <tr>
-        <th>
-            @Html.ActionLink("Kategori Adı", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })
-        </th>
+       
         <th>
             @Html.Label("Ürün Adı")
         </th>
@@ -96,10 +94,8 @@
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.kategoriler.kategoriAdi)
-            </td>
+        <tr> 
+           
             <td>
                 @Html.DisplayFor(modelItem => item.urunAdi)
             </td>
@@ -128,8 +124,8 @@
 
 
             <td>
-                @Html.ActionLink("Düzenle", "Edit", new { id = item.urunID }) |
-                @Html.ActionLink("Sil", "Delete", new { id = item.urunID })
+                @*@Html.ActionLink("Düzenle", "Edit", new { id = item.urunID }) |
+                @Html.ActionLink("Sil", "Delete", new { id = item.urunID })*@
 
             </td>
         </tr>

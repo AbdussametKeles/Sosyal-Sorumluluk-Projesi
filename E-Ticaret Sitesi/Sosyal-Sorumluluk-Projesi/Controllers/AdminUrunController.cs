@@ -84,9 +84,10 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         {
 
             ViewBag.kategoriID = new SelectList(db.kategorilers, "kategoriID", "kategoriAdi");
+            ViewBag.kullaniciID = new SelectList(db.kullanicilars, "kullaniciID", "adsoyad");
             ViewBag.memleketID = new SelectList(db.memlekets, "memleketID", "memleketAdi");
 
-            return View();
+            return View();  
         }
 
         // POST: AdminUrun/Create
@@ -183,6 +184,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                 urun1.urunAdi = urun.urunAdi;
                 urun1.urunİcerik = urun.urunİcerik;
                 urun1.kategoriID = urun.kategoriID;
+                urun1.tarih = urun.tarih; 
                 db.SaveChanges();
                 return RedirectToAction("Index");
 
