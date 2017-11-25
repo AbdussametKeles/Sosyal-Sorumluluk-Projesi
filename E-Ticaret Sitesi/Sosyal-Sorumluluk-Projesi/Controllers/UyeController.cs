@@ -21,6 +21,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         public ActionResult Index(int id)
         {
             var uye = db.kullanicilars.Where(k => k.kullaniciID == id).SingleOrDefault();
+           
             if (Convert.ToInt32(Session["kullaniciID"]) != uye.kullaniciID)
             {
                 return HttpNotFound();
@@ -28,6 +29,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
 
 
             return View(uye);
+         
         }
 
         // GET: Uye/Details/5 
@@ -287,6 +289,147 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
 
 
         }
+
+        // GET: AdminUrun/Create
+        public ActionResult UrunCreate()
+        {
+
+            ViewBag.kategoriID = new SelectList(db.kategorilers, "kategoriID", "kategoriAdi");
+            ViewBag.kullaniciID = new SelectList(db.kullanicilars, "kullaniciID", "adsoyad");
+            ViewBag.memleketID = new SelectList(db.memlekets, "memleketID", "memleketAdi");
+
+            return View();
+        }
+
+        // POST: AdminUrun/Create
+        [HttpPost]
+        public ActionResult UrunCreate(urunler urun, string etiketler, HttpPostedFileBase resim)
+        {
+            if (ModelState.IsValid)
+            { 
+
+                if (resim != null)
+                {
+                    WebImage img = new WebImage(resim.InputStream);
+
+                    FileInfo resiminfo = new FileInfo(resim.FileName);
+
+                    string newfoto = Guid.NewGuid().ToString() + resiminfo.Extension;
+                    img.Resize(800, 350);
+                    img.Save("~/Uploads/urunler/" + newfoto);
+                    urun.resim = "/Uploads/urunler/" + newfoto;
+
+                }
+
+
+                if (etiketler != null)
+                {
+                    String[] etiketdizi = etiketler.Split(',');
+                    foreach (var i in etiketdizi)
+                    {
+                        var yenietiket = new etiket { etiketAdi = i };
+
+
+                        db.etikets.Add(yenietiket);
+
+
+
+                    }
+                    db.urunlers.Add(urun);
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index","Home","kullaniciID"); 
+                }
+
+                ViewBag.kategoriID = new SelectList(db.kategorilers, "kategoriID", "kategoriAdi");
+                ViewBag.kullaniciID = new SelectList(db.kullanicilars, "kullaniciID", "adsoyad");
+                ViewBag.memleketID = new SelectList(db.memlekets, "memleketID", "memleketAdi");
+
+
+
+            }
+            return View(urun);
+
+        }
+
+
+
+
+        // GET: UyeUrun/Delete/5
+        public ActionResult UrunDelete(int id)
+        {
+
+
+            var urun = db.urunlers.Where(u => u.urunID == id).SingleOrDefault();
+
+            if (urun == null)
+            {
+                return HttpNotFound();
+            }
+
+
+
+
+            return View(urun);
+        }
+
+        // POST: UyeUrun/Delete/5
+        [HttpPost]
+        public ActionResult UrunDelete(int id, FormCollection collection)
+        {
+            try
+            {
+
+                var urun1 = db.urunlers.Where(u => u.urunID == id).SingleOrDefault();
+
+                if (urun1 == null)
+                {
+                    return HttpNotFound();
+                }
+
+                if (System.IO.File.Exists(Server.MapPath(urun1.resim)))
+                {
+                    System.IO.File.Delete(Server.MapPath(urun1.resim));
+                }
+
+                foreach (var i in urun1.yorums.ToList())
+                {
+                    db.yorums.Remove(i);
+                }
+
+                foreach (var i in urun1.etikets.ToList())
+                {
+                    db.etikets.Remove(i);
+                }
+
+                db.urunlers.Remove(urun1);
+                db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         protected override void Dispose(bool disposing)

@@ -79,6 +79,11 @@
 </div>
 <p>
     @Html.ActionLink("Düzenle", "Edit", new { id = Model.kullaniciID }) |
-    @Html.ActionLink("Sil", "Delete", new { id = Model.kullaniciID })
+    @Html.ActionLink("Sil", "Delete", new { id = Model.kullaniciID }) |
+    @Html.ActionLink("Ürün Ekle", "UrunCreate", new { id = Model.kullaniciID }) | 
+    @Html.ActionLink("Ürün Sil", "UrunDelete", new { id = Model.kullaniciID })
+
+
+
  
 </p>

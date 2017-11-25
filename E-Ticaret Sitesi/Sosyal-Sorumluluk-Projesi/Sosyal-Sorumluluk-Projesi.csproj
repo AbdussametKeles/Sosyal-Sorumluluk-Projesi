@@ -363,6 +363,8 @@
     <Content Include="Views\Home\KullaniciSozlesmesi.cshtml" />
     <Content Include="Views\Home\GizlilikPolitikasi.cshtml" />
     <Content Include="Views\AdminUye\Edit.cshtml" />
+    <Content Include="Views\Uye\UrunCreate.cshtml" />
+    <Content Include="Views\Uye\UrunDelete.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
