@@ -365,6 +365,7 @@
     <Content Include="Views\AdminUye\Edit.cshtml" />
     <Content Include="Views\Uye\UrunCreate.cshtml" />
     <Content Include="Views\Uye\UrunDelete.cshtml" />
+    <Content Include="Views\Uye\Urunlerim.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -10,6 +10,8 @@ using Sosyal_Sorumluluk_Projesi.Models;
 using System.Web.Helpers;
 using System.IO;
 using System.Web.Security;
+using PagedList;
+using PagedList.Mvc;
 
 namespace Sosyal_Sorumluluk_Projesi.Controllers
 {
@@ -288,7 +290,25 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
 
 
 
+        } 
+
+
+        public ActionResult Urunlerim(int id,int Page=1)
+        {
+            var urunler = db.urunlers.OrderByDescending(u=>u.urunID).Where(u => u.kullanicilar.kullaniciID == id).ToPagedList(Page, 5);
+
+
+
+
+            return View(urunler);
+            
         }
+
+
+
+
+
+
 
         // GET: AdminUrun/Create
         public ActionResult UrunCreate()
@@ -404,8 +424,8 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
 
                 db.urunlers.Remove(urun1);
                 db.SaveChanges();
-
-                return RedirectToAction("Index");
+                 
+                return RedirectToAction("Index", "Home", "kullaniciID");
             }
             catch
             {
