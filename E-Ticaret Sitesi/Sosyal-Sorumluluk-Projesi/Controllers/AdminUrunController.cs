@@ -150,7 +150,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.kategori_id = new SelectList(db.kategorilers, "kategoriID", "kategoriAdi", urun.kategoriID);
+            ViewBag.kategoriID = new SelectList(db.kategorilers, "kategoriID", "kategoriAdi", urun.kategoriID);
 
 
 
@@ -162,7 +162,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         public ActionResult Edit(int id, urunler urun, HttpPostedFileBase resim)
         {
 
-            ViewBag.kategori_id = new SelectList(db.kategorilers, "kategoriID", "kategoriAdi", urun.kategoriID);
+            ViewBag.kategoriID = new SelectList(db.kategorilers, "kategoriID", "kategoriAdi", urun.kategoriID);
 
             var urun1 = db.urunlers.Where(u => u.urunID == id).SingleOrDefault();
 

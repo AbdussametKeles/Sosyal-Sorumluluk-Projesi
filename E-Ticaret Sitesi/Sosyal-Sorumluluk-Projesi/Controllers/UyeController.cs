@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using Sosyal_Sorumluluk_Projesi.Models;
+using Sosyal_Sorumluluk_Projesi.Models; 
 using System.Web.Helpers;
 using System.IO;
 using System.Web.Security;
@@ -432,6 +432,67 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                 return View();
             }
 
+
+        }
+
+        // GET: UyeUrun/Edit/5
+        public ActionResult UrunEdit(int id)
+        { 
+
+            var urun = db.urunlers.Where(u => u.urunID == id).SingleOrDefault();
+
+            if (urun == null)
+            {
+
+                return HttpNotFound();
+            }
+
+            ViewBag.kategoriID = new SelectList(db.kategorilers, "kategoriID", "kategoriAdi", urun.kategoriID);
+
+
+
+            return View(urun);
+        }
+
+        // POST: UyeUrun/Edit/5
+        [HttpPost]
+        public ActionResult UrunEdit(int id, urunler urun, HttpPostedFileBase resim)
+        {
+
+           ViewBag.kategoriID = new SelectList(db.kategorilers, "kategoriID", "kategoriAdi", urun.kategoriID);
+
+            var urun1 = db.urunlers.Where(u => u.urunID == id).SingleOrDefault();
+
+            if (resim != null)
+            {
+                if (System.IO.File.Exists(Server.MapPath(urun1.resim)))
+                {
+                    System.IO.File.Delete(Server.MapPath(urun1.resim));
+                }
+
+                WebImage img = new WebImage(resim.InputStream);
+
+                FileInfo resiminfo = new FileInfo(resim.FileName);
+
+                string newfoto = Guid.NewGuid().ToString() + resiminfo.Extension;
+                img.Resize(800, 350);
+                img.Save("~/Uploads/urunler/" + newfoto);
+                urun1.resim = "/Uploads/urunler/" + newfoto;
+                urun1.urunAdi = urun.urunAdi;
+                urun1.urunİcerik = urun.urunİcerik;
+                urun1.kategoriID = urun.kategoriID;
+                urun1.tarih = urun.tarih;
+                db.SaveChanges();
+                return RedirectToAction("Index","kullaniciID");
+
+
+
+            }
+
+
+
+
+            return View(urun);
 
         }
 

@@ -17,8 +17,8 @@
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
 
-<h2>Urunlerim</h2>
-
+<h2>Eklediğim Ürünler</h2>
+ 
 <p>
     @Html.ActionLink("Ürün Ekle", "UrunCreate")
 </p> 
@@ -85,9 +85,9 @@
         <td> 
             
 
-            @Html.ActionLink("Ürün Sil", "UrunDelete", new { id = item.urunID })   |
-            @Html.ActionLink("Ürün Düzenle", "UrunEdit", new { id = item.urunID }) |
-            @Html.ActionLink("Ürün Detayı", "UrunDetail", new { id = item.urunID }) |
+            @Html.ActionLink("Sil", "UrunDelete", new { id = item.urunID }) |
+            @Html.ActionLink("Düzenle", "UrunEdit", new { id = item.urunID }) 
+         
           
             <br />
 
@@ -103,4 +103,8 @@
     </tr>
 }
 
-</table>
+</table> 
+
+<div>
+    @Html.ActionLink("Geri Dön", "Index/" + Session["kullaniciID"].ToString())
+</div>
