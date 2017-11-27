@@ -63,25 +63,39 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.kategoriler.kategoriAdi)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.kullanicilar.adsoyad)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.memleket.memleketAdi)
-        </td>
+        </td> 
+
         <td>
             @Html.DisplayFor(modelItem => item.urunAdi)
         </td>
+
         <td>
             @Html.DisplayFor(modelItem => item.urunİcerik)
         </td>
+
+
+        <td>
+            <img width="75" src="@item.resim" />
+        </td>
+
+
         <td>
             @Html.DisplayFor(modelItem => item.tarih)
         </td>
-        <td> 
-            <img width="75" src="@item.resim" />
+
+
+         
+        <td>
+            @Html.DisplayFor(modelItem => item.kullanicilar.adsoyad)
+        </td> 
+
+        <td>
+            @Html.DisplayFor(modelItem => item.memleket.memleketAdi)
         </td>
+       
+     
+    
+     
         <td> 
             
 

@@ -50,9 +50,5 @@ namespace Sosyal_Sorumluluk_Projesi.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<yorum> yorums { get; set; }
-
-   
-    
-
-        }
     }
+}

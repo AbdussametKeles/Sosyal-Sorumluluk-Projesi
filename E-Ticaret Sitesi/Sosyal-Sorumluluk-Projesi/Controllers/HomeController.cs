@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Sosyal_Sorumluluk_Projesi.Models; 
-
+using Sosyal_Sorumluluk_Projesi.Models;
+using PagedList;
+using PagedList.Mvc;
 
 namespace Sosyal_Sorumluluk_Projesi.Controllers
 {
@@ -13,11 +14,11 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         Model1 db = new Model1();
         // GET: Home
         public ActionResult Index()
-        {
-
-            var urun = db.urunlers.Where(u => u.urunID > 0);
+        { 
+             
+            var urun = db.urunlers.OrderByDescending(u => u.urunID).Take(6);
             return View(urun);
-        } 
+        }  
 
         public ActionResult Hakkimizda()
         {
@@ -44,6 +45,20 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         {
             return View();
 
+        }
+
+        public JsonResult YorumYap(string yorum, int UrunID)
+        {
+            var kullaniciID = Session["kullaniciID"];
+            if (yorum == null)
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            db.yorums.Add(new yorum { kullaniciID = Convert.ToInt32(kullaniciID), urunID = UrunID, yorumIcerik = yorum, tarih = DateTime.Now });
+            db.SaveChanges();
+
+
+            return Json(false, JsonRequestBehavior.AllowGet);
         }
 
 

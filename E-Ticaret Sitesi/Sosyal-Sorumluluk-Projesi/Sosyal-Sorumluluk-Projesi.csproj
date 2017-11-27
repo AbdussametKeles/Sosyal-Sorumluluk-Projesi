@@ -276,7 +276,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\etiket.cs" />
     <Compile Include="Models\kategoriler.cs" />
     <Compile Include="Models\kullanicilar.cs" />
     <Compile Include="Models\memleket.cs" />

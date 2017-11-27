@@ -92,7 +92,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
 
         // POST: AdminUrun/Create
         [HttpPost]
-        public ActionResult Create(urunler urun, string etiketler, HttpPostedFileBase resim)
+        public ActionResult Create(urunler urun, HttpPostedFileBase resim)
         {
             if (ModelState.IsValid)
             {
@@ -111,25 +111,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                 }
 
 
-                if (etiketler != null)
-                {
-                    String[] etiketdizi = etiketler.Split(',');
-                    foreach (var i in etiketdizi)
-                    {
-                        var yenietiket = new etiket { etiketAdi = i };
-
-
-                        db.etikets.Add(yenietiket);
-
-
-
-                    }
-                    db.urunlers.Add(urun);
-                    db.SaveChanges();
-
-                    return RedirectToAction("Index");
-                }
-
+            
 
 
 
@@ -245,10 +227,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                     db.yorums.Remove(i);
                 } 
 
-                foreach (var i in urun1.etikets.ToList())
-                {
-                    db.etikets.Remove(i);
-                }
+              
 
                 db.urunlers.Remove(urun1);
                 db.SaveChanges();

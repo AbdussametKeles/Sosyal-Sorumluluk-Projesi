@@ -6,12 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
-using Sosyal_Sorumluluk_Projesi.Models; 
+using Sosyal_Sorumluluk_Projesi.Models;
 using System.Web.Helpers;
 using System.IO;
 using System.Web.Security;
 using PagedList;
 using PagedList.Mvc;
+using System.Drawing;
 
 namespace Sosyal_Sorumluluk_Projesi.Controllers
 {
@@ -129,6 +130,8 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         public ActionResult Create()
         {
             ViewBag.memleketID = new SelectList(db.memlekets, "memleketID", "memleketAdi");
+
+
             
             return View();
         }
@@ -144,7 +147,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                 {
                  
 
-                    if (resim != null)
+                    if (resim != null)  
                     {
 
                         WebImage img = new WebImage(resim.InputStream);
@@ -175,7 +178,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                 } 
           
             ViewBag.memleketID = new SelectList(db.memlekets, "memleketID", "memleketAdi", kullanicilar.memleketID);
-            //Response.Write("Kayıt İşlemi Başarıyla Gerçekleşti");
+           
            
             return View(kullanicilar);
         }
@@ -323,10 +326,11 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
 
         // POST: AdminUrun/Create
         [HttpPost]
-        public ActionResult UrunCreate(urunler urun, string etiketler, HttpPostedFileBase resim)
+        public ActionResult UrunCreate(urunler urun,  HttpPostedFileBase resim)
         {
+             
             if (ModelState.IsValid)
-            { 
+            {
 
                 if (resim != null)
                 {
@@ -342,35 +346,20 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                 }
 
 
-                if (etiketler != null)
-                {
-                    String[] etiketdizi = etiketler.Split(',');
-                    foreach (var i in etiketdizi)
-                    {
-                        var yenietiket = new etiket { etiketAdi = i };
-
-
-                        db.etikets.Add(yenietiket);
-
-
-
-                    }
                     db.urunlers.Add(urun);
                     db.SaveChanges();
 
-                    return RedirectToAction("Index","Home","kullaniciID"); 
+                    return RedirectToAction("Index", "Home", "kullaniciID");
                 }
 
                 ViewBag.kategoriID = new SelectList(db.kategorilers, "kategoriID", "kategoriAdi");
                 ViewBag.kullaniciID = new SelectList(db.kullanicilars, "kullaniciID", "adsoyad");
                 ViewBag.memleketID = new SelectList(db.memlekets, "memleketID", "memleketAdi");
 
-
+              return View(urun);
 
             }
-            return View(urun);
-
-        }
+          
 
 
 
@@ -417,10 +406,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                     db.yorums.Remove(i);
                 }
 
-                foreach (var i in urun1.etikets.ToList())
-                {
-                    db.etikets.Remove(i);
-                }
+              
 
                 db.urunlers.Remove(urun1);
                 db.SaveChanges();
@@ -483,7 +469,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                 urun1.kategoriID = urun.kategoriID;
                 urun1.tarih = urun.tarih;
                 db.SaveChanges();
-                return RedirectToAction("Index","kullaniciID");
+                return RedirectToAction( "Urunlerim/" + Session["kullaniciID"].ToString());
 
 
 
