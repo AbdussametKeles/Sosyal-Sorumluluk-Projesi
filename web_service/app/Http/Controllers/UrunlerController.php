@@ -66,7 +66,7 @@ class UrunlerController extends Controller
       foreach ($urun_gorselleri as $gorsel) {
         $resimler[] = [
           'id' => DB::table('resimler')->insertGetId($gorsel),
-          'resim_url' => url("/resim//{$gorsel['resim']}"),
+          'resim_url' => url("/resim/{$gorsel['resim']}"),
         ];
       }
 
