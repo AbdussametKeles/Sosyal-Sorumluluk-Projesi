@@ -54,9 +54,11 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                     break;
             }
 
+        
+
             int pageSize = 3;
-            int pageNumber = (page ?? 1);
-            return View(uye.ToPagedList(pageNumber, pageSize));
+            int pageNumber = (page ?? 1); 
+            return View(uye.ToPagedList(pageNumber, pageSize)); 
         }
 
         // GET: AdminUye/Details/5
@@ -155,7 +157,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "kullaniciID,yetkiID,memleketID,adsoyad,kullaniciAdi,mail,sifre,telefon,resim")] kullanicilar kullanicilar,HttpPostedFileBase resim, int id)
+        public ActionResult Edit([Bind(Include = "kullaniciID,yetkiID,memleketID,adsoyad,kullaniciAdi,mail,sifre,telefon,resim")] kullanicilar kullanicilar, HttpPostedFileBase resim, int id)
         {
             if (ModelState.IsValid)
             {
@@ -187,7 +189,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
 
                 uye1.telefon = kullanicilar.telefon;
                 db.SaveChanges();
-                Session["kullaniciadi"] = kullanicilar.kullaniciID; 
+                Session["kullaniciadi"] = kullanicilar.kullaniciID;
 
 
                 return RedirectToAction("Index", "AdminUye", new { id = uye1.kullaniciID });
@@ -202,7 +204,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
             return View(kullanicilar);
         }
 
-        // GET: AdminUye/Delete/5
+        //GET: AdminUye/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)

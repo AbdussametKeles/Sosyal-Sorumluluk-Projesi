@@ -9,6 +9,10 @@ using System.Web.Mvc;
 using Sosyal_Sorumluluk_Projesi.Models;
 using System.Web.Helpers;
 using System.IO;
+using System.Web.Security;
+using PagedList;
+using PagedList.Mvc;
+using System.Drawing;
 
 namespace Sosyal_Sorumluluk_Projesi.Controllers
 {
@@ -20,6 +24,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         public ActionResult Index(int id)
         {
             var uye = db.kullanicilars.Where(k => k.kullaniciID == id).SingleOrDefault();
+           
             if (Convert.ToInt32(Session["kullaniciID"]) != uye.kullaniciID)
             {
                 return HttpNotFound();
@@ -27,6 +32,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
 
 
             return View(uye);
+         
         }
 
         // GET: Uye/Details/5 
@@ -116,12 +122,16 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
             Session.Abandon();
             return RedirectToAction("Index", "Home");
         }
+         
+          
 
 
         // GET: Uye/Create
         public ActionResult Create()
         {
             ViewBag.memleketID = new SelectList(db.memlekets, "memleketID", "memleketAdi");
+
+
             
             return View();
         }
@@ -135,9 +145,9 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         {   
                 if (ModelState.IsValid)
                 {
+                 
 
-
-                    if (resim != null)
+                    if (resim != null)  
                     {
 
                         WebImage img = new WebImage(resim.InputStream);
@@ -168,7 +178,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                 } 
           
             ViewBag.memleketID = new SelectList(db.memlekets, "memleketID", "memleketAdi", kullanicilar.memleketID);
-            //Response.Write("Kayıt İşlemi Başarıyla Gerçekleşti");
+           
            
             return View(kullanicilar);
         }
@@ -283,7 +293,210 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
 
 
 
+        } 
+
+
+        public ActionResult Urunlerim(int id,int Page=1)
+        {
+            var urunler = db.urunlers.OrderByDescending(u=>u.urunID).Where(u => u.kullanicilar.kullaniciID == id).ToPagedList(Page, 5);
+
+
+
+
+            return View(urunler);
+            
         }
+
+
+
+
+
+
+
+        // GET: AdminUrun/Create
+        public ActionResult UrunCreate()
+        {
+
+            ViewBag.kategoriID = new SelectList(db.kategorilers, "kategoriID", "kategoriAdi");
+            ViewBag.kullaniciID = new SelectList(db.kullanicilars, "kullaniciID", "adsoyad");
+            ViewBag.memleketID = new SelectList(db.memlekets, "memleketID", "memleketAdi");
+
+            return View();
+        }
+
+        // POST: AdminUrun/Create
+        [HttpPost]
+        public ActionResult UrunCreate(urunler urun,  HttpPostedFileBase resim)
+        {
+             
+            if (ModelState.IsValid)
+            {
+
+                if (resim != null)
+                {
+                    WebImage img = new WebImage(resim.InputStream);
+
+                    FileInfo resiminfo = new FileInfo(resim.FileName);
+
+                    string newfoto = Guid.NewGuid().ToString() + resiminfo.Extension;
+                    img.Resize(800, 350);
+                    img.Save("~/Uploads/urunler/" + newfoto);
+                    urun.resim = "/Uploads/urunler/" + newfoto;
+
+                }
+
+
+                    db.urunlers.Add(urun);
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index", "Home", "kullaniciID");
+                }
+
+                ViewBag.kategoriID = new SelectList(db.kategorilers, "kategoriID", "kategoriAdi");
+                ViewBag.kullaniciID = new SelectList(db.kullanicilars, "kullaniciID", "adsoyad");
+                ViewBag.memleketID = new SelectList(db.memlekets, "memleketID", "memleketAdi");
+
+              return View(urun);
+
+            }
+          
+
+
+
+
+        // GET: UyeUrun/Delete/5
+        public ActionResult UrunDelete(int id)
+        {
+
+
+            var urun = db.urunlers.Where(u => u.urunID == id).SingleOrDefault();
+
+            if (urun == null)
+            {
+                return HttpNotFound();
+            }
+
+
+
+
+            return View(urun);
+        }
+
+        // POST: UyeUrun/Delete/5
+        [HttpPost]
+        public ActionResult UrunDelete(int id, FormCollection collection)
+        {
+            try
+            {
+
+                var urun1 = db.urunlers.Where(u => u.urunID == id).SingleOrDefault();
+
+                if (urun1 == null)
+                {
+                    return HttpNotFound();
+                }
+
+                if (System.IO.File.Exists(Server.MapPath(urun1.resim)))
+                {
+                    System.IO.File.Delete(Server.MapPath(urun1.resim));
+                }
+
+                foreach (var i in urun1.yorums.ToList())
+                {
+                    db.yorums.Remove(i);
+                }
+
+              
+
+                db.urunlers.Remove(urun1);
+                db.SaveChanges();
+                 
+                return RedirectToAction("Index", "Home", "kullaniciID");
+            }
+            catch
+            {
+                return View();
+            }
+
+
+        }
+
+        // GET: UyeUrun/Edit/5
+        public ActionResult UrunEdit(int id)
+        { 
+
+            var urun = db.urunlers.Where(u => u.urunID == id).SingleOrDefault();
+
+            if (urun == null)
+            {
+
+                return HttpNotFound();
+            }
+
+            ViewBag.kategoriID = new SelectList(db.kategorilers, "kategoriID", "kategoriAdi", urun.kategoriID);
+
+
+
+            return View(urun);
+        }
+
+        // POST: UyeUrun/Edit/5
+        [HttpPost]
+        public ActionResult UrunEdit(int id, urunler urun, HttpPostedFileBase resim)
+        {
+
+           ViewBag.kategoriID = new SelectList(db.kategorilers, "kategoriID", "kategoriAdi", urun.kategoriID);
+
+            var urun1 = db.urunlers.Where(u => u.urunID == id).SingleOrDefault();
+
+            if (resim != null)
+            {
+                if (System.IO.File.Exists(Server.MapPath(urun1.resim)))
+                {
+                    System.IO.File.Delete(Server.MapPath(urun1.resim));
+                }
+
+                WebImage img = new WebImage(resim.InputStream);
+
+                FileInfo resiminfo = new FileInfo(resim.FileName);
+
+                string newfoto = Guid.NewGuid().ToString() + resiminfo.Extension;
+                img.Resize(800, 350);
+                img.Save("~/Uploads/urunler/" + newfoto);
+                urun1.resim = "/Uploads/urunler/" + newfoto;
+                urun1.urunAdi = urun.urunAdi;
+                urun1.urunİcerik = urun.urunİcerik;
+                urun1.kategoriID = urun.kategoriID;
+                urun1.tarih = urun.tarih;
+                db.SaveChanges();
+                return RedirectToAction( "Urunlerim/" + Session["kullaniciID"].ToString());
+
+
+
+            }
+
+
+
+
+            return View(urun);
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         protected override void Dispose(bool disposing)

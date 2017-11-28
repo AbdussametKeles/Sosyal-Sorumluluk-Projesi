@@ -270,11 +270,12 @@
     <Compile Include="Controllers\AdminUrunController.cs" />
     <Compile Include="Controllers\AdminUyeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\KategoriUrunController.cs" />
+    <Compile Include="Controllers\UrunlerController.cs" />
     <Compile Include="Controllers\UyeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\etiket.cs" />
     <Compile Include="Models\kategoriler.cs" />
     <Compile Include="Models\kullanicilar.cs" />
     <Compile Include="Models\memleket.cs" />
@@ -356,6 +357,15 @@
     <Content Include="Views\Uye\Delete.cshtml" />
     <Content Include="Views\Uye\Edit.cshtml" />
     <Content Include="Views\Uye\Details.cshtml" />
+    <Content Include="Views\Urunler\Detay.cshtml" />
+    <Content Include="Views\KategoriUrun\Index.cshtml" />
+    <Content Include="Views\Home\KullaniciSozlesmesi.cshtml" />
+    <Content Include="Views\Home\GizlilikPolitikasi.cshtml" />
+    <Content Include="Views\AdminUye\Edit.cshtml" />
+    <Content Include="Views\Uye\UrunCreate.cshtml" />
+    <Content Include="Views\Uye\UrunDelete.cshtml" />
+    <Content Include="Views\Uye\Urunlerim.cshtml" />
+    <Content Include="Views\Uye\UrunEdit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -1,0 +1,239 @@
+﻿
+@{
+    ViewBag.Title = "Detay";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+@model Sosyal_Sorumluluk_Projesi.Models.urunler
+
+@using Sosyal_Sorumluluk_Projesi.Models;
+
+<div class="col-sm-12 padding-right">
+    <hr />
+    <div class="product-details">
+        <!--product-details-->
+        <div class="col-sm-5">
+            <div class="view-product">
+                <img src="@Model.resim" alt="@Model.urunAdi" />
+
+            </div>
+            <div id="similar-product" class="carousel slide" data-ride="carousel">
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <a href=""><img src="@Model.resim" width="150" alt=""></a>
+                        <a href=""><img src="images/product-details/similar2.jpg" alt=""></a>
+                        <a href=""><img src="images/product-details/similar3.jpg" alt=""></a>
+                    </div>
+
+
+                </div>
+
+
+                <!-- Controls -->
+                <a class="left item-control" href="@Model.resim" data-slide="prev">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                <a class="right item-control" href="@Model.resim" data-slide="next">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+
+
+
+            </div>
+
+        </div>
+
+
+        <div class="col-sm-7">
+            <div class="product-information">
+                <!--/product-information-->
+                <img src="images/product-details/new.jpg" class="newarrival" alt="" />
+                <h2>@Model.urunAdi</h2>
+
+
+                <span>
+
+                </span>
+
+                <p><b>Ürün Yeri:</b>@Model.memleket.memleketAdi</p>
+                <p><b>Gönderici:</b>@Model.kullanicilar.adsoyad</p>
+                <p><b>Gönderici Telefon:</b>@Model.kullanicilar.telefon</p>
+            </div><!--/product-information-->
+        </div>
+
+
+    </div><!--/product-details-->
+
+    <div class="category-tab shop-details-tab">
+        <!--category-tab-->
+        <div class="col-sm-12">
+            <ul class="nav nav-tabs">
+                <li><a href="" data-toggle="tab">Ürün Açıklaması</a></li>
+                <li class="active"><a href="/" data-toggle="tab">Yorumlar(5)</a></li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div class="tab-pane fade" id="details">
+                <div class="col-sm-3">
+                    <div class="product-image-wrapper">
+                        <div class="single-products">
+                            <div class="productinfo text-center">
+                                <img src="@Model.resim" alt="" />
+                                @*<h2>$56</h2>
+                                    <p>Easy Polo Black Edition</p>*@
+                                <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+
+            <div class="tab-pane fade active in" id="reviews">
+                <div class="col-sm-12">
+                    <ul>
+                        <li><a href=""><i class="fa fa-user"></i>@Model.kullanicilar.kullaniciAdi</a></li>
+                        <li><a href=""><i class="fa fa-calendar-o"></i>@Model.tarih</a></li>
+                    </ul>
+                    <p>@Model.urunİcerik</p>
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+
+
+
+            @if (Session["kullaniciID"] != null)
+            {
+
+
+                <div class="well">
+                    <p><b>Yorumunuz</b></p>
+
+                    <form role="form">
+
+                        <textarea id="yorum" typeof="text"></textarea>
+
+                        <button type="button" id="gonder" class="btn btn-default pull-right">
+                            Yorum Yap
+                        </button>
+                    </form>
+                </div>
+
+            }
+
+
+            else
+            {
+                <h5>Yorum yapmak için kullanıcı girişi yapınız.</h5>
+                <p><a href="/Uye/Login/">Giriş Yap</a></p>
+
+            }
+
+
+
+
+
+
+
+        </div>
+    </div><!--/category-tab-->
+
+ 
+
+
+
+
+
+
+    <div class="media">
+        @foreach (var item in Model.yorums.ToList())
+        {
+
+            <div class="well">
+                <a class="pull-left" href="#">
+                    <img width="50" class="img-circle" src="@item.kullanicilar.resim" alt="@item.kullanicilar.adsoyad">
+                </a>
+                <div class="media-body">
+                    <h4 class="media-heading">
+                        @item.kullanicilar.kullaniciAdi
+                        <small>@item.tarih</small>
+                    </h4>
+
+                    @item.yorumIcerik - @if (Convert.ToInt32(Session["kullaniciID"]) == item.kullaniciID)
+                    {
+                        <a class="btn btn-danger" href="/Home/YorumSil/@item.yorumID">Sil</a>
+
+                    }
+
+
+
+                </div>
+            </div>
+
+        }
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+ 
+
+
+<script src="~/Content/js/jquery.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="~/Content/js/bootstrap.min.js"></script> 
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#gonder").click(function(){
+
+            var yorumunuz = $("#yorum").val();
+            $.ajax({
+                url:'/Home/YorumYap/',
+                data:{yorum:yorumunuz, urunID:@Model.urunID},
+                type:'POST', 
+                dataType:'json', 
+                success:function(data){
+
+                    alert("Yorum Gönderildi:" + yorumunuz); }});
+
+
+        });
+    })
+
+
+</script>
+ 

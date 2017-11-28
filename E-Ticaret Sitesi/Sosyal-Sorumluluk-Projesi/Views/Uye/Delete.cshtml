@@ -81,9 +81,10 @@
     @using (Html.BeginForm("Delete", "Uye", FormMethod.Post, new { enctype = "multipart/form-data" })) {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Sil" class="btn btn-default" /> |
-            @Html.ActionLink("Geri Dön", "Index","Home")
-        </div>
-    }
-</div>
+        <div class="form-actions no-color"> 
+            <input type="submit" value="Sil" class="btn btn-default" /> | 
+            @Html.ActionLink("Geri Dön" ,"Index/" + Session["kullaniciID"].ToString())
+        </div>   
+    }    
+</div> 
+ 

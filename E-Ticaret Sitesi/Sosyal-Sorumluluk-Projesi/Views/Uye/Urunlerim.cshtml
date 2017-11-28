@@ -1,0 +1,124 @@
+﻿
+@model IPagedList<Sosyal_Sorumluluk_Projesi.Models.urunler>
+
+
+@using PagedList
+@using PagedList.Mvc
+
+
+
+
+
+
+
+
+@{
+    ViewBag.Title = "Urunlerim";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>Eklediğim Ürünler</h2>
+ 
+<p>
+    @Html.ActionLink("Ürün Ekle", "UrunCreate")
+</p> 
+<table class="table">
+    <tr>
+        <th> 
+            @Html.Label("Kategori Adı")
+        </th>
+        <th>
+            @Html.Label("Ürün Adı")
+        </th>
+
+        <th>
+            @Html.Label("Ürün İçerik")
+        </th>
+
+        <th>
+            @Html.Label("Ürün Resmi")
+        </th>
+
+        <th>
+
+            @Html.Label("Tarih")
+
+        </th>
+
+        <th>
+
+            @Html.Label("Kullanici Bilgileri")
+
+        </th>
+
+        <th>
+
+            @Html.Label("Memleket")
+
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.kategoriler.kategoriAdi)
+        </td> 
+
+        <td>
+            @Html.DisplayFor(modelItem => item.urunAdi)
+        </td>
+
+        <td>
+            @Html.DisplayFor(modelItem => item.urunİcerik)
+        </td>
+
+
+        <td>
+            <img width="75" src="@item.resim" />
+        </td>
+
+
+        <td>
+            @Html.DisplayFor(modelItem => item.tarih)
+        </td>
+
+
+         
+        <td>
+            @Html.DisplayFor(modelItem => item.kullanicilar.adsoyad)
+        </td> 
+
+        <td>
+            @Html.DisplayFor(modelItem => item.memleket.memleketAdi)
+        </td>
+       
+     
+    
+     
+        <td> 
+            
+
+            @Html.ActionLink("Sil", "UrunDelete", new { id = item.urunID }) |
+            @Html.ActionLink("Düzenle", "UrunEdit", new { id = item.urunID }) 
+         
+          
+            <br />
+
+            <br />
+
+
+            <br />
+
+            <br />
+            <br />
+
+        </td>
+    </tr>
+}
+
+</table> 
+
+<div>
+    @Html.ActionLink("Geri Dön", "Index/" + Session["kullaniciID"].ToString())
+</div>

@@ -18,11 +18,51 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
 
 
         // GET: AdminUrun
-        public ActionResult Index(int Page=1)
+        public ActionResult Index(string sortOrder, string currentFilter, string searchString, int? page)
         {
-            var urunler = db.urunlers.OrderByDescending(u=>u.urunID).ToPagedList(Page, 10);
-            return View(urunler);
-        } 
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+
+
+
+
+            if (searchString != null)
+            {
+                page = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+
+            var urun = from s in db.urunlers
+                       select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                urun = urun.Where(s => s.kategoriler.kategoriAdi.Contains(searchString)
+                                       || s.memleket.memleketAdi.Contains(searchString));
+
+            }
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    urun = urun.OrderByDescending(s => s.kategoriler.kategoriAdi);
+                    break;
+
+
+
+                default:
+                    urun = urun.OrderBy(s => s.kategoriler.kategoriAdi);
+                    break;
+            } 
+
+            int pageSize = 3;
+            int pageNumber = (page ?? 1);
+            return View(urun.ToPagedList(pageNumber, pageSize));
+        }
 
         // GET: AdminUrun/Details/5
         public ActionResult Details(int? id)
@@ -32,11 +72,11 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             urunler urun = db.urunlers.Find(id);
-            if (urun== null)
+            if (urun == null)
             {
                 return HttpNotFound();
             }
-            return View(urun); 
+            return View(urun);
         }
 
         // GET: AdminUrun/Create
@@ -47,12 +87,12 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
             ViewBag.kullaniciID = new SelectList(db.kullanicilars, "kullaniciID", "adsoyad");
             ViewBag.memleketID = new SelectList(db.memlekets, "memleketID", "memleketAdi");
 
-            return View();
+            return View();  
         }
 
         // POST: AdminUrun/Create
         [HttpPost]
-        public ActionResult Create(urunler urun, string etiketler, HttpPostedFileBase resim)
+        public ActionResult Create(urunler urun, HttpPostedFileBase resim)
         {
             if (ModelState.IsValid)
             {
@@ -71,25 +111,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                 }
 
 
-                if (etiketler != null)
-                {
-                    String[] etiketdizi = etiketler.Split(',');
-                    foreach (var i in etiketdizi)
-                    {
-                        var yenietiket = new etiket { etiketAdi = i };
-
-
-                        db.etikets.Add(yenietiket);
-
-
-
-                    }
-                    db.urunlers.Add(urun);
-                    db.SaveChanges();
-
-                    return RedirectToAction("Index");
-                }
-
+            
 
 
 
@@ -110,7 +132,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                 return HttpNotFound();
             }
 
-            ViewBag.kategori_id = new SelectList(db.kategorilers, "kategoriID", "kategoriAdi", urun.kategoriID);
+            ViewBag.kategoriID = new SelectList(db.kategorilers, "kategoriID", "kategoriAdi", urun.kategoriID);
 
 
 
@@ -121,45 +143,48 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         [HttpPost]
         public ActionResult Edit(int id, urunler urun, HttpPostedFileBase resim)
         {
-            try
-            {
-                var urun1 = db.urunlers.Where(u => u.urunID == id).SingleOrDefault();
 
-                if (resim != null)
+            ViewBag.kategoriID = new SelectList(db.kategorilers, "kategoriID", "kategoriAdi", urun.kategoriID);
+
+            var urun1 = db.urunlers.Where(u => u.urunID == id).SingleOrDefault();
+
+            if (resim != null)
+            {
+                if (System.IO.File.Exists(Server.MapPath(urun1.resim)))
                 {
-                    if (System.IO.File.Exists(Server.MapPath(urun1.resim)))
-                    {
-                        System.IO.File.Delete(Server.MapPath(urun1.resim));
-                    }
-
-                    WebImage img = new WebImage(resim.InputStream);
-
-                    FileInfo resiminfo = new FileInfo(resim.FileName);
-
-                    string newfoto = Guid.NewGuid().ToString() + resiminfo.Extension;
-                    img.Resize(800, 350);
-                    img.Save("~/Uploads/urunler/" + newfoto);
-                    urun1.resim = "/Uploads/urunler/" + newfoto;
-                    urun1.urunAdi = urun.urunAdi;
-                    urun1.urunİcerik = urun.urunİcerik;
-                    urun1.kategoriID = urun.kategoriID;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-
+                    System.IO.File.Delete(Server.MapPath(urun1.resim));
                 }
-                return View();
-            }
 
+                WebImage img = new WebImage(resim.InputStream);
 
+                FileInfo resiminfo = new FileInfo(resim.FileName);
 
+                string newfoto = Guid.NewGuid().ToString() + resiminfo.Extension;
+                img.Resize(800, 350);
+                img.Save("~/Uploads/urunler/" + newfoto);
+                urun1.resim = "/Uploads/urunler/" + newfoto;
+                urun1.urunAdi = urun.urunAdi;
+                urun1.urunİcerik = urun.urunİcerik;
+                urun1.kategoriID = urun.kategoriID;
+                urun1.tarih = urun.tarih; 
+                db.SaveChanges();
+                return RedirectToAction("Index");
 
-            catch
-            {
-                ViewBag.kategori_id = new SelectList(db.kategorilers, "kategori_id", "kategori_adi", urun.kategoriID);
-                return View(urun);
-            }
+              
+
+            } 
+
+          
+           
+
+              return View(urun);
+
         }
 
+                 
+
+
+  
         // GET: AdminUrun/Delete/5
         public ActionResult Delete(int id)
         {
@@ -202,10 +227,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                     db.yorums.Remove(i);
                 } 
 
-                foreach (var i in urun1.etikets.ToList())
-                {
-                    db.etikets.Remove(i);
-                }
+              
 
                 db.urunlers.Remove(urun1);
                 db.SaveChanges();
