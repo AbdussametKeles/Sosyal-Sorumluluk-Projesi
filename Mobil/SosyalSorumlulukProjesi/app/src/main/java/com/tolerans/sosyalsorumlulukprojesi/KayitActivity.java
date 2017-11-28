@@ -118,8 +118,6 @@ public class KayitActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 memleket= String.valueOf(position+1);
-                Toast.makeText(getApplicationContext(),memleket,Toast.LENGTH_LONG).show();
-
             }
 
             @Override
@@ -253,10 +251,11 @@ public class KayitActivity extends AppCompatActivity {
 
     }
     private void showFileChooser() {
+
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, "Resim Seç"), PICK_IMAGE_REQUEST);
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -274,6 +273,7 @@ public class KayitActivity extends AppCompatActivity {
         }
     }
     public String getPath(Uri uri) {
+
         Cursor cursor = getContentResolver().query(uri, null, null, null, null);
         cursor.moveToFirst();
         String document_id = cursor.getString(0);
@@ -311,30 +311,23 @@ public class KayitActivity extends AppCompatActivity {
         editor.commit();
     }
     private void requestStoragePermission() {
+        //depolama izni methodu
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
             return;
 
-        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            //If the user has denied the permission previously your code will come to this block
-            //Here you can explain why you need this permission
-            //Explain here why you need this permission
-        }
-        //And finally ask for the permission
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-        //Checking the request code of our request
+        //request kod eşleşiyorsa
         if (requestCode == STORAGE_PERMISSION_CODE) {
 
-            //If permission is granted
+            //izin kontrolü
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //Displaying a toast
-                Toast.makeText(this, "Permission granted now you can read the storage", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Depo Alanı artık okunabilir", Toast.LENGTH_LONG).show();
             } else {
-                //Displaying another toast if permission is not granted
-                Toast.makeText(this, "Oops you just denied the permission", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "İzin esnasında hata oluştu", Toast.LENGTH_LONG).show();
             }
         }
     }

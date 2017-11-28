@@ -32,7 +32,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    String bundleJson;
+    String bundleJson,token;
     RecyclerView recyclerView;
     List<Projeler> projelerList;
     @Override
@@ -54,6 +54,11 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        Menu menu = navigationView.getMenu();
+        menu.findItem(R.id.nav_cikis).setVisible(false);
+        menu.findItem(R.id.nav_proje_ekle).setVisible(false);
+        menu.findItem(R.id.nav_profil).setVisible(false);
+
 
         Bundle bundle = getIntent().getExtras();
 
@@ -62,7 +67,6 @@ public class MainActivity extends AppCompatActivity
             bundleJson =bundle.getString("jsonveri");
             Toast.makeText(this,bundleJson,Toast.LENGTH_LONG).show();
             //navigation bardaki butonlara ulaşmamızı sağlayacak
-            Menu menu = navigationView.getMenu();
             menu.findItem(R.id.nav_cikis).setVisible(true);
             menu.findItem(R.id.nav_proje_ekle).setVisible(true);
             menu.findItem(R.id.nav_profil).setVisible(true);
@@ -160,6 +164,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_proje_ekle) {
             Intent intent = new Intent(MainActivity.this,ProjeEkleActivity.class);
+            intent.putExtra("jsonveriler",bundleJson);
             startActivity(intent);
         } else if (id == R.id.nav_profil) {
             Intent intent = new Intent(MainActivity.this,ProfilActivity.class);
@@ -176,6 +181,10 @@ public class MainActivity extends AppCompatActivity
             //uygulamayı baştan başlattık.
             Intent intent = new Intent(MainActivity.this,MainActivity.class);
             startActivity(intent);
+        } else if(id== R.id.nav_Icerik){
+            Intent intent = new Intent(MainActivity.this,ProjeIcerikActivity.class);
+            startActivity(intent);
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -21,6 +21,10 @@
                 android:icon="@drawable/ic_menu_send"
                 android:title="Çıkış Yap"
                 android:visible="false"/>
+            <item
+                android:id="@+id/nav_Icerik"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="İçerik"/>
         </menu>
     </item>
 

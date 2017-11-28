@@ -6,17 +6,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.tolerans.sosyalsorumlulukprojesi.ProfilActivity">
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-        <ImageView
+    <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:id="@+id/imgProfilResim"
-            />
-    </LinearLayout>
+            android:id="@+id/imgProfilResim" />
+
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

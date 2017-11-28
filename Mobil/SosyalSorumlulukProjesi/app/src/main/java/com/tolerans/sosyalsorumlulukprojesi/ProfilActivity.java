@@ -1,6 +1,9 @@
 package com.tolerans.sosyalsorumlulukprojesi;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.opengl.Visibility;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -28,6 +32,7 @@ import net.gotev.uploadservice.UploadNotificationConfig;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +45,7 @@ public class ProfilActivity extends AppCompatActivity {
     int position,memleketPosition;
     Button btnGuncelle;
     TextView profilTel ,profilDTarihi,profilSehir,profilAd,profilMail,txtdTarihi,profilSifre;
+    private DatePickerDialog.OnDateSetListener dataSetListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +62,6 @@ public class ProfilActivity extends AppCompatActivity {
             startActivity(intent);
         }else{
             json =bundle.getString("jsonveriler");
-            Toast.makeText(getApplicationContext(),json,Toast.LENGTH_LONG).show();
         }
         btnGuncelle = (Button) findViewById(R.id.profilGuncelleBtn);
          profilAd = (TextView) findViewById(R.id.txtProfilAd);
@@ -77,7 +82,6 @@ public class ProfilActivity extends AppCompatActivity {
         try {
             JSONObject jsonObject = new JSONObject(json);
             token = jsonObject.getString("token");
-            Toast.makeText(getApplicationContext(),token,Toast.LENGTH_LONG).show();
             position = jsonObject.getJSONObject("kullan\u0131c\u0131").getInt("memleket_id")-1;
             profilMail.setText(jsonObject.getJSONObject("kullan\u0131c\u0131").getString("mail"));
             profilSifre.setText(jsonObject.getJSONObject("kullan\u0131c\u0131").getString("sifre"));
@@ -85,13 +89,41 @@ public class ProfilActivity extends AppCompatActivity {
 
             profilSehir.setText(String.valueOf(memleketler[ jsonObject.getJSONObject("kullan\u0131c\u0131").getInt("memleket_id")-1]));
             profilDTarihi.setText(jsonObject.getJSONObject("kullan\u0131c\u0131").getString("dogum_tarihi").toString());
+            profilDTarihi.setText(profilDTarihi.getText().toString().replace("-","/"));
             profilTel.setText(jsonObject.getJSONObject("kullan\u0131c\u0131").getString("telefon").toString());
-
-            Picasso.with(getApplicationContext()).load(jsonObject.getJSONObject("kullan\u0131c\u0131").getString("resim").toString()).into(imgProfil);
+            String resimUrl =jsonObject.getJSONObject("kullan\u0131c\u0131").getString("resim").toString();
+            Toast.makeText(getApplicationContext(),resimUrl,Toast.LENGTH_LONG).show();
+            Picasso.with(this).load(resimUrl).into(imgProfil);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        txtdTarihi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                int day = cal.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog dialog= new DatePickerDialog(ProfilActivity.this,
+                        android.R.style.Theme_DeviceDefault_Dialog_MinWidth,
+                        dataSetListener,
+                        year,month,day);
+
+                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                dialog.show();
+            }
+        });
+
+        dataSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month+=1;
+                txtdTarihi.setText(year+"/"+month+"/"+dayOfMonth);
+            }
+        };
 
         btnGuncelle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,8 +135,9 @@ public class ProfilActivity extends AppCompatActivity {
 
     }
 
+
     private void profilGuncelle() {
-        Toast.makeText(getApplicationContext(),token,Toast.LENGTH_LONG).show();
+
         StringRequest istek = new StringRequest(Request.Method.POST, "http://service.sosyalsorumluluk.mansetler.org/kullanici/profil_guncelle",
                 new Response.Listener<String>() {
                     @Override
@@ -135,8 +168,8 @@ public class ProfilActivity extends AppCompatActivity {
                 Map<String,String> params = new HashMap<String,String>();
                 params.put("token_string",token);
                 params.put("adi_soyadi", editName.getText().toString());
-                params.put("dogum_tarihi","1995/12/12");
-                params.put("memleket_id",String.valueOf(50));
+                params.put("dogum_tarihi",txtdTarihi.getText().toString());
+                params.put("memleket_id",String.valueOf(editMemleket.getSelectedItemId()+1));
                 params.put("sifre",editSifre.getText().toString());
                 params.put("telefon", editTel.getText().toString());
 
