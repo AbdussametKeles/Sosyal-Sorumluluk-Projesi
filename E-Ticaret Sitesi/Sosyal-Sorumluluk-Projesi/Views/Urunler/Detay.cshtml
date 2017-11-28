@@ -163,10 +163,10 @@
         {
 
             <div class="well">
-                <a class="pull-left" href="#">
+                <a class="pull-left" href="/Uye/Details/@item.kullaniciID">
                     <img width="50" class="img-circle" src="@item.kullanicilar.resim" alt="@item.kullanicilar.adsoyad">
                 </a>
-                <div class="media-body">
+                <div class="media-body">  
                     <h4 class="media-heading">
                         @item.kullanicilar.kullaniciAdi
                         <small>@item.tarih</small>
@@ -228,7 +228,9 @@
                 dataType:'json', 
                 success:function(data){
 
-                    alert("Yorum Gönderildi:" + yorumunuz); }});
+                    alert("Yorum Gönderildi:" + yorumunuz); }}); 
+
+               
 
 
         });
