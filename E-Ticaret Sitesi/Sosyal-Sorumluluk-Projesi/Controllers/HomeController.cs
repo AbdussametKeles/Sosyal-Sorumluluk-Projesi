@@ -59,6 +59,26 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
 
 
             return Json(false, JsonRequestBehavior.AllowGet);
+        } 
+
+        public ActionResult YorumSil(int id)
+        {
+
+            var kullaniciID = Session["kullaniciID"];
+            var yorum = db.yorums.Where(y => y.yorumID == id).SingleOrDefault();
+            var urun = db.urunlers.Where(u => u.urunID == yorum.urunID).SingleOrDefault();
+            if (yorum.kullaniciID==Convert.ToInt32(kullaniciID))
+            {
+                db.yorums.Remove(yorum);
+                db.SaveChanges();
+
+                return RedirectToAction("Detay", "Urunler", new { id = urun.urunID });
+            }
+            else 
+            { 
+                return HttpNotFound();
+            }
+
         }
 
 

@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Sosyal_Sorumluluk_Projesi.Models.yorum>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+<h2>Yorumlar</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.kullanicilar.adsoyad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.urunler.urunAdi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.yorumIcerik)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tarih)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.kullanicilar.adsoyad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.urunler.urunAdi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.yorumIcerik)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tarih)
+        </td>
+        <td>
+            @Html.ActionLink("Düzenle", "Edit", new { id=item.yorumID }) |
+            @Html.ActionLink("Detaylar", "Details", new { id=item.yorumID }) |
+            @Html.ActionLink("Sil", "Delete", new { id=item.yorumID })
+        </td>
+    </tr>  
+}
+     
+</table>

@@ -1,0 +1,51 @@
+﻿@model Sosyal_Sorumluluk_Projesi.Models.yorum
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>yorum</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.kullanicilar.adsoyad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.kullanicilar.adsoyad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.urunler.urunAdi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.urunler.urunAdi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.yorumIcerik)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.yorumIcerik)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tarih)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tarih)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.yorumID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

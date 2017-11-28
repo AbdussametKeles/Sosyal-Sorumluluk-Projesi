@@ -269,6 +269,7 @@
     <Compile Include="Controllers\AdminKategoriController.cs" />
     <Compile Include="Controllers\AdminUrunController.cs" />
     <Compile Include="Controllers\AdminUyeController.cs" />
+    <Compile Include="Controllers\AdminYorumController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\KategoriUrunController.cs" />
     <Compile Include="Controllers\UrunlerController.cs" />
@@ -366,6 +367,11 @@
     <Content Include="Views\Uye\UrunDelete.cshtml" />
     <Content Include="Views\Uye\Urunlerim.cshtml" />
     <Content Include="Views\Uye\UrunEdit.cshtml" />
+    <Content Include="Views\AdminYorum\Create.cshtml" />
+    <Content Include="Views\AdminYorum\Delete.cshtml" />
+    <Content Include="Views\AdminYorum\Details.cshtml" />
+    <Content Include="Views\AdminYorum\Edit.cshtml" />
+    <Content Include="Views\AdminYorum\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
