@@ -372,6 +372,7 @@
     <Content Include="Views\AdminYorum\Details.cshtml" />
     <Content Include="Views\AdminYorum\Edit.cshtml" />
     <Content Include="Views\AdminYorum\Index.cshtml" />
+    <Content Include="Views\Urunler\YorumDetay.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

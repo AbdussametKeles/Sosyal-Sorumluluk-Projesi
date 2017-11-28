@@ -70,7 +70,7 @@
         <!--category-tab-->
         <div class="col-sm-12">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="">Ürün Açıklaması</a> 
+                <li><a href="~/Urunler/Detay/@Model.urunID">Ürün Açıklaması</a> 
                 
                 
 
@@ -79,9 +79,9 @@
                 
                 
                 </li>
-                <li><a href="~/Urunler/YorumDetay/@Model.urunID">Yorumlar(@Model.yorums.Count())</a></li>
-            </ul>  
-        </div>   
+                <li class="active"><a href="/">Yorumlar(@Model.yorums.Count())</a></li>
+            </ul>
+        </div>  
         <div class="tab-content">
             <div class="tab-pane fade" id="details">
                 <div class="col-sm-3">
@@ -89,7 +89,8 @@
                         <div class="single-products">
                             <div class="productinfo text-center">
                                 <img src="@Model.resim" alt="" />
-                            
+                              
+                                
                             </div>
                         </div>
                     </div>
@@ -101,27 +102,90 @@
 
 
 
-            <div class="tab-pane fade active in" id="reviews">
+            @*<div class="tab-pane fade active in" id="reviews">
                 <div class="col-sm-12">
                     <ul>
                         <li><a href="~/Uye/Details/@Model.kullaniciID"><i class="fa fa-user"></i>@Model.kullanicilar.kullaniciAdi</a></li>
                         <li><i class="fa fa-calendar-o"></i>@Model.tarih</li>
-                    </ul> 
+                    </ul>
                     <p>@Model.urunİcerik</p>
 
                 </div>
 
 
+            </div>*@
+
+
+
+
+
+
+
+            @if (Session["kullaniciID"] != null)
+            {
+
+
+                <div class="well">
+                    <p><b>Yorumunuz</b></p>
+
+                    <form role="form">
+
+                        <textarea id="yorum" typeof="text"></textarea>
+
+                        <button type="button" id="gonder" class="btn btn-default pull-right">
+                            Yorum Yap
+                        </button>
+                    </form>
+                </div>
+
+            }
+
+
+            else
+            {
+                <h5>Yorum yapmak için kullanıcı girişi yapınız.</h5>
+                <p><a href="/Uye/Login/">Giriş Yap</a></p>
+
+            }
+
+
+
+
+
+
+
+
+
+
+
+            <div class="media">
+                @foreach (var item in Model.yorums.ToList())
+                {
+
+                    <div class="well">
+                        <a class="pull-left" href="/Uye/Details/@item.kullaniciID">
+                            <img width="50" class="img-circle" src="@item.kullanicilar.resim" alt="@item.kullanicilar.adsoyad">
+                        </a>
+                        <div class="media-body">
+                            <h4 class="media-heading">
+                                @item.kullanicilar.kullaniciAdi
+                                <small>@item.tarih</small>
+                            </h4>
+
+                            @item.yorumIcerik - @if (Convert.ToInt32(Session["kullaniciID"]) == item.kullaniciID)
+                            {
+                                <a class="btn btn-danger" href="/Home/YorumSil/@item.yorumID">Sil</a>
+
+                            }
+
+
+
+                        </div>
+                    </div>
+
+                }
+
             </div>
-
-
-
-
-
-
-
-
-
 
 
 
@@ -161,3 +225,33 @@
 
  
 
+
+<script src="~/Content/js/jquery.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="~/Content/js/bootstrap.min.js"></script> 
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#gonder").click(function(){
+
+            var yorumunuz = $("#yorum").val();
+            $.ajax({
+                url:'/Home/YorumYap/',
+                data:{yorum:yorumunuz, urunID:@Model.urunID},
+                type:'POST', 
+                dataType:'json', 
+                success:function(data){
+
+                    alert("Yorum Gönderildi:" + yorumunuz); }}); 
+                      
+            window.location.reload(true);
+                
+
+
+        });
+    })
+
+
+</script>
+ 

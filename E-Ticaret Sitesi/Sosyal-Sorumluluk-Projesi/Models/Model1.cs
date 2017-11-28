@@ -8,7 +8,7 @@ namespace Sosyal_Sorumluluk_Projesi.Models
     public partial class Model1 : DbContext
     {
         public Model1()
-            : base("name=Model26")
+            : base("name=Model27")
         {
         }
 
@@ -21,6 +21,15 @@ namespace Sosyal_Sorumluluk_Projesi.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<urunler>()
+                .HasMany(e => e.yorums)
+                .WithOptional(e => e.urunler)
+                .HasForeignKey(e => e.urunID);
+
+            modelBuilder.Entity<yorum>()
+                .HasMany(e => e.urunlers)
+                .WithOptional(e => e.yorum)
+                .HasForeignKey(e => e.yorumID);
         }
     }
 }

@@ -22,6 +22,14 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
 
             return View(urun);
 
+        } 
+
+        public ActionResult YorumDetay(int id)
+        {
+            var urun = db.urunlers.Where(u => u.urunID == id).SingleOrDefault();
+
+            return View(urun);
+
         }
 
 
