@@ -35,7 +35,7 @@ $router->group(['prefix' => 'kategori'], function () use ($router) {
 
 // UrunlerController için Routes Oluşturuldu.
 $router->group(['prefix' => 'urunler'], function () use ($router) {
-  $router->get('listele', ['uses' => 'UrunlerController@urun_listele']);
+  $router->post('listele', ['uses' => 'UrunlerController@urun_listele']);
   $router->get('goruntule', ['uses' => 'UrunlerController@urun_goruntule']);
   $router->post('yayinlama', ['uses' => 'UrunlerController@urun_yayinlama']);
   $router->post('yorumlama', ['uses' => 'UrunlerController@urun_yorumlama']);
