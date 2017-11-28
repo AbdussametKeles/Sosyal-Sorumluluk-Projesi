@@ -112,7 +112,7 @@ class KullaniciController extends Controller
 
       //Resmi url şeklinde döndüren komut.
       if($kullanici->resim!=null) {
-        $kullanici->resim =  url("/resim/{$kullanici->$resim}");
+        $kullanici->resim =  url("/resim/{$kullanici->resim}");
       }
 
       //Sonuç İşlemleri
@@ -203,7 +203,7 @@ class KullaniciController extends Controller
 
       //Resmi url şeklinde döndüren komut.
       if($kullanici->resim!=null) {
-        $kullanici->resim =  url("/resim/{$kullanici->$resim}");
+        $kullanici->resim =  url("/resim/{$kullanici->resim}");
       }
 
       return response()->json([
