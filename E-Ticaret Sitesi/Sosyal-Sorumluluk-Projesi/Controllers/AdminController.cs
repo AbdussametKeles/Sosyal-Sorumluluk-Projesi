@@ -12,6 +12,12 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         // GET: Admin
         public ActionResult Index()
         {
+
+            ViewBag.urunSayisi = db.urunlers.Count();
+            ViewBag.yorumSayisi = db.yorums.Count();
+            ViewBag.kategoriSayisi = db.kategorilers.Count();
+            ViewBag.uyeSayisi = db.kullanicilars.Count();
+                
             return View(); 
         } 
 
