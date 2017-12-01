@@ -55,19 +55,19 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Login(kullanicilar uye)
+        public ActionResult Login(kullanicilar uye,string sifre)
         {
+            var md5pass = Crypto.Hash(sifre, "MD5");
             var login = db.kullanicilars.Where(k => k.mail == uye.mail).SingleOrDefault();
 
             try
-            {
+            { 
 
-                if (login.mail == uye.mail && login.sifre == uye.sifre)
-                {
-
+                if (login.mail == uye.mail && login.sifre == md5pass)
+                { 
+                     
                     Session["kullaniciID"] = login.kullaniciID;
                     Session["mail"] = login.mail;
-                    Session["sifre"] = login.sifre;
                     Session["yetkiID"] = login.yetkiID;
 
                     return RedirectToAction("Index", "Home");
@@ -124,7 +124,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         }
          
           
-
+         
 
         // GET: Uye/Create
         public ActionResult Create()
@@ -141,8 +141,9 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "kullaniciID,yetkiID,memleketID,adsoyad,kullaniciAdi,mail,sifre,telefon,resim")] kullanicilar kullanicilar,HttpPostedFileBase resim)
-        {   
+        public ActionResult Create([Bind(Include = "kullaniciID,yetkiID,memleketID,adsoyad,kullaniciAdi,mail,sifre,telefon,resim")] kullanicilar kullanicilar,string sifre,HttpPostedFileBase resim)
+        {
+            var md5pass = sifre;
                 if (ModelState.IsValid)
                 {
                  
@@ -158,6 +159,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                         img.Save("~/Uploads/resimler/" + newfoto);
                         kullanicilar.resim = "/Uploads/resimler/" + newfoto;
                         kullanicilar.yetkiID = 2;
+                        kullanicilar.sifre = Crypto.Hash(md5pass, "MD5");
 
                     //Session["kullaniciID"] = kullanicilar.kullaniciID;
                     //Session["yetkiID"] = kullanicilar.yetkiID;
@@ -165,6 +167,8 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
 
                         db.kullanicilars.Add(kullanicilar);
                         db.SaveChanges();
+                    Session["kullaniciID"] = kullanicilar.kullaniciID;
+                    Session["mail"] = kullanicilar.mail;
                          return RedirectToAction("Index", "Home");
                    
                   
@@ -203,8 +207,9 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "kullaniciID,yetkiID,memleketID,adsoyad,kullaniciAdi,mail,sifre,telefon,resim")] kullanicilar kullanicilar, HttpPostedFileBase resim, int id)
+        public ActionResult Edit([Bind(Include = "kullaniciID,yetkiID,memleketID,adsoyad,kullaniciAdi,mail,sifre,telefon,resim")] kullanicilar kullanicilar,string sifre, HttpPostedFileBase resim, int id)
         {
+            var md5pass = sifre;
             if (ModelState.IsValid)
             {
                 var uye1 = db.kullanicilars.Where(k => k.kullaniciID == id).SingleOrDefault();
@@ -225,13 +230,13 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                     img.Resize(150, 150);
                     img.Save("~/Uploads/uyeler/" + newfoto);
                     uye1.resim = "/Uploads/uyeler/" + newfoto;
-
+                     
                     }
 
                     uye1.adsoyad = kullanicilar.adsoyad;
                     uye1.kullaniciAdi = kullanicilar.kullaniciAdi;
                     uye1.mail = kullanicilar.mail;
-                    uye1.sifre = kullanicilar.sifre;
+                uye1.sifre = Crypto.Hash(md5pass, "MD5");
                   
                     uye1.telefon = kullanicilar.telefon;
                     db.SaveChanges();

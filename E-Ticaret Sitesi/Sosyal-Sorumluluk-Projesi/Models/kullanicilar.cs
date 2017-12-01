@@ -32,7 +32,7 @@ namespace Sosyal_Sorumluluk_Projesi.Models
         [StringLength(25)]
         public string mail { get; set; }
 
-        [StringLength(20)]
+        [StringLength(200)]
         public string sifre { get; set; }
 
         [StringLength(11)]
