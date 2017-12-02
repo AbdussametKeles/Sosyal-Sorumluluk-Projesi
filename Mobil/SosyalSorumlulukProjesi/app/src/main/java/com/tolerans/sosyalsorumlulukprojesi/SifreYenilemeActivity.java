@@ -23,16 +23,7 @@ public class SifreYenilemeActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-                emailIntent.setData(Uri.parse("mailto:" + mailEdit.getText()));
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "My email's subject");
-                emailIntent.putExtra(Intent.EXTRA_TEXT, "My email's body");
 
-                try {
-                    startActivity(Intent.createChooser(emailIntent, "Send email using..."));
-                } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(getApplicationContext(), "No email clients installed.", Toast.LENGTH_SHORT).show();
-                }
             }
         });
 

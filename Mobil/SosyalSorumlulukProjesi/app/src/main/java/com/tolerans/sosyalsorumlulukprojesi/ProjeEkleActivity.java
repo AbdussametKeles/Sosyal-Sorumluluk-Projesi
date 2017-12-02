@@ -46,6 +46,8 @@ import java.util.List;
 public class ProjeEkleActivity extends AppCompatActivity {
     ArrayList<String> memleketList;
     ArrayList<String> kategoriList;
+    ArrayAdapter<String> memleketAdapter;
+    ArrayAdapter<String> kategoriAdapter;
     JSONArray jsonArrayKategori,jsonArrayMemleket;
     Spinner spMemleket,spKategori;
     int memleketID,kategoriID;
@@ -63,18 +65,10 @@ public class ProjeEkleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_proje_ekle);
 
 
-        requestStoragePermission();
-
-        btnEkle = (Button) findViewById(R.id.btnProjeEkle);
-        edtBaslik = (EditText) findViewById(R.id.edtProjeBaslik);
-        edtIcerik = (EditText) findViewById(R.id.edtProjeIcerik);
-        edtBagisT = (EditText) findViewById(R.id.edtBagisTipi);
-        btnResimSec = (Button) findViewById(R.id.btnProjeResim);
-        imgProjeFoto = (ImageView) findViewById(R.id.ImgProjeFoto);
+        requestStoragePermission();//izin kontrolü yapan mehtod
+        nesneleriTanimla();//findview işlemleri
 
 
-        spMemleket = (Spinner) findViewById(R.id.spEkleSehir);
-        spKategori = (Spinner) findViewById(R.id.spEkleKategori);
 
 
         Bundle bundle = getIntent().getExtras();
@@ -92,6 +86,11 @@ public class ProjeEkleActivity extends AppCompatActivity {
 
         }
         memleketList = new ArrayList<String>();
+        memleketAdapter = new ArrayAdapter<String>(ProjeEkleActivity.this, android.R.layout.simple_spinner_item, memleketList);
+        memleketAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spMemleket.setAdapter(memleketAdapter);
+
+
         StringRequest request = new StringRequest(Request.Method.GET, "http://service.sosyalsorumluluk.mansetler.org/memleket/listele", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -101,16 +100,22 @@ public class ProjeEkleActivity extends AppCompatActivity {
                     jsonArrayMemleket = memleketJson.getJSONArray("memleketler");//genel json dosyasındanki verilerin array halin
                     for(int i=0;i<jsonArrayMemleket.length();i++){
                         JSONObject siradakiMemleket = jsonArrayMemleket.getJSONObject(i);//her json verisi için ayrı obje oluşturuyoruz ve bunu çekiyoruz.
-                        memleketList.add(siradakiMemleket.getString("memleket_adi"));//listeye ekliyoruz birazdan spinnerin kaynağı olarak belirteceğiz.
+                       String memleketAdi = siradakiMemleket.getString("memleket_adi");
+
+                        if(!memleketAdi.equals("")) {
+                            memleketList.add(memleketAdi);//listeye ekliyoruz birazdan spinnerin kaynağı olarak belirteceğiz.
+                        } else {
+                            memleketList.clear();
+                        }
                     }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                memleketAdapter.notifyDataSetChanged();//adapteri her değişiklikte bilgilendirecek burası çok önemli!!
+             }
 
-
-            }
-        }, new Response.ErrorListener() {
+            }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getApplicationContext(),"Memleketleri görüntülemede hata oluştu",Toast.LENGTH_LONG).show();
@@ -119,24 +124,35 @@ public class ProjeEkleActivity extends AppCompatActivity {
         Volley.newRequestQueue(this).add(request);
 
         kategoriList = new ArrayList<String>();
+        kategoriAdapter = new ArrayAdapter<String>(ProjeEkleActivity.this, android.R.layout.simple_spinner_item, kategoriList);
+        kategoriAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spKategori.setAdapter(kategoriAdapter);
+
+
         StringRequest kategoriRequest = new StringRequest(Request.Method.GET, "http://service.sosyalsorumluluk.mansetler.org/kategori/listele", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
                 try {
-                    JSONObject kategoriJson  = new JSONObject(response);//gelen json dosyası
+                    JSONObject kategoriJson = new JSONObject(response);//gelen json dosyası
                     jsonArrayKategori = kategoriJson.getJSONArray("kategoriler");//genel json dosyasındanki verilerin array halin
-                    for(int i=0;i<jsonArrayKategori.length();i++){
+                    for (int i = 0; i < jsonArrayKategori.length(); i++) {
                         JSONObject siradakiKategori = jsonArrayKategori.getJSONObject(i);//her json verisi için ayrı obje oluşturuyoruz ve bunu çekiyoruz.
-                        kategoriList.add(siradakiKategori.getString("kategori_adi"));//listeye ekliyoruz birazdan spinnerin kaynağı olarak belirteceğiz.
+                        String kategoriAdi = siradakiKategori.getString("kategori_adi");
+
+                        if (!kategoriAdi.equals("")) {
+                            kategoriList.add(kategoriAdi);//listeye ekliyoruz birazdan spinnerin kaynağı olarak belirteceğiz.
+                        } else {
+                            kategoriList.clear();
+                        }
                     }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
+                kategoriAdapter.notifyDataSetChanged();//adapteri her değişiklikte bilgilendirecek burası çok önemli!!
             }
+
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
@@ -147,22 +163,12 @@ public class ProjeEkleActivity extends AppCompatActivity {
 
 
 
-        spMemleket.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,memleketList));//spinnera kaynağjnı atadık
-        spKategori.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,kategoriList));
-
-
-
 
         spMemleket.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             //spinnerda bir değer seçildiğinde çalışacak method
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 //seçilmiş olan değeri memleket idye atıyoruz ki ekleme işleminde kolaylık sağlasın
-                try {
-                    Toast.makeText(getApplicationContext(),jsonArrayMemleket.get(position).toString(),Toast.LENGTH_LONG).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
                 memleketID = position+1;
 
             }
@@ -196,11 +202,22 @@ public class ProjeEkleActivity extends AppCompatActivity {
         btnResimSec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showFileChooser();
+                dosyaSecici();
             }
         });
 
 
+    }
+
+    private void nesneleriTanimla() {
+        btnEkle = (Button) findViewById(R.id.btnProjeEkle);
+        edtBaslik = (EditText) findViewById(R.id.edtProjeBaslik);
+        edtIcerik = (EditText) findViewById(R.id.edtProjeIcerik);
+        edtBagisT = (EditText) findViewById(R.id.edtBagisTipi);
+        btnResimSec = (Button) findViewById(R.id.btnProjeResim);
+        imgProjeFoto = (ImageView) findViewById(R.id.ImgProjeFoto);
+        spMemleket = (Spinner) findViewById(R.id.spEkleSehir);
+        spKategori = (Spinner) findViewById(R.id.spEkleKategori);
     }
 
     private void projeEkle() {
@@ -208,10 +225,10 @@ public class ProjeEkleActivity extends AppCompatActivity {
 
         try {
             new MultipartUploadRequest(this,"http://service.sosyalsorumluluk.mansetler.org/urunler/yayinlama")
-                    .addFileToUpload(getPath(filePath),"resim")
-                    .addParameter("token_string","59f508bf36462")
-                    .addParameter("kategori_id", String.valueOf(2))
-                    .addParameter("urun_konumu", String.valueOf(20))
+                    .addFileToUpload(yolBul(filePath),"resim")
+                    .addParameter("token_string",token)
+                    .addParameter("kategori_id", String.valueOf(kategoriID))
+                    .addParameter("urun_konumu", String.valueOf(memleketID))
                     .addParameter("bagis_tipi",edtBagisT.getText().toString())
                     .addParameter("urun_adi",edtBaslik.getText().toString())
                     .addParameter("urun_aciklamasi",edtIcerik.getText().toString())
@@ -225,6 +242,8 @@ public class ProjeEkleActivity extends AppCompatActivity {
         }catch (Exception e){
             e.printStackTrace();
         }
+        Intent intent = new Intent(ProjeEkleActivity.this,MainActivity.class);
+        startActivity(intent);
 
     }
     private void requestStoragePermission() {
@@ -237,7 +256,7 @@ public class ProjeEkleActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-        //request kod eşleşiyorsa
+        //dosya okumaya erişimi varsa
         if (requestCode == STORAGE_PERMISSION_CODE) {
 
             //izin kontrolü
@@ -248,7 +267,7 @@ public class ProjeEkleActivity extends AppCompatActivity {
             }
         }
     }
-    private void showFileChooser() {
+    private void dosyaSecici() {
 
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -270,7 +289,7 @@ public class ProjeEkleActivity extends AppCompatActivity {
             }
         }
     }
-    public String getPath(Uri uri) {
+    public String yolBul(Uri uri) {
 
         Cursor cursor = getContentResolver().query(uri, null, null, null, null);
         cursor.moveToFirst();

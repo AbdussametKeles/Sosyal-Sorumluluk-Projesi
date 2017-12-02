@@ -1,6 +1,9 @@
 package com.tolerans.sosyalsorumlulukprojesi;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by SAMET on 11.11.2017.
@@ -8,9 +11,71 @@ import java.util.ArrayList;
 
 public class Projeler {
 
-    String Baslik,yazarAdi,Konum,Tarih,Icerik;
-    int    yazarId,konumID;
-    ArrayList<Yorum> yorumlar;
+    String Baslik;
+    String yazarAdi;
+    String Konum;
+    String Tarih;
+    String Icerik;
+
+
+    String resimUrl;
+
+    int    yazarId;
+    int konumID;
+    int kategoriId;
+    int urunID;
+    JSONArray yorumlar;
+    String Kategori;
+    String BagisTipi;
+    List<String> resimler;
+
+    public List<String> getResimler() {
+        return resimler;
+    }
+
+    public void setResimler(List<String> resimler) {
+        this.resimler = resimler;
+    }
+
+
+
+
+    public int getUrunID() {
+        return urunID;
+    }
+
+    public void setUrunID(int urunID) {
+        this.urunID = urunID;
+    }
+
+    public String getBagisTipi() {
+        return BagisTipi;
+    }
+
+    public void setBagisTipi(String bagisTipi) {
+        BagisTipi = bagisTipi;
+    }
+
+    public int getKategoriId() {
+        return kategoriId;
+    }
+    public String getResimUrl() {
+        return resimUrl;
+    }
+
+    public void setResimUrl(String resimUrl) {
+        this.resimUrl = resimUrl;
+    }
+
+
+    public void setKategoriId(int kategoriId) {
+        this.kategoriId = kategoriId;
+    }
+
+    public void setKategori(String kategori) {
+        Kategori = kategori;
+    }
+
 
     public String getBaslik() {
         return Baslik;
@@ -68,64 +133,12 @@ public class Projeler {
         this.konumID = konumID;
     }
 
-    public ArrayList<Yorum> getYorumlar() {
+    public JSONArray getYorumlar() {
         return yorumlar;
     }
 
-    public void setYorumlar(ArrayList<Yorum> yorumlar) {
+    public void setYorumlar(JSONArray yorumlar) {
         this.yorumlar = yorumlar;
-    }
-
-    public ArrayList<Kategori> getKategori() {
-        return kategori;
-    }
-
-    public void setKategori(ArrayList<Kategori> kategori) {
-        this.kategori = kategori;
-    }
-
-    ArrayList<Kategori> kategori;
-
-    public class Yorum{
-
-        String yorumIcerik;
-        int yorumID;
-
-        public String getYorumIcerik() {
-            return yorumIcerik;
-        }
-
-        public void setYorumIcerik(String yorumIcerik) {
-            this.yorumIcerik = yorumIcerik;
-        }
-
-        public int getYorumID() {
-            return yorumID;
-        }
-
-        public void setYorumID(int yorumID) {
-            this.yorumID = yorumID;
-        }
-    }
-    public class Kategori{
-        String kategoriAdi;
-        int kategoriID;
-
-        public String getKategoriAdi() {
-            return kategoriAdi;
-        }
-
-        public void setKategoriAdi(String kategoriAdi) {
-            this.kategoriAdi = kategoriAdi;
-        }
-
-        public int getKategoriID() {
-            return kategoriID;
-        }
-
-        public void setKategoriID(int kategoriID) {
-            this.kategoriID = kategoriID;
-        }
     }
 
 }

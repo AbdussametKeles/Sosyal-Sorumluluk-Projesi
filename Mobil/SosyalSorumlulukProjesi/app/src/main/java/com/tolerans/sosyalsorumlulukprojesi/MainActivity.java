@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity
 
     String bundleJson,token;
     RecyclerView recyclerView;
-    List<Projeler> projelerList;
+    ArrayList<Projeler> projelerList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,34 +73,72 @@ public class MainActivity extends AppCompatActivity
             menu.findItem(R.id.nav_profil).setVisible(true);
         }
 
+        projelerList = new ArrayList<Projeler>();
 
         recyclerView = (RecyclerView) findViewById(R.id.rvProjeler);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        projelerList = new ArrayList<>();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
 
-        //projeleriCek();
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager.scrollToPosition(0);
+
+        recyclerView.setLayoutManager(layoutManager);
+
+
+
+        projeleriCek();
+
+
+
     }
 
     public void projeleriCek(){
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "projeler için url gir", new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://service.sosyalsorumluluk.mansetler.org/urunler/listele", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try {
-                    JSONArray array = new JSONArray(response);
+
+                    JSONObject jsonObject = new JSONObject(response);
+
+                    JSONArray array = jsonObject.getJSONArray("urunler");
 
                     for(int i=0;i<array.length();i++){
 
-                        JSONObject proje = array.getJSONObject(i);
+                        JSONObject projeJson = array.getJSONObject(i);
+                        Projeler proje = new Projeler();
+                        proje.setBaslik(projeJson.getString("urun_adi"));
+                        proje.setIcerik(projeJson.getString("urun_aciklamasi"));
+                        proje.setKonumID(projeJson.getInt("urun_konumu"));
+                        proje.setUrunID(projeJson.getInt("urun_id"));
+                        proje.setYazarId(projeJson.getInt("kullanici_id"));
+                        proje.setKategoriId(projeJson.getInt("kategori_id"));
+                        proje.setBagisTipi(projeJson.getString("bagis_tipi"));
+                        ArrayList<String> resimler = new ArrayList<>();
+                       // JSONArray yorumArray = new JSONArray(projeJson.getJSONObject("yorumlar"));
+                     //  proje.setYorumlar(yorumArray);
 
-                        //buraya projeler classından bir nesne oluşturacağız ve
-                        //projelerList.add(new Proje(proje.getInt("id"))) şeklinde olacak
 
-                    }
-                    MyAdapter adapter = new MyAdapter(MainActivity.this,projelerList);
+                         JSONArray resimArray = projeJson.getJSONArray("gorseller");
+                       if(!resimArray.toString().equals("[]")) {
+                           String ilkResim = resimArray.getJSONObject(0).getString("resim");
+                           ilkResim.replace("\\", "");
+                           proje.setResimUrl(ilkResim);
+                           for(int j =0; j<resimArray.length();j++){
+                               String resimUrl = resimArray.getJSONObject(j).getString("resim");
+                               resimUrl.replace("\\","");
+                               resimler.add(resimUrl);
+                           }
+                           proje.setResimler(resimler);
+                       }
+
+                        projelerList.add(proje);
+
+                }
+                    MyAdapter adapter = new MyAdapter(projelerList,MainActivity.this);
                     recyclerView.setAdapter(adapter);
+
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -109,7 +148,7 @@ public class MainActivity extends AppCompatActivity
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(getApplicationContext(),"Projeyi çekerken hata oluştu",Toast.LENGTH_LONG).show();
             }
         });
         Volley.newRequestQueue(this).add(stringRequest);

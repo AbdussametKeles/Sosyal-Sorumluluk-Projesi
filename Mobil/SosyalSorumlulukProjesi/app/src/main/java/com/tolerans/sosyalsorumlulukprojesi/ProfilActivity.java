@@ -4,7 +4,6 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.opengl.Visibility;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -25,13 +23,8 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
-
-import net.gotev.uploadservice.MultipartUploadRequest;
-import net.gotev.uploadservice.UploadNotificationConfig;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,7 +35,7 @@ public class ProfilActivity extends AppCompatActivity {
     EditText editName,editTel,editMail,editSifre;
     Spinner editMemleket;
     String token;
-    int position,memleketPosition;
+    int position;
     Button btnGuncelle;
     TextView profilTel ,profilDTarihi,profilSehir,profilAd,profilMail,txtdTarihi,profilSifre;
     private DatePickerDialog.OnDateSetListener dataSetListener;
@@ -51,9 +44,7 @@ public class ProfilActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil);
 
-        String [] memleketler = getResources().getStringArray(R.array.sehirler);
-
-
+        String [] memleketler = getResources().getStringArray(R.array.sehirler);//önceden oluşturulmuş arrayi çekiyoruz.
 
         Bundle bundle = getIntent().getExtras();
         if(bundle==null){
@@ -61,39 +52,26 @@ public class ProfilActivity extends AppCompatActivity {
             Intent intent = new Intent(ProfilActivity.this,MainActivity.class);
             startActivity(intent);
         }else{
-            json =bundle.getString("jsonveriler");
+            json =bundle.getString("jsonveriler");//intent ile gelen json verisini alıyor
         }
-        btnGuncelle = (Button) findViewById(R.id.profilGuncelleBtn);
-         profilAd = (TextView) findViewById(R.id.txtProfilAd);
-         profilSehir = (TextView) findViewById(R.id.txtProfilMemleket);
-         profilDTarihi = (TextView) findViewById(R.id.txtProfildTarihi);
-         profilMail = (TextView) findViewById(R.id.txtProfilMail);
-         profilTel = (TextView) findViewById(R.id.txtProfilTel);
-        imgProfil = (ImageView) findViewById(R.id.imgProfilResim);
-        editName = (EditText) findViewById(R.id.editNameTxt);
-        editTel = (EditText) findViewById(R.id.editTelTxt);
-        txtdTarihi = (TextView) findViewById(R.id.editdTarihiProfil);
-        editMemleket = (Spinner) findViewById(R.id.editMemleketSpinner);
-        editMail = (EditText) findViewById(R.id.editMailTxt);
-        profilSifre = (TextView) findViewById(R.id.txtSifre);
-        editSifre = (EditText) findViewById(R.id.editSifreTxt);
-
+            nesneleriTanimla();//findview Tanımlamaları
 
         try {
             JSONObject jsonObject = new JSONObject(json);
+
             token = jsonObject.getString("token");
+
             position = jsonObject.getJSONObject("kullan\u0131c\u0131").getInt("memleket_id")-1;
             profilMail.setText(jsonObject.getJSONObject("kullan\u0131c\u0131").getString("mail"));
             profilSifre.setText(jsonObject.getJSONObject("kullan\u0131c\u0131").getString("sifre"));
             profilAd.setText( jsonObject.getJSONObject("kullan\u0131c\u0131").getString("adi_soyadi").toString());
-
             profilSehir.setText(String.valueOf(memleketler[ jsonObject.getJSONObject("kullan\u0131c\u0131").getInt("memleket_id")-1]));
             profilDTarihi.setText(jsonObject.getJSONObject("kullan\u0131c\u0131").getString("dogum_tarihi").toString());
             profilDTarihi.setText(profilDTarihi.getText().toString().replace("-","/"));
             profilTel.setText(jsonObject.getJSONObject("kullan\u0131c\u0131").getString("telefon").toString());
+
             String resimUrl =jsonObject.getJSONObject("kullan\u0131c\u0131").getString("resim").toString();
-            Toast.makeText(getApplicationContext(),resimUrl,Toast.LENGTH_LONG).show();
-            Picasso.with(this).load(resimUrl).into(imgProfil);
+            Picasso.with(this).load(resimUrl).into(imgProfil);//Picasso kütüphanesi ile verileri çekiyor.
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -107,8 +85,8 @@ public class ProfilActivity extends AppCompatActivity {
                 int month = cal.get(Calendar.MONTH);
                 int day = cal.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog dialog= new DatePickerDialog(ProfilActivity.this,
-                        android.R.style.Theme_DeviceDefault_Dialog_MinWidth,
+                DatePickerDialog dialog= new DatePickerDialog(ProfilActivity.this,//datepicker tanımlanıyor.
+                        android.R.style.Theme_DeviceDefault_Dialog_MinWidth,//görünüş stili
                         dataSetListener,
                         year,month,day);
 
@@ -120,6 +98,7 @@ public class ProfilActivity extends AppCompatActivity {
         dataSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                //yeni tarih ayarladığında çalışacak method
                 month+=1;
                 txtdTarihi.setText(year+"/"+month+"/"+dayOfMonth);
             }
@@ -132,6 +111,24 @@ public class ProfilActivity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    private void nesneleriTanimla() {
+        btnGuncelle = (Button) findViewById(R.id.profilGuncelleBtn);
+        profilAd = (TextView) findViewById(R.id.txtProfilAd);
+        profilSehir = (TextView) findViewById(R.id.txtProfilMemleket);
+        profilDTarihi = (TextView) findViewById(R.id.txtProfildTarihi);
+        profilMail = (TextView) findViewById(R.id.txtProfilMail);
+        profilTel = (TextView) findViewById(R.id.txtProfilTel);
+        imgProfil = (ImageView) findViewById(R.id.imgProfilResim);
+        editName = (EditText) findViewById(R.id.editNameTxt);
+        editTel = (EditText) findViewById(R.id.editTelTxt);
+        txtdTarihi = (TextView) findViewById(R.id.editdTarihiProfil);
+        editMemleket = (Spinner) findViewById(R.id.editMemleketSpinner);
+        editMail = (EditText) findViewById(R.id.editMailTxt);
+        profilSifre = (TextView) findViewById(R.id.txtSifre);
+        editSifre = (EditText) findViewById(R.id.editSifreTxt);
 
     }
 
@@ -165,8 +162,9 @@ public class ProfilActivity extends AppCompatActivity {
         }){
             protected Map<String, String> getParams(){
 
-                Map<String,String> params = new HashMap<String,String>();
+                Map<String,String> params = new HashMap<String,String>();//mail eklenecek.
                 params.put("token_string",token);
+                params.put("mail",editMail.getText().toString());
                 params.put("adi_soyadi", editName.getText().toString());
                 params.put("dogum_tarihi",txtdTarihi.getText().toString());
                 params.put("memleket_id",String.valueOf(editMemleket.getSelectedItemId()+1));
@@ -217,28 +215,35 @@ public class ProfilActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == R.id.profil_edit) {
-            profilTel.setVisibility(View.GONE);
-            profilDTarihi.setVisibility(View.GONE);
-            profilSehir.setVisibility(View.GONE);
-            profilAd.setVisibility(View.GONE);
-            profilSehir.setVisibility(View.GONE);
-            editName.setText(profilAd.getText());
-            editTel.setText(profilTel.getText());
-            profilSifre.setVisibility(View.GONE);
-            editSifre.setText(profilSifre.getText());
-            editSifre.setVisibility(View.VISIBLE);
-            profilMail.setVisibility(View.GONE);
-            editMail.setVisibility(View.VISIBLE);
-            editMail.setText(profilMail.getText());
-            txtdTarihi.setText(profilDTarihi.getText());
-            editMemleket.setSelection(position);
-            editName.setVisibility(View.VISIBLE);
-            editTel.setVisibility(View.VISIBLE);
-           txtdTarihi.setVisibility(View.VISIBLE);
-            editMemleket.setVisibility(View.VISIBLE);
-            btnGuncelle.setVisibility(View.VISIBLE);
+            //düzenleme buttonuna tıkladığından yapılacaklar
+           nesneleriGizle();
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void nesneleriGizle() {
+
+        profilTel.setVisibility(View.GONE);
+        profilDTarihi.setVisibility(View.GONE);
+        profilSehir.setVisibility(View.GONE);
+        profilAd.setVisibility(View.GONE);
+        profilSehir.setVisibility(View.GONE);
+        editName.setText(profilAd.getText());
+        editTel.setText(profilTel.getText());
+        profilSifre.setVisibility(View.GONE);
+        editSifre.setText(profilSifre.getText());
+        editSifre.setVisibility(View.VISIBLE);
+        profilMail.setVisibility(View.GONE);
+        editMail.setVisibility(View.VISIBLE);
+        editMail.setText(profilMail.getText());
+        txtdTarihi.setText(profilDTarihi.getText());
+        editMemleket.setSelection(position);
+        editName.setVisibility(View.VISIBLE);
+        editTel.setVisibility(View.VISIBLE);
+        txtdTarihi.setVisibility(View.VISIBLE);
+        editMemleket.setVisibility(View.VISIBLE);
+        btnGuncelle.setVisibility(View.VISIBLE);
+
     }
 }

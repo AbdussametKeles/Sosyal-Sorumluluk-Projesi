@@ -6,10 +6,10 @@
     android:layout_height="match_parent"
     tools:context="com.tolerans.sosyalsorumlulukprojesi.ProjeIcerikActivity"
     android:orientation="vertical">
-    <ImageView
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/ImgProjeFoto"/>
+        android:id="@+id/projeResimler"></android.support.v7.widget.RecyclerView>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
