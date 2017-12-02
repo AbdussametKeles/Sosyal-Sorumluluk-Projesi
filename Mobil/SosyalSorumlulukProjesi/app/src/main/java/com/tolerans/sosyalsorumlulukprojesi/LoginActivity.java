@@ -38,36 +38,25 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        nesneleriTanimla();//findview Tanımlamaları
+
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
 
-        linearLayout = (LinearLayout) findViewById(R.id.linear);
-        edtMail= (EditText) findViewById(R.id.txtMail);
-        edtSifre= (EditText) findViewById(R.id.txtSifre);
-        edtCevap = (EditText) findViewById(R.id.txtCevap);
-        btnKaydol = (Button) findViewById(R.id.btnKaydolYonlendir);
-        btnGiris = (Button) findViewById(R.id.btnKGiris);
-        sayiTxt = (TextView) findViewById(R.id.sayi);
-         checkBox = (CheckBox) findViewById(R.id.dogrulama);
-        Random random = new Random();
+        Random random = new Random();//recapctha kısmı için random sayı ayarlıyor.
         sayi = random.nextInt(10)+1;
-        btnSifremiUnuttum = (Button) findViewById(R.id.btnSifremiUnuttum);
-
         sayiTxt.setText(String.valueOf(sayi));
 
 
 
-
-
         //SharedPreference içindeki verileri çekiyoruz.
-
        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String sharedMail = preferences.getString("userMail","bos");
         String sharedSifre = preferences.getString("userPassword","bos");
 
-        //burada otomatik olarak kullanıcının login olması gerekiyor.Login işlevini bir metod ile sağlayacağız.
 
         if(!sharedMail.equals("bos")&&!sharedSifre.equals("bos")){
+            //önceden sharedpreference doluysa otomatik giriş yap.
             GirisYap(sharedMail,sharedSifre);
         }
 
@@ -116,6 +105,19 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
+
+    private void nesneleriTanimla() {
+        linearLayout = (LinearLayout) findViewById(R.id.linear);
+        edtMail= (EditText) findViewById(R.id.txtMail);
+        edtSifre= (EditText) findViewById(R.id.txtSifre);
+        edtCevap = (EditText) findViewById(R.id.txtCevap);
+        btnKaydol = (Button) findViewById(R.id.btnKaydolYonlendir);
+        btnGiris = (Button) findViewById(R.id.btnKGiris);
+        sayiTxt = (TextView) findViewById(R.id.sayi);
+        checkBox = (CheckBox) findViewById(R.id.dogrulama);
+        btnSifremiUnuttum = (Button) findViewById(R.id.btnSifremiUnuttum);
+    }
+
     public void GirisYap(final String email, final String sifre){
         String token ;
         pDialog.setMessage("Giriş Yapılıyor..");
@@ -129,7 +131,7 @@ public class LoginActivity extends AppCompatActivity {
                         pDialog.dismiss();
                         sharedPreferenceKaydet(email,sifre);
                         Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                        intent.putExtra("jsonveri",response.toString());
+                        intent.putExtra("jsonveri",response.toString());//main activity ye json dosyasını yolluyorum.
                         startActivity(intent);
 
                     }

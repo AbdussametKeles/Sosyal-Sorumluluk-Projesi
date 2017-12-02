@@ -88,7 +88,7 @@ public class KayitActivity extends AppCompatActivity {
         btnSec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showFileChooser();
+                dosyaSecici();
             }
         });
         //textviewin onclick methodu
@@ -151,8 +151,6 @@ public class KayitActivity extends AppCompatActivity {
                 String telefon = edtTelefon.getText().toString();
 
 
-
-
                 //kayıt için uygun şartların kontrolünün burdan sağlayabiliriz.
                 //şuan için tek şart boş olmamaları olduğu için null olup olmadığı kontrol edilecek
                 if(!adSoyad.isEmpty() && !mail.isEmpty() && !dogumTarihi.isEmpty() && !memleket.isEmpty() && !sifre.isEmpty() && !telefon.isEmpty() &&
@@ -160,7 +158,7 @@ public class KayitActivity extends AppCompatActivity {
                     kullaniciKayit(adSoyad,sifre,mail,telefon,dogumTarihi);
                 }
                 else {
-                    Toast.makeText(getApplicationContext(),"Lütfen düzgün biçimde doldurun",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Lütfen kurallara uygun doldurun.",Toast.LENGTH_LONG).show();
                 }
 
             }
@@ -171,16 +169,17 @@ public class KayitActivity extends AppCompatActivity {
     private void kullaniciKayit(final String adSoyad, final String sifre, final String mail, final String telefon, final String dogumTarihi) {
 
 
-        String path = getPath(filePath);
+        String path = yolBul(filePath);
 
         pDialog.setMessage("Kayıt Gerçekleştiriliyor ...");
         pDialog.show();
 
 
-        try {
+        try {//Standart volet kütüphanesini kullanamadık.
+            //Resim ekleme özelliği olmadığı için
             new MultipartUploadRequest(this, REGISTER_URL)
-                    .addFileToUpload(path, "resim") //Adding file
-                    .addParameter("name", adSoyad) //Adding text parameter to the request
+                    .addFileToUpload(path, "resim") //Dosya Ekleme
+                    .addParameter("name", adSoyad) //Parametre ekleme
                     .addParameter("adi_soyadi",adSoyad)
                     .addParameter("dogum_tarihi",dogumTarihi)
                     .addParameter("memleket_id",memleket)
@@ -250,29 +249,15 @@ public class KayitActivity extends AppCompatActivity {
 
 
     }
-    private void showFileChooser() {
+    private void dosyaSecici() {
 
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Resim Seç"), PICK_IMAGE_REQUEST);
     }
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            filePath = data.getData();
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
-                imageView.setImageBitmap(bitmap);
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    public String getPath(Uri uri) {
+    public String yolBul(Uri uri) {
 
         Cursor cursor = getContentResolver().query(uri, null, null, null, null);
         cursor.moveToFirst();
@@ -318,9 +303,23 @@ public class KayitActivity extends AppCompatActivity {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
     }
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath = data.getData();
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                imageView.setImageBitmap(bitmap);
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
-        //request kod eşleşiyorsa
+        //dosya okumaya erişimi varsa
         if (requestCode == STORAGE_PERMISSION_CODE) {
 
             //izin kontrolü
