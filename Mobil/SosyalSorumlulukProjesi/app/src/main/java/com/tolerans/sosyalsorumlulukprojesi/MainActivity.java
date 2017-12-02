@@ -220,10 +220,6 @@ public class MainActivity extends AppCompatActivity
             //uygulamayı baştan başlattık.
             Intent intent = new Intent(MainActivity.this,MainActivity.class);
             startActivity(intent);
-        } else if(id== R.id.nav_Icerik){
-            Intent intent = new Intent(MainActivity.this,ProjeIcerikActivity.class);
-            startActivity(intent);
-            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

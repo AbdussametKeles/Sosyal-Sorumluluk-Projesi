@@ -2,6 +2,7 @@ package com.tolerans.sosyalsorumlulukprojesi;
 
 import android.content.Context;
 
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,7 +71,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         List<String> resimler = (ArrayList<String>) list_projeler.get(position).getResimler();
         if(resimler != null && resimler.size() != 0 && !resimler.contains(null) && !resimler.contains("")){
             Toast.makeText(c,resimler.get(0).toString(),Toast.LENGTH_LONG).show();
@@ -81,7 +83,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(c,"tıklandı",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(c,ProjeIcerikActivity.class);
+                intent.putExtra("proje",  list_projeler.get(position));
+                c.startActivity(intent);
             }
         });
         Picasso.with(c).load(list_projeler.get(position).getResimUrl()).placeholder(R.mipmap.ic_launcher).into(holder.resim);

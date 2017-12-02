@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class ProjeIcerikActivity extends AppCompatActivity {
@@ -26,7 +27,7 @@ public class ProjeIcerikActivity extends AppCompatActivity {
 
         if(getIntent().getSerializableExtra("proje")!=null){
             //sunları sunları yap
-            Projeler proje = (Projeler) getIntent().getSerializableExtra("proje");
+            proje = (Projeler) getIntent().getSerializableExtra("proje");
         }
 
 
@@ -38,14 +39,18 @@ public class ProjeIcerikActivity extends AppCompatActivity {
         btnYorum = (Button) findViewById(R.id.btnprojeYorum);
         rcResimler = (RecyclerView) findViewById(R.id.projeResimler);
         rcYorumlar = (RecyclerView) findViewById(R.id.projeYorumlar);
-
-       //ResimAdapter resimAdapter = new ResimAdapter(proje.getResimler(),getApplicationContext());
-
-       LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false);
-       rcResimler.setLayoutManager(layoutManager);
-      // rcResimler.setAdapter(resimAdapter);
+        if(proje.getResimler() != null && proje.getResimler().size() != 0 && !proje.getResimler().contains(null) && !proje.getResimler().contains(""))
+        {
+            ResimAdapter resimAdapter = new ResimAdapter(proje.getResimler(),getApplicationContext());
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.HORIZONTAL,false);
+            rcResimler.setLayoutManager(layoutManager);
+            rcResimler.setAdapter(resimAdapter);
+        }
 
         txtBaslik.setText(proje.getBaslik());
+        txtKonum.setText(String.valueOf(proje.getKonumID()));
+        txtYazar.setText(String.valueOf(proje.yazarId));
+        txtIcerik.setText(proje.getIcerik());
 
         YorumAdapter yorumAdapter = new YorumAdapter(proje.getYorumlar(),getApplicationContext());
 

@@ -2,6 +2,7 @@ package com.tolerans.sosyalsorumlulukprojesi;
 
 import org.json.JSONArray;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import java.util.List;
  * Created by SAMET on 11.11.2017.
  */
 
-public class Projeler {
+public class Projeler implements Serializable {
 
     String Baslik;
     String yazarAdi;
