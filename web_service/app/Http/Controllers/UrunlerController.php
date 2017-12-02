@@ -15,10 +15,57 @@ class UrunlerController extends Controller
     //üye olmayan kullanıcılar için ürünleri listeleme fonksiyonu
     public function urun_listele(Request $request)
     {
-    }
+      $this->validate($request, [
+        'token_string' => '',
+      ]);
+
+      if(empty($request->input('token_string'))){
+        $urunler = DB::table('urunler')->get();
+
+        foreach ($urunler as $urun_id => $urun) {
+          $urunler[$urun_id]->gorseller = DB::table('resimler')->where('urun_id', $urun->urun_id)->get();
+          foreach($urunler[$urun_id]->gorseller as $resim_id => $resim) {
+            $urunler[$urun_id]->gorseller[$resim_id]->resim = url('resim/'.$urunler[$urun_id]->gorseller[$resim_id]->resim);
+          }
+        }
+
+      return response()->json([
+        'status' => 200,
+        'message' => 'Urunler Basarili Bir Sekilde Listelendi.',
+        'urunler' => $urunler,
+      ]);
+    }else{
+
+      $kullanici = DB::table('oturum')->where([
+        ['token_string', '=', $request->input('token_string')],
+      ])->first();
+
+      $urunler = DB::table('urunler')->where([
+        ['kullanici_id', '=', $kullanici->kullanici_id],
+      ])->get();
+
+      foreach ($urunler as $urun_id => $urun){
+        $urunler[$urun_id]->gorseller = DB::table('resimler')->where('urun_id', $urun->urun_id)->get();
+        foreach($urunler[$urun_id]->gorseller as $resim_id => $resim) {
+          $urunler[$urun_id]->gorseller[$resim_id]->resim = url('resim/'.$urunler[$urun_id]->gorseller[$resim_id]->resim);
+        }
+      }
+
+    return response()->json([
+      'status' => 200,
+      'message' => 'Urunler Basarili Bir Sekilde Listelendi.',
+      'urunler' => $urunler,
+    ]);
+  }
+}
 
     //ürünleri görüntüleme fonksiyonu
     public function urun_goruntule()
+    {
+    }
+
+    //ürünleri görüntüleme fonksiyonu
+    public function urun_silme(Request $request)
     {
     }
 
@@ -66,7 +113,7 @@ class UrunlerController extends Controller
       foreach ($urun_gorselleri as $gorsel) {
         $resimler[] = [
           'id' => DB::table('resimler')->insertGetId($gorsel),
-          'resim_url' => url("/resim//{$gorsel['resim']}"),
+          'resim_url' => url("/resim/{$gorsel['resim']}"),
         ];
       }
 

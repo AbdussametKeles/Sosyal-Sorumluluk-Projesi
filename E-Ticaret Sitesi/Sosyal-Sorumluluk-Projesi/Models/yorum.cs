@@ -9,6 +9,12 @@ namespace Sosyal_Sorumluluk_Projesi.Models
     [Table("yorum")]
     public partial class yorum
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public yorum()
+        {
+            urunlers = new HashSet<urunler>();
+        }
+
         public int yorumID { get; set; }
 
         [StringLength(50)]
@@ -18,10 +24,12 @@ namespace Sosyal_Sorumluluk_Projesi.Models
 
         public int? urunID { get; set; }
 
-        [Column(TypeName = "date")]
         public DateTime? tarih { get; set; }
 
         public virtual kullanicilar kullanicilar { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<urunler> urunlers { get; set; }
 
         public virtual urunler urunler { get; set; }
     }

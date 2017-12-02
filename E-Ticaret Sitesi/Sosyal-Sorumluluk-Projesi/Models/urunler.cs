@@ -36,11 +36,15 @@ namespace Sosyal_Sorumluluk_Projesi.Models
 
         public int? kullaniciID { get; set; }
 
+        public int? yorumID { get; set; }
+
         public virtual kategoriler kategoriler { get; set; }
 
         public virtual kullanicilar kullanicilar { get; set; }
 
         public virtual memleket memleket { get; set; }
+
+        public virtual yorum yorum { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<yorum> yorums { get; set; }
