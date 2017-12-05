@@ -232,4 +232,9 @@ class KullaniciController extends Controller
         'kullanici' => $kullanici,
       ]);
     }
+
+    //kullanıcı profil görüntüleme fonksiyonu
+    public function profil_goruntule(Request $request){
+      
+    }
   }
