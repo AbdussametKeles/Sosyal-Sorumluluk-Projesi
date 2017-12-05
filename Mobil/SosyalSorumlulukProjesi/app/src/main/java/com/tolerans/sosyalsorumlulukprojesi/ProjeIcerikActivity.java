@@ -112,7 +112,7 @@ public class ProjeIcerikActivity extends AppCompatActivity {
             public void onClick(View v) {
 
              //   Toast.makeText(getApplicationContext(),token+" "+String.valueOf(proje.getUrunID()),Toast.LENGTH_LONG).show();
-
+                // proje silme kodu daha öncesinde yazılmışım fakat github'a atmayı unutmuşum.
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://service.sosyalsorumluluk.mansetler.org/urunler/silme", new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
