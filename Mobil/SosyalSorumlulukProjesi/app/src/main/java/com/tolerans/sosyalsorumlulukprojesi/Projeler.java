@@ -26,10 +26,20 @@ public class Projeler implements Serializable {
     int kategoriId;
     int urunID;
     List<String>  yorumlar;
-    List<Integer> yorumID;
     String Kategori;
     String BagisTipi;
     List<String> resimler;
+
+    public List<Integer> getKullaniciIDs() {
+        return kullaniciIDs;
+    }
+
+    public void setKullaniciIDs(List<Integer> kullaniciIDs) {
+        this.kullaniciIDs = kullaniciIDs;
+    }
+
+    List<Integer> yorumID;
+    List<Integer> kullaniciIDs;
 
     public List<String> getResimler() {
         return resimler;

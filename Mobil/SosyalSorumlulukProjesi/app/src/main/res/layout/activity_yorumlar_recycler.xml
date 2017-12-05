@@ -4,33 +4,32 @@
     android:layout_height="match_parent"
     android:padding="5dp"
     >
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imgYorumFoto"
-        android:layout_weight="2"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtYorumKullanici"
-        android:text="Kullanıcı Adı"
-        android:layout_weight="3"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/txtYorumTarih"
-        android:layout_gravity="right"
-        android:text="Tarih"
-        android:layout_weight="3"
-        android:textAlignment="textEnd"/>
-</LinearLayout>
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/txtYorumIcerik"
-        android:text="Yorum İçeriği"/>
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtYorumIcerik"
+            android:text="Yorum İçeriği"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/edtYorum"
+            android:visibility="gone"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnYorumSil"
+            android:text="Sil"
+            android:visibility="gone"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnYorumDuzenle"
+            android:text="Düzenle"
+            android:visibility="gone"/>
+    </LinearLayout>
+
 </LinearLayout>

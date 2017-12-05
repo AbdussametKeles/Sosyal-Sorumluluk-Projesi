@@ -99,7 +99,7 @@ public class ProjeIcerikActivity extends AppCompatActivity {
 
             rcYorumlar.setLayoutManager(yorumManager);
 
-            YorumAdapter yorumAdapter = new YorumAdapter(proje.getYorumlar(),getApplicationContext());
+            YorumAdapter yorumAdapter = new YorumAdapter(proje.getYorumlar(),getApplicationContext(),kullaniciID,proje.getYorumID(),proje.kullaniciIDs,token);
             rcYorumlar.setAdapter(yorumAdapter);
 
         }
@@ -111,7 +111,7 @@ public class ProjeIcerikActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(getApplicationContext(),token+" "+String.valueOf(proje.getUrunID()),Toast.LENGTH_LONG).show();
+             //   Toast.makeText(getApplicationContext(),token+" "+String.valueOf(proje.getUrunID()),Toast.LENGTH_LONG).show();
 
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://service.sosyalsorumluluk.mansetler.org/urunler/silme", new Response.Listener<String>() {
                     @Override
