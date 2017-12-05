@@ -18,7 +18,17 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
              
             var urun = db.urunlers.OrderByDescending(u => u.urunID).Take(6);
             return View(urun);
-        }  
+        }   
+
+        public ActionResult SiteAra(string Ara=null)
+        {
+
+            var aranan = db.urunlers.Where(u=> u.urunAdi.Contains(Ara)).ToList();
+             
+
+            return View(aranan.OrderByDescending(u=>u.tarih)); 
+        }
+
 
         public ActionResult Hakkimizda()
         {

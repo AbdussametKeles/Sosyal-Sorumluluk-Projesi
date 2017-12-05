@@ -170,8 +170,7 @@
 
                            
                                    
-                                  
-
+                             
                               
 
 
@@ -179,11 +178,27 @@
                             </ul>
                         </div>
                     </div>
+                   
+
+                  @using (Html.BeginForm("SiteAra", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                  {
+
                     <div class="col-sm-3">
-                        <div class="search_box pull-right">
-                            <input type="text" placeholder="Ara" />
+                        <div class="searchform pull-right">
+                            <input type="text" id="Ara" name="Ara" placeholder="Ara" class="input-group-btn" />
+                            <button class="btn btn-default" value="Ara" type="submit">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
                         </div>
                     </div>
+
+                     
+                  }
+
+             
+
+
+
                 </div>
             </div>
         </div><!--/header-bottom-->

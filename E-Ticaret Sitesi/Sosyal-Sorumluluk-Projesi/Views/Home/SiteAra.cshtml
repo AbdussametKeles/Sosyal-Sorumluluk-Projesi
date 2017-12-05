@@ -1,0 +1,72 @@
+﻿@model IEnumerable<Sosyal_Sorumluluk_Projesi.Models.urunler>
+
+@{
+    ViewBag.Title = "SiteAra";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+<div class="col-sm-4">
+   
+    <h2>Aranan Kelimeye Göre Bulunan İçerikler</h2>
+     
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.kategoriler.kategoriAdi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.kullanicilar.adsoyad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.memleket.memleketAdi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.yorum.yorumIcerik)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.urunAdi)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.urunİcerik)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.tarih)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.resim)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.kategoriler.kategoriAdi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.kullanicilar.adsoyad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.memleket.memleketAdi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.yorum.yorumIcerik)
+                </td>
+                <td>
+                    <a href="/Urunler/Detay/@item.urunID">  @Html.DisplayFor(modelItem => item.urunAdi)  </a>  
+                </td> 
+                <td>
+                    @Html.DisplayFor(modelItem => item.urunİcerik)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tarih)
+                </td>
+                <td>
+                    <img class="img-rounded img-responsive" width="75" src="@item.resim" alt="@item.urunAdi">
+                </td>
+            
+            </tr>
+        }
+
+    </table>
+</div>
