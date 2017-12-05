@@ -21,6 +21,7 @@ $router->group(['prefix' => 'kullanici'], function () use ($router) {
   $router->get('giris', ['uses' => 'KullaniciController@giris']);
   $router->get('sifremi_unuttum', ['uses' => 'KullaniciController@sifremi_unuttum']);
   $router->post('profil_guncelle', ['uses' => 'KullaniciController@profil_guncelle']);
+  $router->get('goruntule', ['uses' => 'KullaniciController@profil_goruntule']);
 });
 
 // MemleketController için Routes Oluşturuldu.
@@ -38,8 +39,11 @@ $router->group(['prefix' => 'urunler'], function () use ($router) {
   $router->get('listele', ['uses' => 'UrunlerController@urun_listele']);
   $router->get('goruntule', ['uses' => 'UrunlerController@urun_goruntule']);
   $router->post('yayinlama', ['uses' => 'UrunlerController@urun_yayinlama']);
-  $router->post('yorumlama', ['uses' => 'UrunlerController@urun_yorumlama']);
   $router->post('silme',['uses' => 'UrunlerController@urun_silme']);
+  $router->post('guncelle',['uses' => 'UrunlerController@urun_guncelle']);
+  $router->post('yorumlama', ['uses' => 'UrunlerController@urun_yorumlama']);
+  $router->post('yorum_sil', ['uses' => 'UrunlerController@urun_yorum_silme']);
+  $router->post('yorum_duzenle', ['uses' => 'UrunlerController@urun_yorum_duzenleme']);
 });
 
 // ContactController için Routes Oluşturuldu.
