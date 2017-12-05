@@ -27,14 +27,14 @@ import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
+
+    String json;
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView yazar,konum,baslik,icerik;
         LinearLayout linearLayout;
         ImageView resim;
-
-
-
 
         public ViewHolder(View view) {
             super(view);
@@ -54,9 +54,10 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     List<Projeler> list_projeler;
     Context c;
 
-    public MyAdapter(List<Projeler> list_projeler,Context c) {
+    public MyAdapter(List<Projeler> list_projeler,Context c,String json) {
         this.c =c;
         this.list_projeler = list_projeler;
+        this.json = json;
     }
 
 
@@ -74,7 +75,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, final int position) {
         List<String> resimler = (ArrayList<String>) list_projeler.get(position).getResimler();
         if(resimler != null && resimler.size() != 0 && !resimler.contains(null) && !resimler.contains("")){
-            Toast.makeText(c,resimler.get(0).toString(),Toast.LENGTH_LONG).show();
         }
         holder.yazar.setText(String.valueOf(list_projeler.get(position).getYazarId()));
         holder.baslik.setText(list_projeler.get(position).getBaslik());
@@ -84,6 +84,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(c,ProjeIcerikActivity.class);
+                intent.putExtra("json",json);
                 intent.putExtra("proje",  list_projeler.get(position));
                 c.startActivity(intent);
             }

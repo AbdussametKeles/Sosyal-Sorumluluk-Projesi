@@ -67,6 +67,13 @@ public class MainActivity extends AppCompatActivity
         if(bundle!= null){
             bundleJson =bundle.getString("jsonveri");
             Toast.makeText(this,bundleJson,Toast.LENGTH_LONG).show();
+
+            try {
+                JSONObject json = new JSONObject(bundleJson);
+                token = json.getString("token");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             //navigation bardaki butonlara ulaşmamızı sağlayacak
             menu.findItem(R.id.nav_cikis).setVisible(true);
             menu.findItem(R.id.nav_proje_ekle).setVisible(true);
@@ -100,7 +107,7 @@ public class MainActivity extends AppCompatActivity
                 try {
 
                     JSONObject jsonObject = new JSONObject(response);
-
+                   // Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
                     JSONArray array = jsonObject.getJSONArray("urunler");
 
                     for(int i=0;i<array.length();i++){
@@ -115,27 +122,49 @@ public class MainActivity extends AppCompatActivity
                         proje.setKategoriId(projeJson.getInt("kategori_id"));
                         proje.setBagisTipi(projeJson.getString("bagis_tipi"));
                         ArrayList<String> resimler = new ArrayList<>();
+                        ArrayList<String> yorumIcerikler= new ArrayList<>();
+                        ArrayList<Integer> kullaniciIDs = new ArrayList<>();
+                        ArrayList<Integer> yorumIDs = new ArrayList<>();
                        // JSONArray yorumArray = new JSONArray(projeJson.getJSONObject("yorumlar"));
                      //  proje.setYorumlar(yorumArray);
 
 
                          JSONArray resimArray = projeJson.getJSONArray("gorseller");
-                       if(!resimArray.toString().equals("[]")) {
-                           String ilkResim = resimArray.getJSONObject(0).getString("resim");
-                           ilkResim.replace("\\", "");
-                           proje.setResimUrl(ilkResim);
-                           for(int j =0; j<resimArray.length();j++){
-                               String resimUrl = resimArray.getJSONObject(j).getString("resim");
-                               resimUrl.replace("\\","");
-                               resimler.add(resimUrl);
-                           }
-                           proje.setResimler(resimler);
-                       }
+                        if(!resimArray.toString().equals("[]")) {
+                            String ilkResim = resimArray.getJSONObject(0).getString("resim");
+                            ilkResim.replace("\\", "");
+                            proje.setResimUrl(ilkResim);
+                            for(int j =0; j<resimArray.length();j++){
+                                String resimUrl = resimArray.getJSONObject(j).getString("resim");
+                                resimUrl.replace("\\","");
+                                resimler.add(resimUrl);
+                            }
+                            proje.setResimler(resimler);
+                        }
+                        JSONArray yorumArray = projeJson.getJSONArray("yorumlar");
+                        if(!yorumArray.toString().equals("[]")) {
+                            for(int j =0; j<yorumArray.length();j++){
+                                String yorumIcerik = yorumArray.getJSONObject(j).getString("yorum_icerigi");
+                                int yorumId = yorumArray.getJSONObject(j).getInt("yorum_id");
+                                int kullaniciId = yorumArray.getJSONObject(j).getInt("kullanici_id");
+                             //   Toast.makeText(getApplication(),yorumIcerik,Toast.LENGTH_LONG).show();
+                                kullaniciIDs.add(kullaniciId);
+                                yorumIDs.add(yorumId);
+                                yorumIcerikler.add(yorumIcerik);
 
+                            }
+                            proje.setKullaniciIDs(kullaniciIDs);
+                            proje.setYorumID(yorumIDs);
+                            proje.setYorumlar(yorumIcerikler);
+
+                        }
+                      // Toast.makeText(getApplicationContext(),proje.getYorumlar().get(0),Toast.LENGTH_LONG).show();
                         projelerList.add(proje);
 
                 }
-                    MyAdapter adapter = new MyAdapter(projelerList,MainActivity.this);
+
+
+                    MyAdapter adapter = new MyAdapter(projelerList,MainActivity.this,bundleJson);
                     recyclerView.setAdapter(adapter);
 
 

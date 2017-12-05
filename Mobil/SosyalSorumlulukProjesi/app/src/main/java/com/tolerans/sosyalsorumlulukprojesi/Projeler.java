@@ -25,10 +25,21 @@ public class Projeler implements Serializable {
     int konumID;
     int kategoriId;
     int urunID;
-    JSONArray yorumlar;
+    List<String>  yorumlar;
     String Kategori;
     String BagisTipi;
     List<String> resimler;
+
+    public List<Integer> getKullaniciIDs() {
+        return kullaniciIDs;
+    }
+
+    public void setKullaniciIDs(List<Integer> kullaniciIDs) {
+        this.kullaniciIDs = kullaniciIDs;
+    }
+
+    List<Integer> yorumID;
+    List<Integer> kullaniciIDs;
 
     public List<String> getResimler() {
         return resimler;
@@ -40,6 +51,14 @@ public class Projeler implements Serializable {
 
 
 
+
+    public List<Integer> getYorumID() {
+        return yorumID;
+    }
+
+    public void setYorumID(List<Integer> yorumID) {
+        this.yorumID = yorumID;
+    }
 
     public int getUrunID() {
         return urunID;
@@ -134,11 +153,11 @@ public class Projeler implements Serializable {
         this.konumID = konumID;
     }
 
-    public JSONArray getYorumlar() {
+    public List<String> getYorumlar() {
         return yorumlar;
     }
 
-    public void setYorumlar(JSONArray yorumlar) {
+    public void setYorumlar(List<String> yorumlar) {
         this.yorumlar = yorumlar;
     }
 
