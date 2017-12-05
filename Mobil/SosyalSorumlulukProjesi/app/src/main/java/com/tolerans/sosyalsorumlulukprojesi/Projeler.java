@@ -26,6 +26,7 @@ public class Projeler implements Serializable {
     int kategoriId;
     int urunID;
     List<String>  yorumlar;
+    List<Integer> yorumID;
     String Kategori;
     String BagisTipi;
     List<String> resimler;
@@ -40,6 +41,14 @@ public class Projeler implements Serializable {
 
 
 
+
+    public List<Integer> getYorumID() {
+        return yorumID;
+    }
+
+    public void setYorumID(List<Integer> yorumID) {
+        this.yorumID = yorumID;
+    }
 
     public int getUrunID() {
         return urunID;

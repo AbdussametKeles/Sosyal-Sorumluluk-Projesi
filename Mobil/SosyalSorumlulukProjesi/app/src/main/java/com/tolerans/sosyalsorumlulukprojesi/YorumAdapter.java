@@ -33,12 +33,12 @@ public class YorumAdapter extends RecyclerView.Adapter<YorumAdapter.ViewHolder> 
         }
     }
 
-    List<String> list_projeler;
+   List<String> yorumIcerikler;
     Context c;
 
-    public YorumAdapter(List<String> list_projeler,Context c) {
+    public YorumAdapter(List<String> yorumIcerikler,Context c) {
         this.c =c;
-        this.list_projeler = list_projeler;
+        this.yorumIcerikler = yorumIcerikler;
     }
 
 
@@ -55,13 +55,13 @@ public class YorumAdapter extends RecyclerView.Adapter<YorumAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
-
+        holder.txtIcerik.setText(yorumIcerikler.get(position));
 
     }
 
     @Override
     public int getItemCount() {
-        return list_projeler.size();
+        return yorumIcerikler.size();
     }
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {

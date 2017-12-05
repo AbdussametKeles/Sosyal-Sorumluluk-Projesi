@@ -122,26 +122,38 @@ public class MainActivity extends AppCompatActivity
                         proje.setKategoriId(projeJson.getInt("kategori_id"));
                         proje.setBagisTipi(projeJson.getString("bagis_tipi"));
                         ArrayList<String> resimler = new ArrayList<>();
+                        ArrayList<String> yorumIcerikler= new ArrayList<>();
                        // JSONArray yorumArray = new JSONArray(projeJson.getJSONObject("yorumlar"));
                      //  proje.setYorumlar(yorumArray);
 
 
                          JSONArray resimArray = projeJson.getJSONArray("gorseller");
-                       if(!resimArray.toString().equals("[]")) {
-                           String ilkResim = resimArray.getJSONObject(0).getString("resim");
-                           ilkResim.replace("\\", "");
-                           proje.setResimUrl(ilkResim);
-                           for(int j =0; j<resimArray.length();j++){
-                               String resimUrl = resimArray.getJSONObject(j).getString("resim");
-                               resimUrl.replace("\\","");
-                               resimler.add(resimUrl);
-                           }
-                           proje.setResimler(resimler);
-                       }
+                        if(!resimArray.toString().equals("[]")) {
+                            String ilkResim = resimArray.getJSONObject(0).getString("resim");
+                            ilkResim.replace("\\", "");
+                            proje.setResimUrl(ilkResim);
+                            for(int j =0; j<resimArray.length();j++){
+                                String resimUrl = resimArray.getJSONObject(j).getString("resim");
+                                resimUrl.replace("\\","");
+                                resimler.add(resimUrl);
+                            }
+                            proje.setResimler(resimler);
+                        }
+                        JSONArray yorumArray = projeJson.getJSONArray("yorumlar");
+                        if(!yorumArray.toString().equals("[]")) {
+                            for(int j =0; j<yorumArray.length();j++){
+                                String yorumIcerik = yorumArray.getJSONObject(j).getString("yorum_icerigi");
+                                yorumIcerikler.add(yorumIcerik);
 
+                            }
+                            proje.setYorumlar(yorumIcerikler);
+
+                        }
+                      // Toast.makeText(getApplicationContext(),proje.getYorumlar().get(0),Toast.LENGTH_LONG).show();
                         projelerList.add(proje);
 
                 }
+
 
                     MyAdapter adapter = new MyAdapter(projelerList,MainActivity.this,bundleJson);
                     recyclerView.setAdapter(adapter);

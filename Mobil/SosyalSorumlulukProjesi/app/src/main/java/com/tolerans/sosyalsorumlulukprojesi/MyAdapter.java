@@ -83,7 +83,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(c,json,Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(c,ProjeIcerikActivity.class);
                 intent.putExtra("json",json);
                 intent.putExtra("proje",  list_projeler.get(position));

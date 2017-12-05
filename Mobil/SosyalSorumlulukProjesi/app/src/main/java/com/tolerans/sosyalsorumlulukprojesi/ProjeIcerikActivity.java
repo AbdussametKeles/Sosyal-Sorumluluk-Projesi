@@ -22,6 +22,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,7 +36,7 @@ public class ProjeIcerikActivity extends AppCompatActivity {
     Button btnYorum,btnSil;
     EditText edtYorum;
     Projeler proje;
-    String json;
+    JSONArray jsonArray;
     String token;
     int kullaniciID;
     LinearLayout ln;
@@ -47,9 +48,11 @@ public class ProjeIcerikActivity extends AppCompatActivity {
         ln = (LinearLayout) findViewById(R.id.lnProjeIcerik);
 
         if(getIntent().getExtras().getString("json")!=null){
+
             try {
+                JSONObject jsonObject = new JSONObject(getIntent().getExtras().getString("json"));
+                token = jsonObject.getString("token");
                 kullaniciID = new JSONObject(getIntent().getExtras().getString("json")).getJSONObject("kullan\u0131c\u0131").getInt("kullanici_id");
-                Toast.makeText(getApplicationContext(), String.valueOf(kullaniciID),Toast.LENGTH_LONG).show();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -59,6 +62,7 @@ public class ProjeIcerikActivity extends AppCompatActivity {
         if(getIntent().getSerializableExtra("proje")!=null){
             //sunları sunları yap
             proje = (Projeler) getIntent().getSerializableExtra("proje");
+
         }
 
 
@@ -88,11 +92,17 @@ public class ProjeIcerikActivity extends AppCompatActivity {
         txtYazar.setText(String.valueOf(proje.yazarId));
         txtIcerik.setText(proje.getIcerik());
 
-       // YorumAdapter yorumAdapter = new YorumAdapter(proje.getYorumlar(),getApplicationContext());
 
-        LinearLayoutManager yorumManager = new LinearLayoutManager(getApplicationContext(),1,false);
-        //rcYorumlar.setAdapter(yorumAdapter);
-   //     rcYorumlar.setLayoutManager(yorumManager);
+        if(proje.getYorumlar() != null && proje.getYorumlar().size() != 0 && !proje.getYorumlar().contains(null) && !proje.getYorumlar().contains(""))
+        {
+            LinearLayoutManager yorumManager = new LinearLayoutManager(getApplicationContext(),1,false);
+
+            rcYorumlar.setLayoutManager(yorumManager);
+
+            YorumAdapter yorumAdapter = new YorumAdapter(proje.getYorumlar(),getApplicationContext());
+            rcYorumlar.setAdapter(yorumAdapter);
+
+        }
 
         if(kullaniciID==proje.getYazarId()){
             btnSil.setVisibility(View.VISIBLE);
@@ -101,6 +111,30 @@ public class ProjeIcerikActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                Toast.makeText(getApplicationContext(),token+" "+String.valueOf(proje.getUrunID()),Toast.LENGTH_LONG).show();
+
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://service.sosyalsorumluluk.mansetler.org/urunler/silme", new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(getApplicationContext(),response.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+
+                        Map<String,String> params = new HashMap<>();
+                        params.put("token_string",token);
+                        params.put("urun_id",String.valueOf(proje.getUrunID()));
+                        return params;
+
+                    }
+                };
+                Volley.newRequestQueue(getApplicationContext()).add(stringRequest);
             }
         });
         btnYorum.setOnClickListener(new View.OnClickListener() {
