@@ -36,7 +36,7 @@ public class YorumAdapter extends RecyclerView.Adapter<YorumAdapter.ViewHolder> 
 
         TextView txtIcerik;
         EditText edtIcerik;
-        Button btnSil,btnDuzenle;
+        Button btnSil,btnDuzenle,btnKaydet;
 
         public ViewHolder(View view) {
             super(view);
@@ -44,6 +44,7 @@ public class YorumAdapter extends RecyclerView.Adapter<YorumAdapter.ViewHolder> 
             btnSil = (Button) view.findViewById(R.id.btnYorumSil);
             edtIcerik = (EditText) view.findViewById(R.id.edtYorum);
             btnDuzenle = (Button) view.findViewById(R.id.btnYorumDuzenle);
+            btnKaydet = (Button) view.findViewById(R.id.btnYorumKaydet);
         }
     }
 
@@ -74,12 +75,13 @@ public class YorumAdapter extends RecyclerView.Adapter<YorumAdapter.ViewHolder> 
 
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         holder.txtIcerik.setText(yorumIcerikler.get(position));
        // Toast.makeText(c,kullaniciIDs.get(position).toString(),Toast.LENGTH_LONG).show();
         if(kullaniciIDs.get(position)==kullaniciID){
             holder.btnSil.setVisibility(View.VISIBLE);
+            holder.btnDuzenle.setVisibility(View.VISIBLE);
         }
         holder.btnSil.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +105,41 @@ public class YorumAdapter extends RecyclerView.Adapter<YorumAdapter.ViewHolder> 
                         params.put("yorum_id",yorumIDs.get(position).toString());
                         return params;
 
+                    }
+                };
+                Volley.newRequestQueue(c).add(request);
+            }
+        });
+        holder.btnDuzenle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                holder.txtIcerik.setVisibility(View.GONE);
+                holder.edtIcerik.setVisibility(View.VISIBLE);
+                holder.btnKaydet.setVisibility(View.VISIBLE);
+                holder.btnDuzenle.setVisibility(View.GONE);
+            }
+        });
+        holder.btnKaydet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StringRequest request = new StringRequest(Request.Method.POST, "http://service.sosyalsorumluluk.mansetler.org/urunler/yorum_duzenle", new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(c,response.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(c,error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String,String> params = new HashMap<>();
+                        params.put("token_string",token);
+                        params.put("yorum_id",yorumIDs.get(position).toString());
+                        params.put("yorum_icerigi",holder.edtIcerik.getText().toString());
+                        return params;
                     }
                 };
                 Volley.newRequestQueue(c).add(request);

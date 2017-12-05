@@ -30,6 +30,12 @@
             android:id="@+id/btnYorumDuzenle"
             android:text="Düzenle"
             android:visibility="gone"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnYorumKaydet"
+            android:text="Değişiklikleri Kaydet"
+            android:visibility="gone"/>
     </LinearLayout>
 
 </LinearLayout>
