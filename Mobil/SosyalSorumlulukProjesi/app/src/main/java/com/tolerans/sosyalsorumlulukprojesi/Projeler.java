@@ -25,7 +25,7 @@ public class Projeler implements Serializable {
     int konumID;
     int kategoriId;
     int urunID;
-    JSONArray yorumlar;
+    List<String>  yorumlar;
     String Kategori;
     String BagisTipi;
     List<String> resimler;
@@ -134,11 +134,11 @@ public class Projeler implements Serializable {
         this.konumID = konumID;
     }
 
-    public JSONArray getYorumlar() {
+    public List<String> getYorumlar() {
         return yorumlar;
     }
 
-    public void setYorumlar(JSONArray yorumlar) {
+    public void setYorumlar(List<String> yorumlar) {
         this.yorumlar = yorumlar;
     }
 

@@ -67,6 +67,13 @@ public class MainActivity extends AppCompatActivity
         if(bundle!= null){
             bundleJson =bundle.getString("jsonveri");
             Toast.makeText(this,bundleJson,Toast.LENGTH_LONG).show();
+
+            try {
+                JSONObject json = new JSONObject(bundleJson);
+                token = json.getString("token");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             //navigation bardaki butonlara ulaşmamızı sağlayacak
             menu.findItem(R.id.nav_cikis).setVisible(true);
             menu.findItem(R.id.nav_proje_ekle).setVisible(true);
@@ -135,7 +142,8 @@ public class MainActivity extends AppCompatActivity
                         projelerList.add(proje);
 
                 }
-                    MyAdapter adapter = new MyAdapter(projelerList,MainActivity.this);
+
+                    MyAdapter adapter = new MyAdapter(projelerList,MainActivity.this,bundleJson);
                     recyclerView.setAdapter(adapter);
 
 

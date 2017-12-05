@@ -13,52 +13,60 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.List;
+
 /**
  * Created by SAMET on 01.12.2017.
  */
 
-public class YorumAdapter extends RecyclerView.Adapter<YorumAdapter.MyYorumHolder> {
+public class YorumAdapter extends RecyclerView.Adapter<YorumAdapter.ViewHolder> {
 
-    JSONArray yorumlar;
-    Context c;
-    public YorumAdapter(JSONArray yorumlar, Context c) {
-        this.yorumlar = yorumlar;
-        this.c = c;
-    }
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
+        TextView txtKullanici,txtTarih,txtIcerik;
 
-    @Override
-    public MyYorumHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(c).inflate(R.layout.activity_yorumlar_recycler,parent,false);
-        return new MyYorumHolder(view);
-    }
-
-    @Override
-    public void onBindViewHolder(MyYorumHolder holder, int position) {
-        try {
-            holder.txtYazarAdi.setText(yorumlar.getJSONObject(position).getString("yazar_id"));
-            holder.txtYorumIcerik.setText(yorumlar.getJSONObject(position).getString("yorum_icerik"));
-            holder.txtYorumTarih.setText(yorumlar.getJSONObject(position).getString("tarih"));
-            Picasso.with(c).load(yorumlar.getJSONObject(position).getString("url")).into(holder.yorumFoto);
-        } catch (JSONException e) {
-            e.printStackTrace();
+        public ViewHolder(View view) {
+            super(view);
+            txtKullanici = (TextView) view.findViewById(R.id.txtYorumKullanici);
+            txtIcerik = (TextView) view.findViewById(R.id.txtYorumIcerik);
+            txtTarih = (TextView) view.findViewById(R.id.txtYorumTarih);
         }
+    }
+
+    List<String> list_projeler;
+    Context c;
+
+    public YorumAdapter(List<String> list_projeler,Context c) {
+        this.c =c;
+        this.list_projeler = list_projeler;
+    }
+
+
+    @Override
+    public YorumAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_yorumlar_recycler, parent, false);
+        final ViewHolder view_holder = new ViewHolder(v);
+
+        return view_holder;
+    }
+
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+
+
+
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return list_projeler.size();
+    }
+    @Override
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
     }
 
-    public class MyYorumHolder extends RecyclerView.ViewHolder{
-        ImageView yorumFoto;
-        TextView txtYazarAdi,txtYorumIcerik,txtYorumTarih;
-        public MyYorumHolder(View itemView) {
-            super(itemView);
-            yorumFoto = (ImageView) itemView.findViewById(R.id.imgYorumFoto);
-            txtYazarAdi = (TextView) itemView.findViewById(R.id.txtYorumKullanici);
-            txtYorumIcerik = (TextView) itemView.findViewById(R.id.txtYorumIcerik);
-            txtYorumTarih = (TextView) itemView.findViewById(R.id.txtYorumTarih);
-        }
-    }
+
 }

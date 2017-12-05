@@ -15,11 +15,21 @@
         android:layout_height="wrap_content"
         android:id="@+id/txtProjeBaslik"
         android:text="Başlık"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/edtProjeBaslik"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/txtProjeIcerik"
         android:text="İçerik"/>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/edtProjeIcerik"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,6 +41,11 @@
             android:layout_weight="1"
             android:id="@+id/txtProjeYazar"
             />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/edtProjeYazar"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -38,12 +53,22 @@
             android:layout_weight="1"
             android:id="@+id/txtProjeKonum"
             />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/edtProjeKonum"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tarih"
             android:id="@+id/txtProjeTarih"
             android:layout_weight="1"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/edtProjeTarih"/>
     </LinearLayout>
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
@@ -53,7 +78,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/lnProjeIcerik"
+        android:visibility="gone">
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,4 +93,10 @@
             android:text="Yorum Yap"/>
 
     </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/projeSil"
+        android:visibility="gone"
+        android:text="Projeyi Sil"/>
 </LinearLayout>
