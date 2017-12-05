@@ -174,10 +174,25 @@
 
                             @item.yorumIcerik - @if (Convert.ToInt32(Session["kullaniciID"]) == item.kullaniciID)
                             {
-                                <a class="btn btn-danger" href="/Home/YorumSil/@item.yorumID">Sil</a>
+                                <a class="btn btn-danger" href="/Home/YorumSil/@item.yorumID">Sil</a> 
+                                <a class="btn btn-default" href="/Home/YorumDuzenle/@item.yorumID">Düzenle</a>
 
+                          
+                            }  
+                            
+
+
+                           @if (Convert.ToInt32(Session["yetkiID"]) == 1)
+                            {
+
+                                
+
+                               
+                                <a class="btn btn-default" href="/Home/YorumGizle/@item.yorumID">Yorumu Gizle</a> 
+                         
                             }
 
+                             
 
 
                         </div>

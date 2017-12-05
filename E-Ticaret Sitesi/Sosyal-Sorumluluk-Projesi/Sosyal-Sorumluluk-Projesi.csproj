@@ -271,14 +271,18 @@
     <Compile Include="Controllers\AdminUyeController.cs" />
     <Compile Include="Controllers\AdminYorumController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\iletisimController.cs" />
     <Compile Include="Controllers\KategoriUrunController.cs" />
+    <Compile Include="Controllers\SharedController.cs" />
     <Compile Include="Controllers\UrunlerController.cs" />
     <Compile Include="Controllers\UyeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\iletisimModel.cs" />
     <Compile Include="Models\kategoriler.cs" />
     <Compile Include="Models\kullanicilar.cs" />
+    <Compile Include="Models\Gmail.cs" />
     <Compile Include="Models\memleket.cs" />
     <Compile Include="Models\Model1.cs" />
     <Compile Include="Models\urunler.cs" />
@@ -299,7 +303,6 @@
     <Content Include="Content\sendemail.php" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Hakkimizda.cshtml" />
-    <Content Include="Views\Home\Iletisim.cshtml" />
     <Content Include="Views\Shared\_LayoutPageAdmin.cshtml" />
     <Content Include="Content\Admin\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\Admin\font-awesome\fonts\fontawesome-webfont.ttf" />
@@ -374,6 +377,8 @@
     <Content Include="Views\AdminYorum\Index.cshtml" />
     <Content Include="Views\Urunler\YorumDetay.cshtml" />
     <Content Include="Views\Home\SiteAra.cshtml" />
+    <Content Include="Views\Home\YorumDuzenle.cshtml" />
+    <Content Include="Views\iletisim\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -6,6 +6,9 @@ using System.Web.Mvc;
 using Sosyal_Sorumluluk_Projesi.Models;
 using PagedList;
 using PagedList.Mvc;
+using System.Data.Entity;
+using System.Net;
+using System.Text;
 
 namespace Sosyal_Sorumluluk_Projesi.Controllers
 {
@@ -33,13 +36,10 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         public ActionResult Hakkimizda()
         {
             return View();
-        } 
-
-        public ActionResult Iletisim()
-        {
-            return View();
         }
-        
+
+     
+
         public ActionResult KategoriPartial()
         {
             return View(db.kategorilers.ToList()); 
@@ -71,7 +71,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
             return Json(false, JsonRequestBehavior.AllowGet);
         } 
 
-        public ActionResult YorumSil(int id)
+        public ActionResult YorumSil(int id,yetki yetki1)
         {
 
             var kullaniciID = Session["kullaniciID"];
@@ -83,13 +83,42 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                 db.SaveChanges();
 
                 return RedirectToAction("Detay", "Urunler", new { id = urun.urunID });
-            }
+            } 
             else 
             { 
                 return HttpNotFound();
             }
 
         }
+
+
+        // GET: Yorum/Edit/5
+        public ActionResult YorumDuzenle(int id)
+        {
+            var yorum = db.yorums.Where(y => y.yorumID == id).SingleOrDefault();
+
+            return View(yorum);
+
+
+        }
+         
+        [HttpPost] 
+        public ActionResult YorumDuzenle( yorum yorum,urunler urun)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(yorum).State = EntityState.Modified;  
+                db.SaveChanges();
+                return RedirectToAction("YorumDetay", "Urunler", new { id = urun.urunID }); 
+                  
+            } 
+            
+            return View(yorum);
+        }
+
+  
+
+     
 
 
 
