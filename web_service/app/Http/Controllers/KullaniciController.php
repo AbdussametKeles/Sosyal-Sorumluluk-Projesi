@@ -235,6 +235,25 @@ class KullaniciController extends Controller
 
     //kullanıcı profil görüntüleme fonksiyonu
     public function profil_goruntule(Request $request){
-      
+      $this->validate($request, [
+        'kullanici_id' => 'required',
+      ]);
+
+      $kullanici = DB::table('kullanici')->where([
+        ['kullanici_id', '=', $request->input('kullanici_id')],
+      ])->first();
+
+      return response()->json([
+        'status' => 200,
+        'message' => 'Profil basarili bir sekilde cekildi.',
+        'kullanici' => [
+          'adi_soyadi' => $kullanici->adi_soyadi,
+          'dogum_tarihi' => $kullanici->dogum_tarihi,
+          'memleket_id' => $kullanici->memleket_id,
+          'mail' => $kullanici->mail,
+          'telefon' => $kullanici->telefon,
+          'resim' => $kullanici->resim == null ? null : url("/resim/{$kullanici->resim}"),
+        ]
+      ]);
     }
   }
