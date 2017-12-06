@@ -239,7 +239,12 @@ public class MainActivity extends AppCompatActivity
             intent.putExtra("jsonveriler",bundleJson);
             startActivity(intent);
 
-        } else if (id == R.id.nav_cikis) {
+        }
+        else if (id == R.id.nav_message) {
+            Intent intent = new Intent(MainActivity.this,IletisimActivity.class);
+            startActivity(intent);
+
+        }else if (id == R.id.nav_cikis) {
             //shared preferenceyi temizliyor.
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             SharedPreferences.Editor editor = sharedPreferences.edit();

@@ -12,6 +12,11 @@
     <item android:title="Profil İşlemleri">
         <menu>
             <item
+                android:id="@+id/nav_message"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Admine mesaj gönder"
+               />
+            <item
                 android:id="@+id/nav_profil"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Profil'e git"
