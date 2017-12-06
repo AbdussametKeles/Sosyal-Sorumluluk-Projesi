@@ -53,11 +53,7 @@
             android:layout_weight="1"
             android:id="@+id/txtProjeKonum"
             />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:id="@+id/edtProjeKonum"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -70,6 +66,11 @@
             android:visibility="gone"
             android:id="@+id/edtProjeTarih"/>
     </LinearLayout>
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:id="@+id/edtProjeKonum"/>
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -94,6 +95,12 @@
             android:text="Yorum Yap"/>
 
     </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/projeDuzenleme"
+        android:visibility="gone"
+        android:text="Değişiklikleri Kaydet"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

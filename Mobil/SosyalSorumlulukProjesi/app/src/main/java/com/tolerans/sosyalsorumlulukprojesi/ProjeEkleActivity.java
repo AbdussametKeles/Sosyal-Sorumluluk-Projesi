@@ -225,7 +225,8 @@ public class ProjeEkleActivity extends AppCompatActivity {
 
         try {
             new MultipartUploadRequest(this,"http://service.sosyalsorumluluk.mansetler.org/urunler/yayinlama")
-                    .addFileToUpload(yolBul(filePath),"resim")
+                    .addFileToUpload(yolBul(filePath),"resim[]")
+                    .addFileToUpload(yolBul(filePath),"resim[]")
                     .addParameter("token_string",token)
                     .addParameter("kategori_id", String.valueOf(kategoriID))
                     .addParameter("urun_konumu", String.valueOf(memleketID))

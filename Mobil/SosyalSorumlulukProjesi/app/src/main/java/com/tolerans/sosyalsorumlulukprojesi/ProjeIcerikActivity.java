@@ -32,11 +32,11 @@ import java.util.Map;
 
 public class ProjeIcerikActivity extends AppCompatActivity {
     TextView txtBaslik, txtYazar, txtKonum,txtTarih,txtIcerik;
+    EditText edtBaslik,edtYazar,edtKonum,edtIcerik;
     RecyclerView rcResimler,rcYorumlar;
-    Button btnYorum,btnSil;
+    Button btnYorum,btnSil,btnKaydet;
     EditText edtYorum;
     Projeler proje;
-    JSONArray jsonArray;
     String token;
     int kullaniciID;
     LinearLayout ln;
@@ -67,6 +67,11 @@ public class ProjeIcerikActivity extends AppCompatActivity {
 
 
 
+        btnKaydet = (Button) findViewById(R.id.projeDuzenleme);
+        edtBaslik = (EditText) findViewById(R.id.edtProjeBaslik);
+        edtIcerik = (EditText) findViewById(R.id.edtProjeIcerik);
+        edtKonum = (EditText) findViewById(R.id.edtProjeKonum);
+        edtYazar = (EditText) findViewById(R.id.edtProjeYazar);
 
 
         txtBaslik = (TextView) findViewById(R.id.txtProjeBaslik);
@@ -105,8 +110,40 @@ public class ProjeIcerikActivity extends AppCompatActivity {
         }
 
         if(kullaniciID==proje.getYazarId()){
+            btnKaydet.setVisibility(View.VISIBLE);
             btnSil.setVisibility(View.VISIBLE);
         }
+
+        btnKaydet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://service.sosyalsorumluluk.mansetler.org/urunler/guncelle", new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(getApplication(),response.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplication(),error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        Map<String,String> params = new HashMap<>();
+                        params.put("token_string",token);
+                        params.put("urun_id",String.valueOf(proje.getUrunID()));
+                        params.put("kategori_id",String.valueOf(proje.getKategoriId()));
+                        params.put("urun_adi",edtBaslik.getText().toString());
+                        params.put("urun_konum",String.valueOf(edtKonum.getText()));
+                        params.put("urun_aciklamasi",edtIcerik.getText().toString());
+                        return params;
+                    }
+                };
+            }
+        });
+
+
         btnSil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -173,7 +210,11 @@ public class ProjeIcerikActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main,menu);
 
         menu.findItem(R.id.action_profil).setVisible(false);
-        menu.findItem(R.id.profil_edit).setVisible(true);
+        if(kullaniciID==proje.getYazarId())
+        {
+            menu.findItem(R.id.profil_edit).setVisible(true);
+
+        }
 
         return true;
     }
@@ -184,7 +225,19 @@ public class ProjeIcerikActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == R.id.profil_edit){
+            txtIcerik.setVisibility(View.GONE);
+            txtYazar.setVisibility(View.GONE);
+            txtKonum.setVisibility(View.GONE);
+            txtBaslik.setVisibility(View.GONE);
+            edtYazar.setVisibility(View.VISIBLE);
+            edtBaslik.setVisibility(View.VISIBLE);
+            edtKonum.setVisibility(View.VISIBLE);
+            edtIcerik.setVisibility(View.VISIBLE);
 
+            edtIcerik.setText(txtIcerik.getText());
+            edtYazar.setText(txtYazar.getText());
+            edtBaslik.setText(txtBaslik.getText());
+            edtKonum.setText(txtKonum.getText());
         }
         return true;
     }
