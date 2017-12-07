@@ -1,5 +1,6 @@
 package com.tolerans.sosyalsorumlulukprojesi;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -113,6 +114,28 @@ public class ProjeIcerikActivity extends AppCompatActivity {
             btnKaydet.setVisibility(View.VISIBLE);
             btnSil.setVisibility(View.VISIBLE);
         }
+
+        txtYazar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://service.sosyalsorumluluk.mansetler.org/kullanici/goruntule?kullanici_id="+proje.getYazarId(), new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Intent intent = new Intent(ProjeIcerikActivity.this,BaskaProfilActivity.class);
+                        Toast.makeText(getApplication(),response.toString(),Toast.LENGTH_LONG).show();
+                        intent.putExtra("kullaniciJson",response);
+                        startActivity(intent);
+                        finish();
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                });
+                Volley.newRequestQueue(getApplicationContext()).add(stringRequest);
+            }
+        });
 
         btnKaydet.setOnClickListener(new View.OnClickListener() {
             @Override
