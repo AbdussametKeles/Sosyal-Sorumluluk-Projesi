@@ -397,7 +397,7 @@ class UrunlerController extends Controller
     //urunler için filtreleme işlemi
     public function filtreleme(Request $request){
       $this->validate($request, [
-        'memleket_id' => '',
+        'urun_konumu' => '',
         'kategori_id' => '',
         'urun_adi' => '',
         'page' => 'numeric',
@@ -406,8 +406,8 @@ class UrunlerController extends Controller
       $page = ($request->get('page')) ? $request->get('page') : 1;
 
       $urunler = DB::table('urunler');
-      if($request->get('memleket_id'))
-        $urunler = $urunler->where('memleket_id', $request->get('memleket_id'));
+      if($request->get('urun_konumu'))
+        $urunler = $urunler->where('urun_konumu', $request->get('urun_konumu'));
       if($request->get('urun_adi'))
         $urunler = $urunler->where('urun_adi', 'LIKE', "%{$request->get('urun_adi')}%");
       $urunler = $urunler->offset(20 * ($page-1))->limit(20)->get();
