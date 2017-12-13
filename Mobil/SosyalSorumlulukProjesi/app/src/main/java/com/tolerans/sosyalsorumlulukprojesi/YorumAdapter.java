@@ -22,6 +22,7 @@ import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.List;
@@ -79,8 +80,29 @@ public class YorumAdapter extends RecyclerView.Adapter<YorumAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://service.sosyalsorumluluk.mansetler.org/kullanici/goruntule?kullanici_id="+kullaniciIDs.get(position).toString(), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    holder.txtKullaniciId.setText(jsonObject.getJSONObject("kullanici").getString("adi_soyadi"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(c,error.toString(),Toast.LENGTH_LONG).show();
+            }
+        });
+        Volley.newRequestQueue(c).add(stringRequest);
+
+
         holder.txtIcerik.setText(yorumIcerikler.get(position));
-        holder.txtKullaniciId.setText(String.valueOf(kullaniciIDs.get(position)));
+
        // Toast.makeText(c,kullaniciIDs.get(position).toString(),Toast.LENGTH_LONG).show();
         if(kullaniciIDs.get(position)==kullaniciID){
             holder.btnSil.setVisibility(View.VISIBLE);
@@ -122,25 +144,7 @@ public class YorumAdapter extends RecyclerView.Adapter<YorumAdapter.ViewHolder> 
                 holder.btnDuzenle.setVisibility(View.GONE);
             }
         });
-        holder.txtKullaniciId.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://service.sosyalsorumluluk.mansetler.org/kullanici/goruntule?kullanici_id="+kullaniciIDs.get(position).toString(), new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Intent intent = new Intent(c,BaskaProfilActivity.class);
-                        c.startActivity(intent);
 
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(c,error.toString(),Toast.LENGTH_LONG).show();
-                    }
-                });
-                Volley.newRequestQueue(c).add(stringRequest);
-            }
-        });
         holder.btnKaydet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,13 +34,16 @@ import java.util.Map;
 
 public class ProjeIcerikActivity extends AppCompatActivity {
     TextView txtBaslik, txtYazar, txtKonum,txtTarih,txtIcerik;
-    EditText edtBaslik,edtYazar,edtKonum,edtIcerik;
+    EditText edtBaslik,edtIcerik;
+    Spinner spKonum;
     RecyclerView rcResimler,rcYorumlar;
     Button btnYorum,btnSil,btnKaydet;
     EditText edtYorum;
     Projeler proje;
     String token;
     int kullaniciID;
+    String position;
+    String refreshJson;
     LinearLayout ln;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +52,12 @@ public class ProjeIcerikActivity extends AppCompatActivity {
    //     Toast.makeText(getApplicationContext(),getIntent().getExtras().getString("json"),Toast.LENGTH_LONG).show();
         ln = (LinearLayout) findViewById(R.id.lnProjeIcerik);
 
-        if(getIntent().getExtras().getString("json")!=null){
 
+
+        if(getIntent().getExtras().getString("json")!=null){
+                refreshJson=getIntent().getExtras().getString("json");
             try {
+
                 JSONObject jsonObject = new JSONObject(getIntent().getExtras().getString("json"));
                 token = jsonObject.getString("token");
                 kullaniciID = new JSONObject(getIntent().getExtras().getString("json")).getJSONObject("kullan\u0131c\u0131").getInt("kullanici_id");
@@ -63,7 +70,8 @@ public class ProjeIcerikActivity extends AppCompatActivity {
         if(getIntent().getSerializableExtra("proje")!=null){
             //sunları sunları yap
             proje = (Projeler) getIntent().getSerializableExtra("proje");
-
+            ln.setVisibility(View.VISIBLE);
+            position = getIntent().getExtras().getString("position");
         }
 
 
@@ -71,8 +79,9 @@ public class ProjeIcerikActivity extends AppCompatActivity {
         btnKaydet = (Button) findViewById(R.id.projeDuzenleme);
         edtBaslik = (EditText) findViewById(R.id.edtProjeBaslik);
         edtIcerik = (EditText) findViewById(R.id.edtProjeIcerik);
-        edtKonum = (EditText) findViewById(R.id.edtProjeKonum);
-        edtYazar = (EditText) findViewById(R.id.edtProjeYazar);
+        spKonum = (Spinner) findViewById(R.id.spProjeKonum);
+
+
 
 
         txtBaslik = (TextView) findViewById(R.id.txtProjeBaslik);
@@ -140,10 +149,13 @@ public class ProjeIcerikActivity extends AppCompatActivity {
         btnKaydet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://service.sosyalsorumluluk.mansetler.org/urunler/guncelle", new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Toast.makeText(getApplication(),"Çalıştı",Toast.LENGTH_LONG).show();
                         Toast.makeText(getApplication(),response.toString(),Toast.LENGTH_LONG).show();
+
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -158,11 +170,12 @@ public class ProjeIcerikActivity extends AppCompatActivity {
                         params.put("urun_id",String.valueOf(proje.getUrunID()));
                         params.put("kategori_id",String.valueOf(proje.getKategoriId()));
                         params.put("urun_adi",edtBaslik.getText().toString());
-                        params.put("urun_konum",String.valueOf(edtKonum.getText()));
+                        params.put("urun_konumu",String.valueOf(spKonum.getSelectedItemId()+1));
                         params.put("urun_aciklamasi",edtIcerik.getText().toString());
                         return params;
                     }
                 };
+                Volley.newRequestQueue(getApplicationContext()).add(stringRequest);
             }
         });
 
@@ -252,15 +265,17 @@ public class ProjeIcerikActivity extends AppCompatActivity {
             txtYazar.setVisibility(View.GONE);
             txtKonum.setVisibility(View.GONE);
             txtBaslik.setVisibility(View.GONE);
-            edtYazar.setVisibility(View.VISIBLE);
             edtBaslik.setVisibility(View.VISIBLE);
-            edtKonum.setVisibility(View.VISIBLE);
+            spKonum.setVisibility(View.VISIBLE);
             edtIcerik.setVisibility(View.VISIBLE);
 
             edtIcerik.setText(txtIcerik.getText());
-            edtYazar.setText(txtYazar.getText());
             edtBaslik.setText(txtBaslik.getText());
-            edtKonum.setText(txtKonum.getText());
+            spKonum.setSelection(proje.getKonumID()-1);
+        }
+        if(id==R.id.refresh){
+            Intent intent = new Intent(ProjeIcerikActivity.this,MainActivity.class);
+            startActivity(intent);
         }
         return true;
     }

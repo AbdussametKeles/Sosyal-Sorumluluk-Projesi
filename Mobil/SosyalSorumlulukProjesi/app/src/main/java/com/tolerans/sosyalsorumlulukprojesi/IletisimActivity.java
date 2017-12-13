@@ -62,6 +62,7 @@ public class IletisimActivity extends AppCompatActivity {
                     }
                 };
                 Volley.newRequestQueue(getApplicationContext()).add(request);
+
             }
         });
 

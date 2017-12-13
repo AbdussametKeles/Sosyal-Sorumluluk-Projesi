@@ -22,6 +22,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Random;
 
 
@@ -46,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
         Random random = new Random();//recapctha kısmı için random sayı ayarlıyor.
         sayi = random.nextInt(10)+1;
         sayiTxt.setText(String.valueOf(sayi));
+        edtCevap.setText("0");
 
 
 
@@ -85,24 +89,26 @@ public class LoginActivity extends AppCompatActivity {
         btnGiris.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int karesi = Integer.valueOf(edtCevap.getText().toString());
-                int cevap = sayi*sayi;
 
-                if(edtMail.getText().equals("")&&edtSifre.getText().equals("")){
-                    Toast.makeText(getApplicationContext(),"Lütfen alanları boş bırakmayın",Toast.LENGTH_LONG).show();
-                }
-                else{
-                    if(karesi != cevap){
-                        Toast.makeText(getApplicationContext(),"Karesini yanlış girdiniz",Toast.LENGTH_LONG).show();
-                    }
-                    else{
-                        GirisYap(edtMail.getText().toString(),edtSifre.getText().toString());
-                    }
+                if(edtCevap.getText().toString().equals("")){
+                    Toast.makeText(getApplicationContext(),"Sayi alanını boş bırakmayın.",Toast.LENGTH_LONG).show();
+                }else {
+                    int karesi = Integer.valueOf(edtCevap.getText().toString());
+                    int cevap = sayi * sayi;
 
+                    if (edtMail.getText().equals("") && edtSifre.getText().equals("")) {
+                        Toast.makeText(getApplicationContext(), "Lütfen alanları boş bırakmayın", Toast.LENGTH_LONG).show();
+                    } else {
+                        if (karesi != cevap) {
+                            Toast.makeText(getApplicationContext(), "Karesini yanlış girdiniz", Toast.LENGTH_LONG).show();
+                        } else {
+                            GirisYap(edtMail.getText().toString(), edtSifre.getText().toString());
+                        }
+
+                    }
                 }
             }
         });
-
 
     }
 
@@ -119,37 +125,52 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void GirisYap(final String email, final String sifre){
-        String token ;
-        pDialog.setMessage("Giriş Yapılıyor..");
-        pDialog.show();
-        String URL = "http://service.sosyalsorumluluk.mansetler.org/kullanici/giris?mail="+email+"&sifre="+sifre;
-        final StringRequest request = new StringRequest(Request.Method.GET, URL,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
 
-                        pDialog.dismiss();
-                        sharedPreferenceKaydet(email,sifre);
-                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-                        intent.putExtra("jsonveri",response.toString());//main activity ye json dosyasını yolluyorum.
-                        startActivity(intent);
 
+
+            pDialog.setMessage("Giriş Yapılıyor..");
+            pDialog.show();
+            String URL = "http://service.sosyalsorumluluk.mansetler.org/kullanici/giris?mail="+email+"&sifre="+sifre;
+            final StringRequest request = new StringRequest(Request.Method.GET, URL,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                            pDialog.dismiss();
+                            try {
+                                JSONObject jsonObject = new JSONObject(response);
+                                if(!jsonObject.getString("status").equals("401")){
+                                    Intent intent = new Intent(LoginActivity.this,MainActivity.class);
+                                    intent.putExtra("jsonveri",response.toString());//main activity ye json dosyasını yolluyorum.
+                                    startActivity(intent);
+                                    sharedPreferenceKaydet(email,sifre);
+
+                                }else{
+                                    Toast.makeText(getApplicationContext(),"Kullanıcı adı veya şifre yanlış",Toast.LENGTH_LONG).show();
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+
+
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    pDialog.dismiss();
+                    if(error.toString().equals("com.android.volley.ServerError")){
+                        Toast.makeText(getApplicationContext(),"Kullanıcı adı veya şifre yanlış",Toast.LENGTH_LONG).show();
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                pDialog.dismiss();
-                if(error.toString().equals("com.android.volley.ServerError")){
-                    Toast.makeText(getApplicationContext(),"Kullanıcı adı veya şifre yanlış",Toast.LENGTH_LONG).show();
-                }
-                else{
-                    Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_LONG).show();
-                }
+                    else{
+                        Toast.makeText(getApplicationContext(),error.toString(),Toast.LENGTH_LONG).show();
+                    }
 
-            }
-        });
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(request);
+                }
+            });
+            RequestQueue requestQueue = Volley.newRequestQueue(this);
+            requestQueue.add(request);
+
     }
 
     private void sharedPreferenceKaydet(String mail, String sifre) {

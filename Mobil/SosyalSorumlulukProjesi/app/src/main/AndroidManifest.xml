@@ -29,7 +29,8 @@
         <activity android:name=".SifreYenilemeActivity" />
         <activity android:name=".ProjeIcerikActivity" />
         <activity android:name=".IletisimActivity" />
-        <activity android:name=".BaskaProfilActivity"></activity>
+        <activity android:name=".BaskaProfilActivity" />
+        <activity android:name=".SearchActivity"></activity>
     </application>
 
 </manifest>
