@@ -8,6 +8,12 @@
     tools:context="com.tolerans.sosyalsorumlulukprojesi.MainActivity"
     tools:showIn="@layout/app_bar_main"
     android:id="@+id/content_main">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Uyguladığınız kriterlere göre sonuç bulunamadı."
+        android:visibility="gone"
+        android:id="@+id/txtFiltreSonuc"/>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvProjeler"
         android:layout_width="match_parent"

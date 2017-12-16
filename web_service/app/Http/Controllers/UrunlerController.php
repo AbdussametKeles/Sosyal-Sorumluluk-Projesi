@@ -393,4 +393,43 @@ class UrunlerController extends Controller
         ]);
       }
     }
+
+    //urunler için filtreleme işlemi
+    public function filtreleme(Request $request){
+      $this->validate($request, [
+        'urun_konumu' => '',
+        'kategori_id' => '',
+        'urun_adi' => '',
+        'page' => 'numeric',
+       ]);
+
+      $page = ($request->get('page')) ? $request->get('page') : 1;
+
+      $urunler = DB::table('urunler');
+      if($request->get('urun_konumu'))
+        $urunler = $urunler->where('urun_konumu', $request->get('urun_konumu'));
+      if($request->get('urun_adi'))
+        $urunler = $urunler->where('urun_adi', 'LIKE', "%{$request->get('urun_adi')}%");
+      $urunler = $urunler->offset(20 * ($page-1))->limit(20)->get();
+
+      foreach ($urunler as $urun_id => $urun) {
+
+        $urunler[$urun_id]->gorseller = DB::table('resimler')->where('urun_id', $urun->urun_id)->get();
+        $urunler[$urun_id]->yorumlar = DB::table('yorum')->where('urun_id', $urun->urun_id)->get();
+
+        foreach($urunler[$urun_id]->gorseller as $resim_id => $resim) {
+          $urunler[$urun_id]->gorseller[$resim_id]->resim = url('resim/'.$urunler[$urun_id]->gorseller[$resim_id]->resim);
+        }
+        foreach($urunler[$urun_id]->yorumlar as $yorum_id => $yorum){
+          $urunler[$urun_id]->yorumlar[$yorum_id]->yorum_icerigi = $urunler[$urun_id]->yorumlar[$yorum_id]->yorum_icerigi;
+        }
+      }
+
+      return response()->json([
+        'status' => 200,
+        'message' => 'filtreleme basarili.',
+        'urunler' => $urunler,
+      ]);
+
+    }
 }

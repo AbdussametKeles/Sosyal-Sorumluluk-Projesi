@@ -44,6 +44,7 @@ $router->group(['prefix' => 'urunler'], function () use ($router) {
   $router->post('yorumlama', ['uses' => 'UrunlerController@urun_yorumlama']);
   $router->post('yorum_sil', ['uses' => 'UrunlerController@urun_yorum_silme']);
   $router->post('yorum_duzenle', ['uses' => 'UrunlerController@urun_yorum_duzenleme']);
+  $router->get('filtreleme', ['uses' => 'UrunlerController@filtreleme']);
 });
 
 // ContactController için Routes Oluşturuldu.

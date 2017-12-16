@@ -15,7 +15,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -58,6 +66,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         this.c =c;
         this.list_projeler = list_projeler;
         this.json = json;
+
     }
 
 
@@ -72,11 +81,51 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
 
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         List<String> resimler = (ArrayList<String>) list_projeler.get(position).getResimler();
         if(resimler != null && resimler.size() != 0 && !resimler.contains(null) && !resimler.contains("")){
         }
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://service.sosyalsorumluluk.mansetler.org/kullanici/goruntule?kullanici_id="+String.valueOf(list_projeler.get(position).getYazarId()), new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    holder.yazar.setText(jsonObject.getJSONObject("kullanici").getString("adi_soyadi"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(c,error.toString(),Toast.LENGTH_LONG).show();
+            }
+        });
+        Volley.newRequestQueue(c).add(stringRequest);
+
         holder.yazar.setText(String.valueOf(list_projeler.get(position).getYazarId()));
+        holder.yazar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://service.sosyalsorumluluk.mansetler.org/kullanici/goruntule?kullanici_id="+String.valueOf(list_projeler.get(position).getYazarId()), new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Intent intent = new Intent(c,BaskaProfilActivity.class);
+                        intent.putExtra("kullaniciJson",response);
+                        c.startActivity(intent);
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(c,error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                });
+                Volley.newRequestQueue(c).add(stringRequest);
+            }
+        });
         holder.baslik.setText(list_projeler.get(position).getBaslik());
         holder.icerik.setText(list_projeler.get(position).getIcerik());
         holder.konum.setText(String.valueOf(list_projeler.get(position).getKonumID()));

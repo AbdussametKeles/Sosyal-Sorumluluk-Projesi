@@ -12,6 +12,11 @@
     <item android:title="Profil İşlemleri">
         <menu>
             <item
+                android:id="@+id/nav_message"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Admine mesaj gönder"
+               />
+            <item
                 android:id="@+id/nav_profil"
                 android:icon="@drawable/ic_menu_share"
                 android:title="Profil'e git"
@@ -21,6 +26,17 @@
                 android:icon="@drawable/ic_menu_send"
                 android:title="Çıkış Yap"
                 android:visible="false"/>
+            <item
+                android:id="@+id/nav_search"
+                android:icon="@drawable/ic_menu_camera"
+                android:title="Detaylı Arama Yap"
+               />
+            <item
+                android:id="@+id/nav_sifirla"
+                android:icon="@drawable/ic_menu_slideshow"
+                android:title="Aramayı Sıfırla"
+                android:visible="false"
+                />
         </menu>
     </item>
 
