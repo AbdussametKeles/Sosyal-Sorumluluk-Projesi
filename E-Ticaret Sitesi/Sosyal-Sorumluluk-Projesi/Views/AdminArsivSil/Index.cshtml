@@ -5,30 +5,28 @@
     Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Arşiv</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.kategoriler.kategori_adi)
+            @Html.DisplayNameFor(model => model.kategoriler.kategoriAdi)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.kullanicilar.ad_soyad)
+            @Html.DisplayNameFor(model => model.kullanicilar.adsoyad)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.memleket.memleket_adi)
+            @Html.DisplayNameFor(model => model.memleket.memleketAdi)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.urun_adi)
+            @Html.DisplayNameFor(model => model.urunAdi) 
         </th>
         <th>
             @Html.DisplayNameFor(model => model.resim)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.urun_icerik)
+            @Html.DisplayNameFor(model => model.urunİcerik)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.tarih)
@@ -39,33 +37,32 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.kategoriler.kategori_adi)
+            @Html.DisplayFor(modelItem => item.kategoriler.kategoriAdi)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.kullanicilar.ad_soyad)
+            @Html.DisplayFor(modelItem => item.kullanicilar.adsoyad)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.memleket.memleket_adi)
+            @Html.DisplayFor(modelItem => item.memleket.memleketAdi)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.urun_adi)
+            @Html.DisplayFor(modelItem => item.urunAdi)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.resim)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.urun_icerik)
+            @Html.DisplayFor(modelItem => item.urunİcerik)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.tarih)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.urun_id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.urun_id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.urun_id })
+            
+            @Html.ActionLink("Delete", "Delete", new { id=item.urunID })
         </td>
     </tr>
-}
+} 
      
 
     @ViewData["urun_id"]="ürünler";

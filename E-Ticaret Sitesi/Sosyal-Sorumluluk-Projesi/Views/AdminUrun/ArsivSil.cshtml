@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Sosyal_Sorumluluk_Projesi.Models.Arsiv>
+
+@{
+    ViewBag.Title = "ArsivSil";
+    Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
+}
+
+<h2>ArsivSil</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.urunID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.kategoriID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.urunAdi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.urunİcerik)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.memleketID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tarih)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.resim)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.kullaniciID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.yorumID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>  
+            @TempData["urunID"] 
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.kategoriID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.urunAdi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.urunİcerik)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.memleketID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tarih)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.resim)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.kullaniciID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.yorumID)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ArsivID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ArsivID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ArsivID })
+        </td>
+    </tr>
+}
+
+</table>

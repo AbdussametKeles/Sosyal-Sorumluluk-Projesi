@@ -94,6 +94,9 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         [HttpPost]
         public ActionResult Create(urunler urun, HttpPostedFileBase resim)
         {
+            ViewBag.kategoriID = new SelectList(db.kategorilers, "kategoriID", "kategoriAdi");
+            ViewBag.kullaniciID = new SelectList(db.kullanicilars, "kullaniciID", "adsoyad");
+            ViewBag.memleketID = new SelectList(db.memlekets, "memleketID", "memleketAdi"); 
             if (ModelState.IsValid)
             {
 
@@ -108,10 +111,17 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                     img.Save("~/Uploads/urunler/" + newfoto);
                     urun.resim = "/Uploads/urunler/" + newfoto;
 
+                   
+                    
+
+
                 }
 
 
-            
+                db.urunlers.Add(urun);
+                db.SaveChanges();
+
+                return RedirectToAction("Index");  
 
 
 
@@ -188,11 +198,22 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         // GET: AdminUrun/Delete/5
         public ActionResult Delete(int id)
         {
+            var urun1 = db.urunlers.Where(u => u.urunID == id).SingleOrDefault(); 
+            ViewData["urunID"] = "";
+            ViewData["kategoriID"] = "";
+            ViewData["urunAdi"] = "";
+            ViewData["urunIcerik"] = "";
+            ViewData["memleketID"] = "";
+            ViewData["tarih"] = "";
+            ViewData["resim"] = "";
+            ViewData["kullaniciID"] = "";
+            ViewData["yorumID"] = "";
 
 
-            var urun = db.urunlers.Where(u => u.urunID == id).SingleOrDefault();
 
-            if (urun==null)
+          
+
+            if (urun1==null)
             {
                 return HttpNotFound();
             }
@@ -200,47 +221,48 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
 
 
 
-            return View(urun);
+            return View(urun1);
         }
 
         // POST: AdminUrun/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
-            try
-            {
+            var urun1 = db.urunlers.Where(u => u.urunID == id).SingleOrDefault();
 
-                var urun1 = db.urunlers.Where(u => u.urunID == id).SingleOrDefault();
+            ViewData["urunID"] = "";
+            ViewData["kategoriID"] = "";
+            ViewData["urunAdi"] = "";
+            ViewData["urunIcerik"] = "";
+            ViewData["memleketID"] = "";
+            ViewData["tarih"] = "";
+            ViewData["resim"] = "";
+            ViewData["kullaniciID"] = "";
+            ViewData["yorumID"] = "";
 
-                if (urun1 == null)
-                {
-                    return HttpNotFound();
-                }
 
-                if (System.IO.File.Exists(Server.MapPath(urun1.resim)))
-                {
-                    System.IO.File.Delete(Server.MapPath(urun1.resim));
-                }
 
-                foreach (var i in urun1.yorums.ToList())
-                {
-                    db.yorums.Remove(i);
-                } 
+            return RedirectToAction("/ArsivSil/urunID/");
 
-              
 
-                db.urunlers.Remove(urun1);
-                db.SaveChanges();
+            
+        } 
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
 
-             
-        }
-    }
+
+
+    
+
+         
+
+
+
+
+
+
+
+
+
+}
 }
 

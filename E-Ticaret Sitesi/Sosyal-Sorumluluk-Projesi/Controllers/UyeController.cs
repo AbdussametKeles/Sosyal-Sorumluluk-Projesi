@@ -63,12 +63,13 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
             try
             { 
 
-                if (login.mail == uye.mail && login.sifre == md5pass)
+                if (login.mail == uye.mail && login.sifre==uye.sifre)
                 { 
-                     
+                      
                     Session["kullaniciID"] = login.kullaniciID;
                     Session["mail"] = login.mail;
                     Session["yetkiID"] = login.yetkiID;
+                    Session["sifre"] = login.sifre;
 
                     return RedirectToAction("Index", "Home");
 
@@ -155,7 +156,7 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
                         FileInfo fotoinfo = new FileInfo(resim.FileName);
 
                         string newfoto = Guid.NewGuid().ToString() + fotoinfo.Extension;
-                        img.Resize(150, 150);
+                        img.Resize(100, 100); 
                         img.Save("~/Uploads/resimler/" + newfoto);
                         kullanicilar.resim = "/Uploads/resimler/" + newfoto;
                         kullanicilar.yetkiID = 2;

@@ -8,10 +8,11 @@ namespace Sosyal_Sorumluluk_Projesi.Models
     public partial class Model1 : DbContext
     {
         public Model1()
-            : base("name=Model28")
+            : base("name=Model37")
         {
         }
 
+        public virtual DbSet<Arsiv> Arsivs { get; set; }
         public virtual DbSet<kategoriler> kategorilers { get; set; }
         public virtual DbSet<kullanicilar> kullanicilars { get; set; }
         public virtual DbSet<memleket> memlekets { get; set; }

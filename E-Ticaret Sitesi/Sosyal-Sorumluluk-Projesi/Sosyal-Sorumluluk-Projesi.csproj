@@ -265,6 +265,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AdminArsivSilController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\AdminKategoriController.cs" />
     <Compile Include="Controllers\AdminUrunController.cs" />
@@ -279,10 +280,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Arsiv.cs" />
     <Compile Include="Models\iletisimModel.cs" />
+    <Compile Include="Models\Gmail.cs" />
     <Compile Include="Models\kategoriler.cs" />
     <Compile Include="Models\kullanicilar.cs" />
-    <Compile Include="Models\Gmail.cs" />
     <Compile Include="Models\memleket.cs" />
     <Compile Include="Models\Model1.cs" />
     <Compile Include="Models\urunler.cs" />
@@ -379,6 +381,8 @@
     <Content Include="Views\Home\SiteAra.cshtml" />
     <Content Include="Views\Home\YorumDuzenle.cshtml" />
     <Content Include="Views\iletisim\Index.cshtml" />
+    <Content Include="Views\AdminArsivSil\Delete.cshtml" />
+    <Content Include="Views\AdminArsivSil\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -407,7 +411,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>22158</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:22158/</IISUrl>
+          <IISUrl>http://localhost:22159/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

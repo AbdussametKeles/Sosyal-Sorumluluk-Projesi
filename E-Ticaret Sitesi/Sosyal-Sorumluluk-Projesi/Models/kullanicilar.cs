@@ -12,6 +12,7 @@ namespace Sosyal_Sorumluluk_Projesi.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public kullanicilar()
         {
+            Arsivs = new HashSet<Arsiv>();
             urunlers = new HashSet<urunler>();
             yorums = new HashSet<yorum>();
         }
@@ -40,6 +41,9 @@ namespace Sosyal_Sorumluluk_Projesi.Models
 
         [StringLength(500)]
         public string resim { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Arsiv> Arsivs { get; set; }
 
         public virtual memleket memleket { get; set; }
 

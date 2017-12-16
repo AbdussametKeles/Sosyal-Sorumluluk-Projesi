@@ -5,43 +5,43 @@
     Layout = "~/Views/Shared/_LayoutPageAdmin.cshtml";
 }
 
-<h2>Delete</h2>
+<h2>Arşivden Ürünü Sil</h2> 
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Bu Ürünü Silmek İstiyormusunuz?</h3>
 <div>
     <h4>urunler</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.kategoriler.kategori_adi)
+            @Html.DisplayNameFor(model => model.kategoriler.kategoriAdi)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.kategoriler.kategori_adi)
+            @Html.DisplayFor(model => model.kategoriler.kategoriAdi)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.kullanicilar.ad_soyad)
+            @Html.DisplayNameFor(model => model.kullanicilar.adsoyad)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.kullanicilar.ad_soyad)
+            @Html.DisplayFor(model => model.kullanicilar.adsoyad)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.memleket.memleket_adi)
+            @Html.DisplayNameFor(model => model.memleket.memleketAdi)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.memleket.memleket_adi)
+            @Html.DisplayFor(model => model.memleket.memleketAdi)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.urun_adi)
+            @Html.DisplayNameFor(model => model.urunAdi)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.urun_adi)
+            @Html.DisplayFor(model => model.urunAdi)
         </dd>
 
         <dt>
@@ -53,11 +53,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.urun_icerik)
+            @Html.DisplayNameFor(model => model.urunİcerik)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.urun_icerik)
+            @Html.DisplayFor(model => model.urunİcerik)
         </dd>
 
         <dt>
@@ -65,7 +65,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.tarih)
+            @Html.DisplayFor(model => model.tarih) 
         </dd>
 
     </dl>
@@ -75,7 +75,7 @@
 
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("Geri Dön", "Index")
         </div>
-    }
+    } 
 </div>
