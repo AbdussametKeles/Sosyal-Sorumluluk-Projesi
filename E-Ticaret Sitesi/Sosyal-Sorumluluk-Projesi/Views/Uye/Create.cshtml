@@ -5,20 +5,17 @@
     Layout = "~/Views/Shared/_LayoutPage1.cshtml";
 }
 
-<h2>Kayıt Ol</h2>
+<h2>Üye Kayıt Ol</h2>
 
-@using (Html.BeginForm("Create","Uye",FormMethod.Post,new { enctype="multipart/form-data"}))
-{
+@using (Html.BeginForm("Create", "Uye", FormMethod.Post, new { enctype = "multipart/form-data" })) 
+{ 
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
         <h4>kullanicilar</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    
-
-
-
+      
         <div class="form-group">
             @Html.LabelFor(model => model.memleketID, "memleketID", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -46,17 +43,17 @@
         <div class="form-group">
             @Html.LabelFor(model => model.mail, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.mail, new { htmlAttributes = new { @class = "form-control" ,@type="mail"} })
+                @Html.EditorFor(model => model.mail, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.mail, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group"> 
+        <div class="form-group">
             @Html.LabelFor(model => model.sifre, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.sifre, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+                @Html.EditorFor(model => model.sifre, new { htmlAttributes = new { @class = "form-control" ,@type="password"} })
                 @Html.ValidationMessageFor(model => model.sifre, "", new { @class = "text-danger" })
-            </div>
+            </div> 
         </div>
 
         <div class="form-group">
@@ -74,18 +71,33 @@
                 @Html.ValidationMessageFor(model => model.resim, "", new { @class = "text-danger" })
             </div>
         </div>
+         
+        <div class="form-group">
+            @Html.LabelFor(model => model.gizliSoru, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.gizliSoru, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.gizliSoru, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.gizliSoruCevap, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.gizliSoruCevap, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.gizliSoruCevap, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Kaydet" class="btn btn-default" />
             </div>
         </div>
-    </div> 
-    
-       
-    <span class="alert-info h2">@ViewBag.Uyari</span>
-
-    @Html.ActionLink("Geri Dön", "Index","Home") 
-
+    </div>
 }
  
+  

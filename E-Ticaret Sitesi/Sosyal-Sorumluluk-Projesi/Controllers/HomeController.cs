@@ -91,29 +91,12 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
 
         }
 
-
-        // GET: Yorum/Edit/5
-        public ActionResult YorumDuzenle(int id)
-        {
-            var yorum = db.yorums.Where(y => y.yorumID == id).SingleOrDefault();
-
-            return View(yorum);
+          public ActionResult YorumGizle()
+        {     
 
 
-        }
-         
-        [HttpPost] 
-        public ActionResult YorumDuzenle( yorum yorum,urunler urun)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(yorum).State = EntityState.Modified;  
-                db.SaveChanges();
-                return RedirectToAction("YorumDetay", "Urunler", new { id = urun.urunID }); 
-                  
-            } 
-            
-            return View(yorum);
+            return View();
+
         }
 
   

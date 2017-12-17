@@ -261,7 +261,9 @@
     <Content Include="Content\product-details.html" />
     <Content Include="Content\shop.html" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -379,10 +381,10 @@
     <Content Include="Views\AdminYorum\Index.cshtml" />
     <Content Include="Views\Urunler\YorumDetay.cshtml" />
     <Content Include="Views\Home\SiteAra.cshtml" />
-    <Content Include="Views\Home\YorumDuzenle.cshtml" />
     <Content Include="Views\iletisim\Index.cshtml" />
     <Content Include="Views\AdminArsivSil\Delete.cshtml" />
     <Content Include="Views\AdminArsivSil\Index.cshtml" />
+    <Content Include="Views\Uye\SifremiUnuttum.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

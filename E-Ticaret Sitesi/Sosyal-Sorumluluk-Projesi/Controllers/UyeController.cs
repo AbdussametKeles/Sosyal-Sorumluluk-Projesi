@@ -63,9 +63,9 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
             try
             { 
 
-                if (login.mail == uye.mail && login.sifre==uye.sifre)
-                { 
-                      
+                if (login.mail == uye.mail && login.sifre==md5pass || login.mail == uye.mail && login.sifre==uye.sifre)
+                {   
+                        
                     Session["kullaniciID"] = login.kullaniciID;
                     Session["mail"] = login.mail;
                     Session["yetkiID"] = login.yetkiID;
@@ -124,8 +124,68 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
             return RedirectToAction("Index", "Home");
         }
          
+           public ActionResult SifremiUnuttum()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult SifremiUnuttum(kullanicilar uye1)
+        {
+            Random rnd = new Random();
+             
+            var sifrem = db.kullanicilars.Where(k => k.kullaniciAdi == uye1.kullaniciAdi).SingleOrDefault();
+
+
+            
+
+            string yeniSifrem = rnd.Next(100,1000000000).ToString();
+            
+
           
-         
+          
+
+           
+
+            
+
+           
+
+
+
+            try
+            {
+                
+                if (sifrem.kullaniciAdi==uye1.kullaniciAdi && uye1.gizliSoruCevap=="ankara")
+                { 
+                     
+                    uye1.sifre = yeniSifrem;
+                    sifrem.sifre = uye1.sifre;
+                    db.SaveChanges();
+                    ViewBag.Mesaj = "Geçici Şifreniz Budur lütfen bu şifreyi değiştiriniz:" + yeniSifrem; 
+                     
+                }  
+                else 
+                {
+                    ViewBag.Mesaj = "Bilgilerinizi Kontrol Ediniz";
+
+                   
+                }
+                 
+            }
+            catch (NullReferenceException)
+            {
+                ViewBag.Mesaj = "Bilgilerinizi Kontrol Ediniz";
+
+            }
+             
+            return View();  
+
+
+
+        } 
+
+
+
 
         // GET: Uye/Create
         public ActionResult Create()
@@ -142,9 +202,9 @@ namespace Sosyal_Sorumluluk_Projesi.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "kullaniciID,yetkiID,memleketID,adsoyad,kullaniciAdi,mail,sifre,telefon,resim")] kullanicilar kullanicilar,string sifre,HttpPostedFileBase resim)
+        public ActionResult Create([Bind(Include = "kullaniciID,yetkiID,memleketID,adsoyad,kullaniciAdi,mail,sifre,telefon,resim,gizliSoru,gizliSoruCevap")] kullanicilar kullanicilar,string sifre,HttpPostedFileBase resim)
         {
-            var md5pass = sifre;
+            var md5pass = sifre; 
                 if (ModelState.IsValid)
                 {
                  

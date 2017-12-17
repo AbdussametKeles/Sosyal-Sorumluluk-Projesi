@@ -8,7 +8,7 @@ namespace Sosyal_Sorumluluk_Projesi.Models
     public partial class Model1 : DbContext
     {
         public Model1()
-            : base("name=Model37")
+            : base("name=Model40")
         {
         }
 

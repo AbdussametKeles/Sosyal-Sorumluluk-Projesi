@@ -42,6 +42,12 @@ namespace Sosyal_Sorumluluk_Projesi.Models
         [StringLength(500)]
         public string resim { get; set; }
 
+        [StringLength(50)]
+        public string gizliSoruCevap { get; set; }
+
+        [StringLength(50)]
+        public string gizliSoru { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Arsiv> Arsivs { get; set; }
 
