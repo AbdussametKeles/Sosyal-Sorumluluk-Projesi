@@ -20,7 +20,7 @@ class UrunlerController extends Controller
       ]);
 
       if(empty($request->input('token_string'))){
-        $urunler = DB::table('urunler')->get();
+        $urunler = DB::table('urunler')->where('deleted','=','0')->get();
 
         foreach ($urunler as $urun_id => $urun) {
 
@@ -48,6 +48,7 @@ class UrunlerController extends Controller
 
       $urunler = DB::table('urunler')->where([
         ['kullanici_id', '=', $kullanici->kullanici_id],
+        ['deleted','=','0'],
       ])->get();
 
       foreach ($urunler as $urun_id => $urun){
@@ -127,15 +128,21 @@ class UrunlerController extends Controller
       if(($kullanici->kullanici_id) == ($urun->kullanici_id)){
         DB::table('yorum')->where([
           ['urun_id', '=', $request->input('urun_id')],
-        ])->delete();
+        ])->update([
+          'deleted','=','1'
+        ]);
 
         DB::table('resimler')->where([
           ['urun_id', '=', $request->input('urun_id')],
-        ])->delete();
+        ])->update([
+          'deleted','=','1'
+        ]);
 
         DB::table('urunler')->where([
           ['urun_id', '=', $request->input('urun_id')],
-        ])->delete();
+        ])->update([
+          'deleted','=','1'
+        ]);
 
         return response()->json([
           'status' => 200,
@@ -342,7 +349,9 @@ class UrunlerController extends Controller
       if(($kullanici->kullanici_id) == ($urun->kullanici_id) || ($kullanici->kullanici_id) == ($yorum->kullanici_id)){
         DB::table('yorum')->where([
           ['yorum_id', '=', $yorum->yorum_id],
-        ])->delete();
+        ])->update([
+          'deleted','=','1'
+        ]);
 
         return response()->json([
           'status' => 200,
@@ -430,6 +439,5 @@ class UrunlerController extends Controller
         'message' => 'filtreleme basarili.',
         'urunler' => $urunler,
       ]);
-
     }
 }
