@@ -128,21 +128,15 @@ class UrunlerController extends Controller
       if(($kullanici->kullanici_id) == ($urun->kullanici_id)){
         DB::table('yorum')->where([
           ['urun_id', '=', $request->input('urun_id')],
-        ])->update([
-          'deleted','=','1'
-        ]);
+        ])->update(['deleted' => '1']);
 
         DB::table('resimler')->where([
           ['urun_id', '=', $request->input('urun_id')],
-        ])->update([
-          'deleted','=','1'
-        ]);
+        ])->update(['deleted' => '1']);
 
         DB::table('urunler')->where([
           ['urun_id', '=', $request->input('urun_id')],
-        ])->update([
-          'deleted','=','1'
-        ]);
+        ])->update(['deleted' => '1']);
 
         return response()->json([
           'status' => 200,
@@ -349,9 +343,7 @@ class UrunlerController extends Controller
       if(($kullanici->kullanici_id) == ($urun->kullanici_id) || ($kullanici->kullanici_id) == ($yorum->kullanici_id)){
         DB::table('yorum')->where([
           ['yorum_id', '=', $yorum->yorum_id],
-        ])->update([
-          'deleted','=','1'
-        ]);
+        ])->update(['deleted' => '1']);
 
         return response()->json([
           'status' => 200,
