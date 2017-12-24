@@ -256,4 +256,54 @@ class KullaniciController extends Controller
         ]
       ]);
     }
-  }
+
+    public function gizli_cevap(Request $request){
+      $this->validate($request, [
+        'mail' => 'required',
+        'gizli_cevap' => 'required',
+      ]);
+
+      $kullanici_bilgisi = DB::table('kullanici')->where([
+        ['mail', '=', $request->input('mail')],
+      ])->first();
+
+      $gizli_cevap = DB::table('kullanici')->where('kullanici_id','=',$kullanici_bilgisi->kullanici_id)->first();
+
+      if($request->input('gizli_cevap') == $gizli_cevap->gizli_cevap){
+        return response()->json([
+          'status' => 200,
+          'message' => 'basarili',
+        ]);
+      }else{
+        return response()->json([
+          'status' => 400,
+          'message' => 'Hatali giris',
+        ]);
+      }
+    }
+
+    public function sifre_gonder(Request $request){
+      $this->validate($request, [
+        'mail' => 'required',
+        'sifre' => 'required',
+      ]);
+
+      $kullanici_bilgisi = DB::table('kullanici')->where([
+        ['mail', '=', $request->input('mail')],
+      ])->first();
+
+        DB::table('kullanici')
+                  ->where('kullanici_id', $kullanici_bilgisi->kullanici_id)
+                  ->update(['sifre' => $request->input('sifre')]);
+
+      $kullanici_bilgisi = DB::table('kullanici')->where([
+        ['mail', '=', $request->input('mail')],
+        ])->first();            
+
+      return response()->json([
+        'status' => 200,
+        'message' => 'basarili',
+        'yeni_sifre' => $kullanici_bilgisi->sifre,
+      ]);
+      }
+    }

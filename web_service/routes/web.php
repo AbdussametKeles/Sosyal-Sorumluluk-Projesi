@@ -22,6 +22,8 @@ $router->group(['prefix' => 'kullanici'], function () use ($router) {
   $router->get('sifremi_unuttum', ['uses' => 'KullaniciController@sifremi_unuttum']);
   $router->post('profil_guncelle', ['uses' => 'KullaniciController@profil_guncelle']);
   $router->get('goruntule', ['uses' => 'KullaniciController@profil_goruntule']);
+  $router->get('gizli_cevap', ['uses' => 'KullaniciController@gizli_cevap']);
+  $router->post('sifre_yenile', ['uses' => 'KullaniciController@sifre_gonder']);
 });
 
 // MemleketController için Routes Oluşturuldu.
